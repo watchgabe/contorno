@@ -1,0 +1,734 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>contorno</title>
+  <meta name="description" content="Contorno — documenting the process of building in Puerto Escondido, México.">
+
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=DM+Mono:ital,wght@0,400;0,500;1,400&family=Inter:ital,wght@0,300;0,400;0,700;0,900;1,400&display=swap" rel="stylesheet">
+
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root {
+      --cream:  #f8f0dd;
+      --ink:    #121212;
+      --rust:   #9f4c29;
+      --mid:    #888;
+      --mono:   "DM Mono", monospace;
+      --sans:   "Inter", sans-serif;
+      --nav-h:  68px;   /* fixed nav height */
+      --frame:  14px;   /* hero frame gap */
+    }
+
+    html { scroll-behavior: smooth; }
+
+    body {
+      background: var(--cream);
+      color: var(--ink);
+      font-family: var(--sans);
+      -webkit-font-smoothing: antialiased;
+      overflow-x: hidden;
+    }
+
+    /* ─── NAV ─────────────────────────────────────────── */
+    nav {
+      position: fixed;
+      top: 0; left: 0; right: 0;
+      z-index: 100;
+      height: var(--nav-h);
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 0 40px;
+    }
+
+    /* Nav is always cream-colored — text over the cream padding, not the image */
+    nav { color: var(--ink); }
+
+    .nav-left, .nav-right {
+      display: flex;
+      gap: 28px;
+      font-family: var(--mono);
+      font-size: 11px;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+    }
+
+    .nav-left a, .nav-right a {
+      text-decoration: none;
+      color: inherit;
+      opacity: 0.7;
+      transition: opacity 0.2s;
+    }
+
+    .nav-left a:hover, .nav-right a:hover { opacity: 1; }
+
+    .nav-logo {
+      font-family: var(--sans);
+      font-size: 15px;
+      font-weight: 400;
+      letter-spacing: 0.04em;
+      text-decoration: none;
+      color: inherit;
+      position: absolute;
+      left: 50%;
+      transform: translateX(-50%);
+    }
+
+    .nav-cta {
+      background: var(--ink);
+      color: var(--cream) !important;
+      padding: 8px 16px;
+      opacity: 1 !important;
+      transition: background 0.2s !important;
+    }
+
+    .nav-cta:hover { background: #333 !important; }
+
+    /* ─── HERO WRAPPER (creates the frame) ───────────────── */
+    .hero-wrapper {
+      padding: var(--nav-h) var(--frame) var(--frame);
+      min-height: 100vh;
+      background: var(--cream);
+    }
+
+    /* ─── HERO ────────────────────────────────────────── */
+    .hero {
+      position: relative;
+      width: 100%;
+      height: calc(100vh - var(--nav-h) - var(--frame));
+      border-radius: 12px;
+      overflow: hidden;
+    }
+
+    .hero-img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      object-position: center 40%;
+      display: block;
+    }
+
+    .hero-overlay {
+      position: absolute;
+      inset: 0;
+      border-radius: 12px;
+      background: linear-gradient(
+        to bottom,
+        rgba(0,0,0,0.05) 0%,
+        rgba(0,0,0,0) 35%,
+        rgba(0,0,0,0.55) 100%
+      );
+    }
+
+    .hero-coords {
+      position: absolute;
+      top: 28px;
+      left: 32px;
+      font-family: var(--mono);
+      font-size: 11px;
+      letter-spacing: 0.06em;
+      color: rgba(255,255,255,0.7);
+      line-height: 1.7;
+    }
+
+    .hero-label {
+      position: absolute;
+      top: 28px;
+      right: 32px;
+      font-family: var(--mono);
+      font-size: 11px;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      color: rgba(255,255,255,0.7);
+      white-space: nowrap;
+    }
+
+    .hero-content {
+      position: absolute;
+      bottom: 48px;
+      left: 40px;
+      right: 40px;
+    }
+
+    .hero-title {
+      font-family: var(--sans);
+      font-size: clamp(72px, 12vw, 160px);
+      font-weight: 300;
+      line-height: 0.92;
+      letter-spacing: -0.02em;
+      color: #fff;
+      margin-bottom: 20px;
+    }
+
+    .hero-desc {
+      font-family: var(--sans);
+      font-size: 16px;
+      font-weight: 400;
+      color: rgba(255,255,255,0.75);
+      max-width: 400px;
+      line-height: 1.55;
+    }
+
+    /* ─── INTRO ───────────────────────────────────────── */
+    .intro {
+      padding: 110px 40px 90px;
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 40px 80px;
+      align-items: start;
+    }
+
+    .intro-eyebrow {
+      grid-column: 1 / -1;
+      font-family: var(--mono);
+      font-size: 11px;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      color: var(--mid);
+      margin-bottom: -20px;
+    }
+
+    .intro-headline {
+      font-family: var(--sans);
+      font-size: clamp(36px, 4vw, 56px);
+      font-weight: 300;
+      line-height: 1.1;
+      letter-spacing: -0.02em;
+    }
+
+    .intro-body {
+      font-size: 15px;
+      line-height: 1.75;
+      color: #444;
+      padding-top: 8px;
+    }
+
+    .intro-body p + p { margin-top: 16px; }
+
+    /* ─── DIVIDER ─────────────────────────────────────── */
+    .divider {
+      width: calc(100% - 80px);
+      margin: 0 40px;
+      height: 1px;
+      background: rgba(18,18,18,0.12);
+    }
+
+    /* ─── SECTION HEADER ──────────────────────────────── */
+    .section-header {
+      padding: 80px 40px 40px;
+      display: flex;
+      align-items: baseline;
+      justify-content: space-between;
+    }
+
+    .section-title {
+      font-family: var(--sans);
+      font-size: clamp(48px, 8vw, 120px);
+      font-weight: 300;
+      letter-spacing: -0.03em;
+      line-height: 1;
+    }
+
+    .section-tag {
+      font-family: var(--mono);
+      font-size: 11px;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      color: var(--mid);
+    }
+
+    /* ─── GALLERY ─────────────────────────────────────── */
+    .gallery {
+      padding: 0 40px 80px;
+      columns: 4;
+      column-gap: 10px;
+    }
+
+    @media (max-width: 1100px) {
+      .gallery { columns: 3; }
+    }
+
+    @media (max-width: 700px) {
+      .gallery { columns: 2; padding: 0 20px 60px; }
+    }
+
+    @media (max-width: 420px) {
+      .gallery { columns: 2; padding: 0 12px 50px; column-gap: 8px; }
+    }
+
+    .gallery figure {
+      break-inside: avoid;
+      margin-bottom: 10px;
+      overflow: hidden;
+      border-radius: 10px;
+    }
+
+    .gallery figure img {
+      width: 100%;
+      height: auto;
+      display: block;
+      border-radius: 10px;
+      transition: transform 0.5s ease;
+    }
+
+    .gallery figure:hover img {
+      transform: scale(1.02);
+    }
+
+    /* ─── FEATURE IMAGE ───────────────────────────────── */
+    .feature {
+      position: relative;
+      height: 80vh;
+      overflow: hidden;
+    }
+
+    .feature img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      object-position: center top;
+      display: block;
+    }
+
+    .feature-overlay {
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(to bottom, rgba(0,0,0,0) 40%, rgba(0,0,0,0.5) 100%);
+    }
+
+    .feature-caption {
+      position: absolute;
+      bottom: 40px;
+      left: 40px;
+      right: 40px;
+      display: flex;
+      justify-content: space-between;
+      align-items: flex-end;
+    }
+
+    .feature-caption-label {
+      font-family: var(--mono);
+      font-size: 11px;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      color: rgba(255,255,255,0.7);
+    }
+
+    /* ─── ABOUT / TEAM ────────────────────────────────── */
+    .about {
+      padding: 100px 40px;
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 60px;
+      align-items: center;
+    }
+
+    .about-image {
+      aspect-ratio: 3/4;
+      overflow: hidden;
+      border-radius: 6px;
+    }
+
+    .about-image img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      object-position: center;
+      display: block;
+    }
+
+    .about-eyebrow {
+      font-family: var(--mono);
+      font-size: 11px;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      color: var(--mid);
+      margin-bottom: 24px;
+    }
+
+    .about-headline {
+      font-family: var(--sans);
+      font-size: clamp(32px, 3.5vw, 48px);
+      font-weight: 300;
+      line-height: 1.1;
+      letter-spacing: -0.02em;
+      margin-bottom: 28px;
+    }
+
+    .about-body {
+      font-size: 15px;
+      line-height: 1.75;
+      color: #444;
+    }
+
+    .about-body p + p { margin-top: 16px; }
+
+    .about-names {
+      margin-top: 40px;
+      display: flex;
+      gap: 32px;
+    }
+
+    .about-name {
+      font-family: var(--mono);
+      font-size: 11px;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      color: var(--ink);
+      opacity: 0.55;
+    }
+
+    /* ─── FOOTER ──────────────────────────────────────── */
+    footer {
+      border-top: 1px solid rgba(18,18,18,0.12);
+      padding: 60px 40px 50px;
+      display: grid;
+      grid-template-columns: 1fr 1fr 1fr 1fr;
+      gap: 40px;
+      align-items: start;
+    }
+
+    .footer-wordmark {
+      font-family: var(--sans);
+      font-size: 15px;
+      font-weight: 400;
+      letter-spacing: 0.04em;
+      margin-bottom: 10px;
+    }
+
+    .footer-tagline {
+      font-size: 13px;
+      color: var(--mid);
+      line-height: 1.55;
+      max-width: 200px;
+    }
+
+    .footer-col-title {
+      font-family: var(--mono);
+      font-size: 10px;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      color: var(--mid);
+      margin-bottom: 14px;
+    }
+
+    .footer-col a, .footer-col p {
+      display: block;
+      font-size: 13px;
+      color: var(--ink);
+      text-decoration: none;
+      line-height: 1.9;
+      transition: color 0.2s;
+    }
+
+    .footer-col a:hover { color: var(--rust); }
+
+    .footer-email { color: var(--rust) !important; }
+
+    .footer-bottom {
+      grid-column: 1 / -1;
+      border-top: 1px solid rgba(18,18,18,0.08);
+      padding-top: 28px;
+      margin-top: 8px;
+    }
+
+    .footer-giant {
+      font-family: var(--sans);
+      font-size: clamp(60px, 12vw, 180px);
+      font-weight: 300;
+      letter-spacing: -0.04em;
+      line-height: 1;
+      color: var(--ink);
+      opacity: 0.07;
+      user-select: none;
+    }
+
+    /* ─── RESPONSIVE ──────────────────────────────────── */
+    @media (max-width: 768px) {
+      :root { --frame: 10px; }
+
+      nav { padding: 0 20px; }
+
+      .hero-coords {
+        top: 20px;
+        left: 20px;
+      }
+      .hero-label {
+        top: 20px;
+        right: 20px;
+        left: auto; /* prevent left override */
+      }
+      .hero-content {
+        left: 24px;
+        right: 24px;
+        bottom: 36px;
+      }
+      .hero-desc { font-size: 14px; }
+
+      .intro {
+        padding: 70px 24px 70px;
+        grid-template-columns: 1fr;
+      }
+      .intro-eyebrow { grid-column: 1; }
+
+      .section-header { padding: 60px 24px 28px; }
+
+      .about {
+        grid-template-columns: 1fr;
+        padding: 60px 24px;
+      }
+
+      footer {
+        grid-template-columns: 1fr 1fr;
+        padding: 50px 24px 40px;
+      }
+      .footer-bottom { grid-column: 1 / -1; }
+
+      .divider {
+        width: calc(100% - 48px);
+        margin: 0 24px;
+      }
+
+      .feature-caption {
+        flex-direction: column;
+        gap: 4px;
+        align-items: flex-start;
+      }
+    }
+
+    @media (max-width: 480px) {
+      .nav-left { display: none; }
+      .hero-title { font-size: clamp(52px, 14vw, 100px); }
+    }
+  </style>
+</head>
+
+<body>
+
+  <!-- NAV -->
+  <nav id="main-nav">
+    <div class="nav-left">
+      <a href="#work">work</a>
+      <a href="#about">about</a>
+    </div>
+    <a href="#" class="nav-logo">contorno</a>
+    <div class="nav-right">
+      <a href="mailto:hello@contorno.mx" class="nav-cta">contact →</a>
+    </div>
+  </nav>
+
+  <!-- HERO — framed rectangle -->
+  <div class="hero-wrapper">
+    <section class="hero">
+      <img
+        class="hero-img"
+        src="Edited copy/L3 Construction.jpg"
+        alt="Contorno — building in Puerto Escondido"
+      >
+      <div class="hero-overlay"></div>
+
+      <div class="hero-coords">
+        15.8442° N<br>
+        97.0418° W
+      </div>
+
+      <div class="hero-label">Puerto Escondido · 2026</div>
+
+      <div class="hero-content">
+        <h1 class="hero-title">contorno</h1>
+        <p class="hero-desc">the process of building — documented from the ground up.</p>
+      </div>
+    </section>
+  </div>
+
+  <!-- INTRO -->
+  <section class="intro">
+    <p class="intro-eyebrow">the project</p>
+    <h2 class="intro-headline">
+      not a finished thing —
+      a thing becoming.
+    </h2>
+    <div class="intro-body">
+      <p>
+        Contorno is a record of construction in progress. It documents the way a building
+        takes shape — the decisions made on site, the materials handled by hand, the moments
+        between the plans and the pour.
+      </p>
+      <p>
+        Based in Puerto Escondido, Oaxaca, the project follows Nick and Ricardo
+        through the arc of building: from raw land to finished structure,
+        told in photographs and in real time.
+      </p>
+    </div>
+  </section>
+
+  <div class="divider"></div>
+
+  <!-- WORK / GALLERY -->
+  <section id="work">
+    <div class="section-header">
+      <h2 class="section-title">the build</h2>
+      <span class="section-tag">Puerto Escondido · 2026</span>
+    </div>
+
+    <div class="gallery">
+      <!-- Named / curated images first -->
+      <figure><img src="Edited copy/I like this one.jpg" alt=""></figure>
+      <figure><img src="Edited copy/Black%20%26%20White.jpg" alt=""></figure>
+      <figure><img src="Edited copy/Nick%20%26%20Ricardo%20Posing.jpg" alt=""></figure>
+      <figure><img src="Edited copy/Nick%20%26%20Ricardo%201.jpg" alt=""></figure>
+      <figure><img src="Edited copy/Nick%20%26%20Ricardo%202.jpg" alt=""></figure>
+      <figure><img src="Edited copy/Nick Ladder.jpg" alt=""></figure>
+      <figure><img src="Edited copy/Nick Paxifico.jpg" alt=""></figure>
+      <figure><img src="Edited copy/Nick.jpg" alt=""></figure>
+      <figure><img src="Edited copy/Ricardo Lines.jpg" alt=""></figure>
+      <figure><img src="Edited copy/Ricardo%20Materials%20%E2%80%94%20Steel%201.jpg" alt=""></figure>
+      <figure><img src="Edited copy/Ricardo%20Materials%20%E2%80%94%20Steel%202.jpg" alt=""></figure>
+      <figure><img src="Edited copy/IMG_1497.jpg" alt=""></figure>
+      <figure><img src="Edited copy/IMG_3439.jpg" alt=""></figure>
+      <figure><img src="Edited copy/IMG_3443.jpg" alt=""></figure>
+      <figure><img src="Edited copy/IMG_4879.jpg" alt=""></figure>
+      <figure><img src="Edited copy/IMG_4880.jpg" alt=""></figure>
+      <figure><img src="Edited copy/IMG_4884.jpg" alt=""></figure>
+      <figure><img src="Edited copy/IMG_6056.jpg" alt=""></figure>
+      <figure><img src="Edited copy/IMG_6451.jpg" alt=""></figure>
+      <figure><img src="Edited copy/IMG_6455.jpg" alt=""></figure>
+      <figure><img src="Edited copy/IMG_8782.jpg" alt=""></figure>
+      <!-- Edited images -->
+      <figure><img src="Edited copy/061B543D-2A1D-4640-9212-1D3C525CD685.jpg" alt=""></figure>
+      <figure><img src="Edited copy/070598ED-FC51-4714-B9CA-FC932FFF6217.jpg" alt=""></figure>
+      <figure><img src="Edited copy/0C72A8CF-5C5B-4080-AE14-FBB5DC86421E.jpg" alt=""></figure>
+      <figure><img src="Edited copy/0D0C42A5-9B72-45EB-9BC0-6F7CD26323DE_4_5005_c.jpg" alt=""></figure>
+      <figure><img src="Edited copy/0D864847-BFDD-426E-9008-4CFA76EC037B.jpg" alt=""></figure>
+      <figure><img src="Edited copy/0f5d83fc-455c-431e-8229-d2c02022d94c.jpg" alt=""></figure>
+      <figure><img src="Edited copy/10E79F69-5E13-429D-BFA8-DBB08C41F68B.jpg" alt=""></figure>
+      <figure><img src="Edited copy/129B802E-3162-4454-8E88-36166BFA4F09_4_5005_c.jpg" alt=""></figure>
+      <figure><img src="Edited copy/142f74f3-5cc2-4ae3-beac-53ee80d2511d.jpg" alt=""></figure>
+      <figure><img src="Edited copy/1afe7fa7-5127-4c2a-bc61-f2b5e8a75b8b.jpg" alt=""></figure>
+      <figure><img src="Edited copy/26092148-4169-45bc-a3e4-d71902936c86.jpg" alt=""></figure>
+      <figure><img src="Edited copy/2E5B2BF8-EEE1-455A-A31C-1C443E4C336D.jpg" alt=""></figure>
+      <figure><img src="Edited copy/2F210712-D308-4564-BE5C-BFF936830051.jpg" alt=""></figure>
+      <figure><img src="Edited copy/2cd74614-5797-41bd-812a-745a948c3036.jpg" alt=""></figure>
+      <figure><img src="Edited copy/39a1b44c-0226-4b3d-9791-fa55ea5a3766.jpg" alt=""></figure>
+      <figure><img src="Edited copy/3B183946-581A-463A-9D96-95F5469BEA13.jpg" alt=""></figure>
+      <figure><img src="Edited copy/3BB35790-898D-4E4F-B565-9BCEA535CCD0.jpg" alt=""></figure>
+      <figure><img src="Edited copy/3df1bec0-27d3-48e0-ad44-a31562519dde.jpg" alt=""></figure>
+      <figure><img src="Edited copy/40A518B5-3109-49AF-B9CE-8905C473F30E.jpg" alt=""></figure>
+      <figure><img src="Edited copy/41F2A86E-0F0E-4D26-9325-F0583E5FE1B4.jpg" alt=""></figure>
+      <figure><img src="Edited copy/44D3F4B4-6857-4272-A030-825017C8C047.jpg" alt=""></figure>
+      <figure><img src="Edited copy/4EDC02ED-6A47-4F18-A124-4581FDC741E8.jpg" alt=""></figure>
+      <figure><img src="Edited copy/4F873E33-391A-4C71-BC88-6682CDCC53C0.jpg" alt=""></figure>
+      <figure><img src="Edited copy/4FE38FEF-59D0-4427-A040-BA61DE3CFBB5.jpg" alt=""></figure>
+      <figure><img src="Edited copy/5DB75BB7-8B26-4F28-B75E-2FC430FA43B9.jpg" alt=""></figure>
+      <figure><img src="Edited copy/60ea1757-64f8-4602-b9d1-d5aed4c759fb.jpg" alt=""></figure>
+      <figure><img src="Edited copy/62847044-8C12-4E7D-8DDA-1C73EF6C4D97.jpg" alt=""></figure>
+      <figure><img src="Edited copy/6AB49683-4759-4689-BC6E-898BF49E223C.jpg" alt=""></figure>
+      <figure><img src="Edited copy/708E6A2B-32C8-4639-9E63-F7E3D8DCA9C7.jpg" alt=""></figure>
+      <figure><img src="Edited copy/7DFD94FB-B88F-4AD7-97FD-D2517D580B19.jpg" alt=""></figure>
+      <figure><img src="Edited copy/93E39AC2-D4D6-48E7-BEAF-9D9D5AA7BF0B.jpg" alt=""></figure>
+      <figure><img src="Edited copy/98BF8017-CF4D-44F8-B2CE-4BE9AD708884_4_5005_c.jpg" alt=""></figure>
+      <figure><img src="Edited copy/99b1750d-7639-4b1d-882d-5c8403bd247c.jpg" alt=""></figure>
+      <figure><img src="Edited copy/A2F5DC44-8A10-436C-BF75-30C5BA66C6B0_4_5005_c.jpg" alt=""></figure>
+      <figure><img src="Edited copy/A4AE3944-80BF-4196-9DAA-8D4706603AF2.jpg" alt=""></figure>
+      <figure><img src="Edited copy/A98D8E12-0CCF-4B9A-8D55-BD1C79818F59.jpg" alt=""></figure>
+      <figure><img src="Edited copy/CA700DEA-BF8E-4A70-A51E-01A4D8FFF542.jpg" alt=""></figure>
+      <figure><img src="Edited copy/D76D8897-7219-44A4-A29B-C2DA582E84EE.poster.jpg" alt=""></figure>
+      <figure><img src="Edited copy/E1D36EF6-D0F4-4BEF-9CAA-415763C225C1.jpg" alt=""></figure>
+      <figure><img src="Edited copy/E48B6D29-4FB4-497A-9898-C8AC388AD993.jpg" alt=""></figure>
+      <figure><img src="Edited copy/EFFFDBD2-4900-48FD-A4D5-65BEB435209A.jpg" alt=""></figure>
+      <figure><img src="Edited copy/F23BB294-0329-4D30-B2E5-DEF3B664A8DB.jpg" alt=""></figure>
+      <figure><img src="Edited copy/F8C7DEAB-72E0-473B-ACC7-375585FC04E1.jpg" alt=""></figure>
+      <figure><img src="Edited copy/FF6A11D8-185B-4DC9-952F-E8B65ACDA305.jpg" alt=""></figure>
+      <figure><img src="Edited copy/a1a1d030-8473-40b5-a0c6-028603930528.jpg" alt=""></figure>
+      <figure><img src="Edited copy/b3656b2e-c1e9-4a43-9907-5f992a507908.jpg" alt=""></figure>
+      <figure><img src="Edited copy/b3eb0122-9858-41f8-85c2-bd84ade72e70.jpg" alt=""></figure>
+      <figure><img src="Edited copy/c2ce60db-eda6-4a8a-8597-a05f93f39547.jpg" alt=""></figure>
+      <figure><img src="Edited copy/cc6f3c10-f2b0-4e42-9206-787c0d3d9a1e.jpg" alt=""></figure>
+      <figure><img src="Edited copy/cf2945b9-16c7-4cc1-bcbe-979290bdcd8a.jpg" alt=""></figure>
+      <figure><img src="Edited copy/dfcf983f-6291-4d88-88a0-8f953dfddc4e.jpg" alt=""></figure>
+      <figure><img src="Edited copy/e71435a3-89ea-451d-9c4f-d48e2fbe0904.jpg" alt=""></figure>
+    </div>
+  </section>
+
+  <div class="divider"></div>
+
+  <!-- FEATURE IMAGE -->
+  <section class="feature">
+    <img src="Edited copy/Nick%20%26%20Ricardo%20Posing.jpg" alt="Nick and Ricardo on site">
+    <div class="feature-overlay"></div>
+    <div class="feature-caption">
+      <span class="feature-caption-label">on site</span>
+      <span class="feature-caption-label">Puerto Escondido, Oaxaca</span>
+    </div>
+  </section>
+
+  <!-- ABOUT / TEAM -->
+  <section class="about" id="about">
+    <div class="about-image">
+      <img src="Edited copy/Black%20%26%20White.jpg" alt="Contorno — construction detail">
+    </div>
+    <div class="about-text">
+      <p class="about-eyebrow">the people</p>
+      <h2 class="about-headline">
+        two people building
+        something real.
+      </h2>
+      <div class="about-body">
+        <p>
+          Nick and Ricardo are the people behind Contorno — not developers,
+          not a firm. Two individuals who decided to build something themselves,
+          in a place they love, with their hands.
+        </p>
+        <p>
+          The project lives in Puerto Escondido, Oaxaca. The photographs
+          document what happens between the idea and the thing: the concrete
+          poured, the steel bent, the decisions made in daylight on a
+          half-finished floor.
+        </p>
+        <p>
+          Contorno is the outline of a building taking shape.
+        </p>
+      </div>
+      <div class="about-names">
+        <span class="about-name">Nick —</span>
+        <span class="about-name">Ricardo —</span>
+      </div>
+    </div>
+  </section>
+
+  <!-- FOOTER -->
+  <footer>
+    <div class="footer-brand">
+      <p class="footer-wordmark">contorno</p>
+      <p class="footer-tagline">building in Puerto Escondido, Oaxaca — documented in real time.</p>
+    </div>
+
+    <div class="footer-col">
+      <p class="footer-col-title">location</p>
+      <p>Puerto Escondido</p>
+      <p>Oaxaca, México</p>
+    </div>
+
+    <div class="footer-col">
+      <p class="footer-col-title">links</p>
+      <a href="#work">the build</a>
+      <a href="#about">about</a>
+    </div>
+
+    <div class="footer-col">
+      <p class="footer-col-title">contact</p>
+      <a href="mailto:hello@contorno.mx" class="footer-email">hello@contorno.mx</a>
+    </div>
+
+    <div class="footer-bottom">
+      <p class="footer-giant">contorno</p>
+    </div>
+  </footer>
+
+</body>
+</html>
