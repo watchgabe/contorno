@@ -8,20 +8,23 @@
 
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=DM+Mono:ital,wght@0,400;0,500;1,400&family=Inter:ital,wght@0,300;0,400;0,700;0,900;1,400&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;1,300;1,400&family=DM+Sans:wght@300;400;500;700&family=Gabarito:wght@400;500;600;700&display=swap" rel="stylesheet">
 
   <style>
     *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
 
     :root {
-      --cream:  #f8f0dd;
-      --ink:    #121212;
-      --rust:   #9f4c29;
-      --mid:    #888;
-      --mono:   "DM Mono", monospace;
-      --sans:   "Inter", sans-serif;
-      --nav-h:  68px;   /* fixed nav height */
-      --frame:  14px;   /* hero frame gap */
+      --cream:    #EDE6D6;
+      --offwhite: #F5F0E8;
+      --ink:      #2A2A2A;
+      --rust:     #C0583A;
+      --mid:      #888;
+      --label:    "DM Sans", sans-serif;
+      --serif:    "Cormorant Garamond", serif;
+      --display:  "Gabarito", sans-serif;
+      --sans:     "DM Sans", sans-serif;
+      --nav-h:    68px;   /* fixed nav height */
+      --frame:    14px;   /* hero frame gap */
     }
 
     html { scroll-behavior: smooth; }
@@ -52,9 +55,10 @@
     .nav-left, .nav-right {
       display: flex;
       gap: 28px;
-      font-family: var(--mono);
+      font-family: var(--label);
       font-size: 11px;
-      letter-spacing: 0.08em;
+      font-weight: 400;
+      letter-spacing: 0.14em;
       text-transform: uppercase;
     }
 
@@ -68,10 +72,11 @@
     .nav-left a:hover, .nav-right a:hover { opacity: 1; }
 
     .nav-logo {
-      font-family: var(--sans);
-      font-size: 15px;
-      font-weight: 400;
-      letter-spacing: 0.04em;
+      font-family: var(--display);
+      font-size: 16px;
+      font-weight: 500;
+      letter-spacing: 0.18em;
+      text-transform: uppercase;
       text-decoration: none;
       color: inherit;
       position: absolute;
@@ -129,9 +134,9 @@
       position: absolute;
       top: 28px;
       left: 32px;
-      font-family: var(--mono);
+      font-family: var(--label);
       font-size: 11px;
-      letter-spacing: 0.06em;
+      letter-spacing: 0.1em;
       color: rgba(255,255,255,0.7);
       line-height: 1.7;
     }
@@ -140,9 +145,9 @@
       position: absolute;
       top: 28px;
       right: 32px;
-      font-family: var(--mono);
+      font-family: var(--label);
       font-size: 11px;
-      letter-spacing: 0.1em;
+      letter-spacing: 0.14em;
       text-transform: uppercase;
       color: rgba(255,255,255,0.7);
       white-space: nowrap;
@@ -156,9 +161,9 @@
     }
 
     .hero-title {
-      font-family: var(--sans);
+      font-family: var(--display);
       font-size: clamp(72px, 12vw, 160px);
-      font-weight: 300;
+      font-weight: 500;
       line-height: 0.92;
       letter-spacing: -0.02em;
       color: #fff;
@@ -185,20 +190,27 @@
 
     .intro-eyebrow {
       grid-column: 1 / -1;
-      font-family: var(--mono);
-      font-size: 11px;
-      letter-spacing: 0.1em;
+      font-family: var(--label);
+      font-size: 10px;
+      letter-spacing: 0.2em;
       text-transform: uppercase;
-      color: var(--mid);
+      color: var(--rust);
       margin-bottom: -20px;
     }
 
     .intro-headline {
-      font-family: var(--sans);
+      font-family: var(--display);
       font-size: clamp(36px, 4vw, 56px);
-      font-weight: 300;
+      font-weight: 500;
       line-height: 1.1;
-      letter-spacing: -0.02em;
+      letter-spacing: -0.01em;
+    }
+
+    .intro-headline em {
+      font-family: var(--serif);
+      font-style: italic;
+      font-weight: 400;
+      color: var(--rust);
     }
 
     .intro-body {
@@ -227,17 +239,17 @@
     }
 
     .section-title {
-      font-family: var(--sans);
+      font-family: var(--display);
       font-size: clamp(48px, 8vw, 120px);
-      font-weight: 300;
-      letter-spacing: -0.03em;
+      font-weight: 500;
+      letter-spacing: -0.02em;
       line-height: 1;
     }
 
     .section-tag {
-      font-family: var(--mono);
-      font-size: 11px;
-      letter-spacing: 0.1em;
+      font-family: var(--label);
+      font-size: 10px;
+      letter-spacing: 0.2em;
       text-transform: uppercase;
       color: var(--mid);
     }
@@ -312,9 +324,9 @@
     }
 
     .feature-caption-label {
-      font-family: var(--mono);
-      font-size: 11px;
-      letter-spacing: 0.08em;
+      font-family: var(--label);
+      font-size: 10px;
+      letter-spacing: 0.2em;
       text-transform: uppercase;
       color: rgba(255,255,255,0.7);
     }
@@ -343,21 +355,28 @@
     }
 
     .about-eyebrow {
-      font-family: var(--mono);
-      font-size: 11px;
-      letter-spacing: 0.1em;
+      font-family: var(--label);
+      font-size: 10px;
+      letter-spacing: 0.2em;
       text-transform: uppercase;
-      color: var(--mid);
+      color: var(--rust);
       margin-bottom: 24px;
     }
 
     .about-headline {
-      font-family: var(--sans);
+      font-family: var(--display);
       font-size: clamp(32px, 3.5vw, 48px);
-      font-weight: 300;
+      font-weight: 500;
       line-height: 1.1;
-      letter-spacing: -0.02em;
+      letter-spacing: -0.01em;
       margin-bottom: 28px;
+    }
+
+    .about-headline em {
+      font-family: var(--serif);
+      font-style: italic;
+      font-weight: 400;
+      color: var(--rust);
     }
 
     .about-body {
@@ -375,9 +394,9 @@
     }
 
     .about-name {
-      font-family: var(--mono);
-      font-size: 11px;
-      letter-spacing: 0.08em;
+      font-family: var(--label);
+      font-size: 10px;
+      letter-spacing: 0.2em;
       text-transform: uppercase;
       color: var(--ink);
       opacity: 0.55;
@@ -394,10 +413,11 @@
     }
 
     .footer-wordmark {
-      font-family: var(--sans);
-      font-size: 15px;
-      font-weight: 400;
-      letter-spacing: 0.04em;
+      font-family: var(--display);
+      font-size: 16px;
+      font-weight: 500;
+      letter-spacing: 0.18em;
+      text-transform: uppercase;
       margin-bottom: 10px;
     }
 
@@ -409,9 +429,9 @@
     }
 
     .footer-col-title {
-      font-family: var(--mono);
+      font-family: var(--label);
       font-size: 10px;
-      letter-spacing: 0.12em;
+      letter-spacing: 0.2em;
       text-transform: uppercase;
       color: var(--mid);
       margin-bottom: 14px;
@@ -438,14 +458,15 @@
     }
 
     .footer-giant {
-      font-family: var(--sans);
+      font-family: var(--display);
       font-size: clamp(60px, 12vw, 180px);
-      font-weight: 300;
-      letter-spacing: -0.04em;
+      font-weight: 500;
+      letter-spacing: -0.02em;
       line-height: 1;
       color: var(--ink);
       opacity: 0.07;
       user-select: none;
+      text-transform: uppercase;
     }
 
     /* ─── RESPONSIVE ──────────────────────────────────── */
@@ -513,12 +534,13 @@
   <!-- NAV -->
   <nav id="main-nav">
     <div class="nav-left">
+      <a href="#">artist residency</a>
       <a href="#work">work</a>
       <a href="#about">about</a>
     </div>
     <a href="#" class="nav-logo">contorno</a>
     <div class="nav-right">
-      <a href="mailto:hello@contorno.mx" class="nav-cta">contact →</a>
+      <a href="mailto:hello@contornocollective.com" class="nav-cta">contact →</a>
     </div>
   </nav>
 
@@ -722,7 +744,7 @@
 
     <div class="footer-col">
       <p class="footer-col-title">contact</p>
-      <a href="mailto:hello@contorno.mx" class="footer-email">hello@contorno.mx</a>
+      <a href="mailto:hello@contornocollective.com" class="footer-email">hello@contornocollective.com</a>
     </div>
 
     <div class="footer-bottom">
