@@ -448,6 +448,105 @@
       user-select: none;
     }
 
+    /* ─── SUBSCRIBE / EMAIL CAPTURE ───────────────────── */
+    .subscribe {
+      border-top: 1px solid rgba(18,18,18,0.12);
+      padding: 110px 40px 110px;
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 40px 80px;
+      align-items: center;
+    }
+
+    .subscribe-eyebrow {
+      grid-column: 1 / -1;
+      font-family: var(--mono);
+      font-size: 11px;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      color: var(--mid);
+      margin-bottom: -20px;
+    }
+
+    .subscribe-headline {
+      font-family: var(--sans);
+      font-size: clamp(36px, 4vw, 56px);
+      font-weight: 300;
+      line-height: 1.1;
+      letter-spacing: -0.02em;
+    }
+
+    .subscribe-form-wrap {
+      display: flex;
+      flex-direction: column;
+      gap: 20px;
+    }
+
+    .subscribe-copy {
+      font-size: 15px;
+      line-height: 1.75;
+      color: #444;
+      max-width: 460px;
+    }
+
+    .subscribe-form {
+      display: flex;
+      align-items: stretch;
+      border-bottom: 1px solid var(--ink);
+      max-width: 460px;
+    }
+
+    .subscribe-input {
+      flex: 1;
+      background: transparent;
+      border: none;
+      outline: none;
+      padding: 14px 0;
+      font-family: var(--sans);
+      font-size: 15px;
+      color: var(--ink);
+    }
+
+    .subscribe-input::placeholder {
+      color: var(--mid);
+      opacity: 1;
+    }
+
+    .subscribe-button {
+      background: transparent;
+      border: none;
+      cursor: pointer;
+      padding: 0 4px;
+      font-family: var(--mono);
+      font-size: 11px;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      color: var(--ink);
+      transition: color 0.2s;
+    }
+
+    .subscribe-button:hover { color: var(--rust); }
+
+    .subscribe-note {
+      font-family: var(--mono);
+      font-size: 11px;
+      letter-spacing: 0.06em;
+      color: var(--mid);
+    }
+
+    .subscribe-success {
+      display: none;
+      font-size: 15px;
+      line-height: 1.6;
+      color: var(--rust);
+      max-width: 460px;
+    }
+
+    .subscribe.is-success .subscribe-form,
+    .subscribe.is-success .subscribe-note { display: none; }
+
+    .subscribe.is-success .subscribe-success { display: block; }
+
     /* ─── RESPONSIVE ──────────────────────────────────── */
     @media (max-width: 768px) {
       :root { --frame: 10px; }
@@ -483,6 +582,12 @@
         padding: 60px 24px;
       }
 
+      .subscribe {
+        grid-template-columns: 1fr;
+        padding: 70px 24px 70px;
+      }
+      .subscribe-eyebrow { grid-column: 1; }
+
       footer {
         grid-template-columns: 1fr 1fr;
         padding: 50px 24px 40px;
@@ -515,6 +620,7 @@
     <div class="nav-left">
       <a href="#work">work</a>
       <a href="#about">about</a>
+      <a href="#subscribe">subscribe</a>
     </div>
     <a href="#" class="nav-logo">contorno</a>
     <div class="nav-right">
@@ -701,6 +807,34 @@
     </div>
   </section>
 
+  <!-- SUBSCRIBE / EMAIL CAPTURE -->
+  <section class="subscribe" id="subscribe">
+    <p class="subscribe-eyebrow">follow along</p>
+    <h2 class="subscribe-headline">
+      letters from
+      the build site.
+    </h2>
+    <div class="subscribe-form-wrap">
+      <p class="subscribe-copy">
+        Occasional dispatches as the build progresses — photographs, notes from
+        the site, and updates from Puerto Escondido. No noise, no marketing.
+      </p>
+      <form class="subscribe-form" id="subscribe-form" novalidate>
+        <input
+          type="email"
+          name="email"
+          class="subscribe-input"
+          placeholder="your email"
+          autocomplete="email"
+          required
+        >
+        <button type="submit" class="subscribe-button">subscribe →</button>
+      </form>
+      <p class="subscribe-note">we'll only write when there's something worth sending.</p>
+      <p class="subscribe-success">thank you — you're on the list. we'll be in touch from the site.</p>
+    </div>
+  </section>
+
   <!-- FOOTER -->
   <footer>
     <div class="footer-brand">
@@ -729,6 +863,30 @@
       <p class="footer-giant">contorno</p>
     </div>
   </footer>
+
+  <script>
+    (function () {
+      var form = document.getElementById('subscribe-form');
+      if (!form) return;
+      var section = document.getElementById('subscribe');
+      var input = form.querySelector('.subscribe-input');
+
+      form.addEventListener('submit', function (e) {
+        e.preventDefault();
+        var value = (input.value || '').trim();
+        if (!value || !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(value)) {
+          input.focus();
+          return;
+        }
+
+        // TODO: wire to your provider (Mailchimp / ConvertKit / Formspree / Buttondown).
+        // Example with fetch:
+        // fetch('https://your-endpoint', { method: 'POST', body: new FormData(form) });
+
+        section.classList.add('is-success');
+      });
+    })();
+  </script>
 
 </body>
 </html>
