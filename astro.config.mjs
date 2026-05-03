@@ -1,7 +1,6 @@
 import { defineConfig } from 'astro/config';
 
 export default defineConfig({
-  site: 'https://watchgabe.github.io',
-  base: '/contorno',
+  site: 'https://contornocollective.com',
   trailingSlash: 'ignore',
 });
