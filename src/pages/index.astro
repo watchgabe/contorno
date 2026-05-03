@@ -1,0 +1,182 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+
+const BASE = import.meta.env.BASE_URL.replace(/\/$/, '');
+const img = (file: string) => `${BASE}/Edited copy/${file}`;
+
+const galleryImages = [
+  'I like this one.jpg',
+  'Black & White.jpg',
+  'Nick & Ricardo Posing.jpg',
+  'Nick & Ricardo 1.jpg',
+  'Nick & Ricardo 2.jpg',
+  'Nick Ladder.jpg',
+  'Nick Paxifico.jpg',
+  'Nick.jpg',
+  'Ricardo Lines.jpg',
+  'Ricardo Materials — Steel 1.jpg',
+  'Ricardo Materials — Steel 2.jpg',
+  'IMG_1497.jpg',
+  'IMG_3439.jpg',
+  'IMG_3443.jpg',
+  'IMG_4879.jpg',
+  'IMG_4880.jpg',
+  'IMG_4884.jpg',
+  'IMG_6056.jpg',
+  'IMG_6451.jpg',
+  'IMG_6455.jpg',
+  'IMG_8782.jpg',
+  '061B543D-2A1D-4640-9212-1D3C525CD685.jpg',
+  '070598ED-FC51-4714-B9CA-FC932FFF6217.jpg',
+  '0C72A8CF-5C5B-4080-AE14-FBB5DC86421E.jpg',
+  '0D0C42A5-9B72-45EB-9BC0-6F7CD26323DE_4_5005_c.jpg',
+  '0D864847-BFDD-426E-9008-4CFA76EC037B.jpg',
+  '0f5d83fc-455c-431e-8229-d2c02022d94c.jpg',
+  '10E79F69-5E13-429D-BFA8-DBB08C41F68B.jpg',
+  '129B802E-3162-4454-8E88-36166BFA4F09_4_5005_c.jpg',
+  '142f74f3-5cc2-4ae3-beac-53ee80d2511d.jpg',
+  '1afe7fa7-5127-4c2a-bc61-f2b5e8a75b8b.jpg',
+  '26092148-4169-45bc-a3e4-d71902936c86.jpg',
+  '2E5B2BF8-EEE1-455A-A31C-1C443E4C336D.jpg',
+  '2F210712-D308-4564-BE5C-BFF936830051.jpg',
+  '2cd74614-5797-41bd-812a-745a948c3036.jpg',
+  '39a1b44c-0226-4b3d-9791-fa55ea5a3766.jpg',
+  '3B183946-581A-463A-9D96-95F5469BEA13.jpg',
+  '3BB35790-898D-4E4F-B565-9BCEA535CCD0.jpg',
+  '3df1bec0-27d3-48e0-ad44-a31562519dde.jpg',
+  '40A518B5-3109-49AF-B9CE-8905C473F30E.jpg',
+  '41F2A86E-0F0E-4D26-9325-F0583E5FE1B4.jpg',
+  '44D3F4B4-6857-4272-A030-825017C8C047.jpg',
+  '4EDC02ED-6A47-4F18-A124-4581FDC741E8.jpg',
+  '4F873E33-391A-4C71-BC88-6682CDCC53C0.jpg',
+  '4FE38FEF-59D0-4427-A040-BA61DE3CFBB5.jpg',
+  '5DB75BB7-8B26-4F28-B75E-2FC430FA43B9.jpg',
+  '60ea1757-64f8-4602-b9d1-d5aed4c759fb.jpg',
+  '62847044-8C12-4E7D-8DDA-1C73EF6C4D97.jpg',
+  '6AB49683-4759-4689-BC6E-898BF49E223C.jpg',
+  '708E6A2B-32C8-4639-9E63-F7E3D8DCA9C7.jpg',
+  '7DFD94FB-B88F-4AD7-97FD-D2517D580B19.jpg',
+  '93E39AC2-D4D6-48E7-BEAF-9D9D5AA7BF0B.jpg',
+  '98BF8017-CF4D-44F8-B2CE-4BE9AD708884_4_5005_c.jpg',
+  '99b1750d-7639-4b1d-882d-5c8403bd247c.jpg',
+  'A2F5DC44-8A10-436C-BF75-30C5BA66C6B0_4_5005_c.jpg',
+  'A4AE3944-80BF-4196-9DAA-8D4706603AF2.jpg',
+  'A98D8E12-0CCF-4B9A-8D55-BD1C79818F59.jpg',
+  'CA700DEA-BF8E-4A70-A51E-01A4D8FFF542.jpg',
+  'D76D8897-7219-44A4-A29B-C2DA582E84EE.poster.jpg',
+  'E1D36EF6-D0F4-4BEF-9CAA-415763C225C1.jpg',
+  'E48B6D29-4FB4-497A-9898-C8AC388AD993.jpg',
+  'EFFFDBD2-4900-48FD-A4D5-65BEB435209A.jpg',
+  'F23BB294-0329-4D30-B2E5-DEF3B664A8DB.jpg',
+  'F8C7DEAB-72E0-473B-ACC7-375585FC04E1.jpg',
+  'FF6A11D8-185B-4DC9-952F-E8B65ACDA305.jpg',
+  'a1a1d030-8473-40b5-a0c6-028603930528.jpg',
+  'b3656b2e-c1e9-4a43-9907-5f992a507908.jpg',
+  'b3eb0122-9858-41f8-85c2-bd84ade72e70.jpg',
+  'c2ce60db-eda6-4a8a-8597-a05f93f39547.jpg',
+  'cc6f3c10-f2b0-4e42-9206-787c0d3d9a1e.jpg',
+  'cf2945b9-16c7-4cc1-bcbe-979290bdcd8a.jpg',
+  'dfcf983f-6291-4d88-88a0-8f953dfddc4e.jpg',
+  'e71435a3-89ea-451d-9c4f-d48e2fbe0904.jpg',
+];
+---
+
+<BaseLayout>
+  <div class="hero-wrapper">
+    <section class="hero">
+      <img class="hero-img" src={img('L3 Construction.jpg')} alt="Contorno — building in Puerto Escondido" />
+      <div class="hero-overlay"></div>
+
+      <div class="hero-coords">
+        15.8442° N<br />
+        97.0418° W
+      </div>
+
+      <div class="hero-label">Puerto Escondido · 2026</div>
+
+      <div class="hero-content">
+        <h1 class="hero-title">contorno</h1>
+        <p class="hero-desc">the process of building — documented from the ground up.</p>
+      </div>
+    </section>
+  </div>
+
+  <section class="intro">
+    <p class="intro-eyebrow">the project</p>
+    <h2 class="intro-headline">
+      not a finished thing —<br />
+      a thing <em>becoming</em>.
+    </h2>
+    <div class="intro-body">
+      <p>
+        Contorno is a record of construction in progress. It documents the way a building
+        takes shape — the decisions made on site, the materials handled by hand, the moments
+        between the plans and the pour.
+      </p>
+      <p>
+        Based in Puerto Escondido, Oaxaca, the project follows Nick and Ricardo
+        through the arc of building: from raw land to finished structure,
+        told in photographs and in real time.
+      </p>
+    </div>
+  </section>
+
+  <div class="divider"></div>
+
+  <section id="work">
+    <div class="section-header">
+      <h2 class="section-title">the build</h2>
+      <span class="section-tag">Puerto Escondido · 2026</span>
+    </div>
+
+    <div class="gallery">
+      {galleryImages.map((file) => (
+        <figure><img src={img(file)} alt="" loading="lazy" /></figure>
+      ))}
+    </div>
+  </section>
+
+  <div class="divider"></div>
+
+  <section class="feature">
+    <img src={img('Nick & Ricardo Posing.jpg')} alt="Nick and Ricardo on site" />
+    <div class="feature-overlay"></div>
+    <div class="feature-caption">
+      <span class="feature-caption-label">on site</span>
+      <span class="feature-caption-label">Puerto Escondido, Oaxaca</span>
+    </div>
+  </section>
+
+  <section class="about" id="about">
+    <div class="about-image">
+      <img src={img('Black & White.jpg')} alt="Contorno — construction detail" />
+    </div>
+    <div class="about-text">
+      <p class="about-eyebrow">the people</p>
+      <h2 class="about-headline">
+        two people building<br />
+        something <em>real</em>.
+      </h2>
+      <div class="about-body">
+        <p>
+          Nick and Ricardo are the people behind Contorno — not developers,
+          not a firm. Two individuals who decided to build something themselves,
+          in a place they love, with their hands.
+        </p>
+        <p>
+          The project lives in Puerto Escondido, Oaxaca. The photographs
+          document what happens between the idea and the thing: the concrete
+          poured, the steel bent, the decisions made in daylight on a
+          half-finished floor.
+        </p>
+        <p>
+          Contorno is the outline of a building taking shape.
+        </p>
+      </div>
+      <div class="about-names">
+        <span class="about-name">Nick —</span>
+        <span class="about-name">Ricardo —</span>
+      </div>
+    </div>
+  </section>
+</BaseLayout>

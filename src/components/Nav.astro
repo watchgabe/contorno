@@ -1,0 +1,17 @@
+---
+const base = import.meta.env.BASE_URL.replace(/\/$/, '');
+const link = (path: string) => `${base}${path}`;
+const CONTACT_EMAIL = 'hello@contornocollective.com';
+---
+
+<nav id="main-nav">
+  <div class="nav-left">
+    <a href={link('/artist-residency')}>artist residency</a>
+    <a href={link('/#work')}>work</a>
+    <a href={link('/#about')}>about</a>
+  </div>
+  <a href={link('/')} class="nav-logo">contorno</a>
+  <div class="nav-right">
+    <a href={`mailto:${CONTACT_EMAIL}`} class="nav-cta">contact →</a>
+  </div>
+</nav>
