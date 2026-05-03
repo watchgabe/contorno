@@ -1,0 +1,1137 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>ARC — Artist Residency at Contorno</title>
+  <meta name="description" content="ARC — Artist Residency at Contorno. A month in Puerto Escondido for artists with a body of work and a point of view.">
+
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;1,300;1,400&family=DM+Sans:wght@300;400;500;700&family=Gabarito:wght@400;500;600;700&display=swap" rel="stylesheet">
+
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root {
+      --cream:    #EDE6D6;
+      --offwhite: #F5F0E8;
+      --ink:      #2A2A2A;
+      --rust:     #C0583A;
+      --mid:      #888;
+      --label:    "DM Sans", sans-serif;
+      --serif:    "Cormorant Garamond", serif;
+      --display:  "Gabarito", sans-serif;
+      --sans:     "DM Sans", sans-serif;
+      --nav-h:    68px;
+      --frame:    14px;
+    }
+
+    html { scroll-behavior: smooth; }
+
+    body {
+      background: var(--cream);
+      color: var(--ink);
+      font-family: var(--sans);
+      -webkit-font-smoothing: antialiased;
+      overflow-x: hidden;
+    }
+
+    a { color: inherit; }
+
+    /* ─── NAV ─────────────────────────────────────────── */
+    nav {
+      position: fixed;
+      top: 0; left: 0; right: 0;
+      z-index: 100;
+      height: var(--nav-h);
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 0 40px;
+      color: var(--ink);
+      background: var(--cream);
+    }
+
+    .nav-left, .nav-right {
+      display: flex;
+      gap: 28px;
+      font-family: var(--label);
+      font-size: 11px;
+      font-weight: 400;
+      letter-spacing: 0.14em;
+      text-transform: uppercase;
+    }
+
+    .nav-left a, .nav-right a {
+      text-decoration: none;
+      color: inherit;
+      opacity: 0.7;
+      transition: opacity 0.2s;
+    }
+
+    .nav-left a:hover, .nav-right a:hover { opacity: 1; }
+    .nav-left a.active { opacity: 1; }
+
+    .nav-logo {
+      font-family: var(--display);
+      font-size: 16px;
+      font-weight: 500;
+      letter-spacing: 0.18em;
+      text-transform: uppercase;
+      text-decoration: none;
+      color: inherit;
+      position: absolute;
+      left: 50%;
+      transform: translateX(-50%);
+    }
+
+    .nav-cta {
+      background: var(--ink);
+      color: var(--cream) !important;
+      padding: 8px 16px;
+      opacity: 1 !important;
+      transition: background 0.2s !important;
+    }
+
+    .nav-cta:hover { background: #333 !important; }
+
+    /* ─── HERO ────────────────────────────────────────── */
+    .hero-wrapper {
+      padding: var(--nav-h) var(--frame) var(--frame);
+      min-height: 100vh;
+      background: var(--cream);
+    }
+
+    .hero {
+      position: relative;
+      width: 100%;
+      height: calc(100vh - var(--nav-h) - var(--frame));
+      border-radius: 12px;
+      overflow: hidden;
+      background: #1a1a1a;
+    }
+
+    .hero-img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      object-position: center 45%;
+      display: block;
+    }
+
+    .hero-overlay {
+      position: absolute;
+      inset: 0;
+      border-radius: 12px;
+      background: linear-gradient(
+        to bottom,
+        rgba(0,0,0,0.15) 0%,
+        rgba(0,0,0,0.05) 35%,
+        rgba(0,0,0,0.7) 100%
+      );
+    }
+
+    .hero-coords {
+      position: absolute;
+      top: 28px;
+      left: 32px;
+      font-family: var(--label);
+      font-size: 11px;
+      letter-spacing: 0.1em;
+      color: rgba(255,255,255,0.7);
+      line-height: 1.7;
+    }
+
+    .hero-label {
+      position: absolute;
+      top: 28px;
+      right: 32px;
+      font-family: var(--label);
+      font-size: 11px;
+      letter-spacing: 0.14em;
+      text-transform: uppercase;
+      color: rgba(255,255,255,0.7);
+      white-space: nowrap;
+    }
+
+    .hero-content {
+      position: absolute;
+      bottom: 48px;
+      left: 40px;
+      right: 40px;
+    }
+
+    .hero-eyebrow {
+      font-family: var(--label);
+      font-size: 11px;
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+      color: rgba(255,255,255,0.7);
+      margin-bottom: 18px;
+    }
+
+    .hero-title {
+      font-family: var(--display);
+      font-size: clamp(96px, 18vw, 240px);
+      font-weight: 500;
+      line-height: 0.92;
+      letter-spacing: -0.03em;
+      color: #fff;
+      margin-bottom: 18px;
+    }
+
+    .hero-subhead {
+      font-family: var(--serif);
+      font-style: italic;
+      font-weight: 400;
+      font-size: clamp(20px, 2.4vw, 32px);
+      color: rgba(255,255,255,0.92);
+      margin-bottom: 22px;
+      line-height: 1.2;
+    }
+
+    .hero-desc {
+      font-family: var(--sans);
+      font-size: 16px;
+      font-weight: 400;
+      color: rgba(255,255,255,0.78);
+      max-width: 480px;
+      line-height: 1.6;
+      margin-bottom: 30px;
+    }
+
+    /* ─── BUTTONS ─────────────────────────────────────── */
+    .btn {
+      display: inline-block;
+      font-family: var(--label);
+      font-size: 12px;
+      font-weight: 500;
+      letter-spacing: 0.16em;
+      text-transform: uppercase;
+      padding: 14px 24px;
+      text-decoration: none;
+      border-radius: 2px;
+      transition: background 0.2s, color 0.2s, transform 0.2s;
+      cursor: pointer;
+      border: none;
+    }
+
+    .btn-light {
+      background: var(--cream);
+      color: var(--ink);
+    }
+    .btn-light:hover { background: #fff; }
+
+    .btn-dark {
+      background: var(--ink);
+      color: var(--cream);
+    }
+    .btn-dark:hover { background: #1a1a1a; }
+
+    .btn-rust {
+      background: var(--rust);
+      color: var(--cream);
+    }
+    .btn-rust:hover { background: #a94a30; }
+
+    /* ─── INTRO / WHAT IT IS ──────────────────────────── */
+    .intro {
+      padding: 110px 40px 90px;
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 40px 80px;
+      align-items: start;
+    }
+
+    .intro-eyebrow {
+      grid-column: 1 / -1;
+      font-family: var(--label);
+      font-size: 10px;
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+      color: var(--rust);
+      margin-bottom: -20px;
+    }
+
+    .intro-headline {
+      font-family: var(--display);
+      font-size: clamp(36px, 4vw, 56px);
+      font-weight: 500;
+      line-height: 1.1;
+      letter-spacing: -0.01em;
+    }
+
+    .intro-headline em {
+      font-family: var(--serif);
+      font-style: italic;
+      font-weight: 400;
+      color: var(--rust);
+    }
+
+    .intro-body {
+      font-size: 15px;
+      line-height: 1.75;
+      color: #444;
+      padding-top: 8px;
+    }
+
+    .intro-body p + p { margin-top: 16px; }
+
+    .intro-body strong {
+      font-weight: 500;
+      color: var(--ink);
+    }
+
+    /* ─── DIVIDER ─────────────────────────────────────── */
+    .divider {
+      width: calc(100% - 80px);
+      margin: 0 40px;
+      height: 1px;
+      background: rgba(18,18,18,0.12);
+    }
+
+    /* ─── SECTION HEADER ──────────────────────────────── */
+    .section-header {
+      padding: 100px 40px 40px;
+      display: flex;
+      align-items: baseline;
+      justify-content: space-between;
+      gap: 24px;
+    }
+
+    .section-title {
+      font-family: var(--display);
+      font-size: clamp(48px, 7vw, 104px);
+      font-weight: 500;
+      letter-spacing: -0.02em;
+      line-height: 1;
+    }
+
+    .section-title em {
+      font-family: var(--serif);
+      font-style: italic;
+      font-weight: 400;
+      color: var(--rust);
+    }
+
+    .section-tag {
+      font-family: var(--label);
+      font-size: 10px;
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+      color: var(--mid);
+      white-space: nowrap;
+    }
+
+    /* ─── WHAT YOU GET LIST ───────────────────────────── */
+    .get {
+      padding: 0 40px 110px;
+      display: grid;
+      grid-template-columns: 1fr 2fr;
+      gap: 60px 80px;
+    }
+
+    .get-aside {
+      font-family: var(--serif);
+      font-style: italic;
+      font-size: 22px;
+      line-height: 1.35;
+      color: var(--ink);
+      max-width: 320px;
+    }
+
+    .get-list {
+      list-style: none;
+      counter-reset: item;
+    }
+
+    .get-list li {
+      counter-increment: item;
+      display: grid;
+      grid-template-columns: 56px 1fr;
+      gap: 24px;
+      padding: 22px 0;
+      border-top: 1px solid rgba(18,18,18,0.12);
+      font-size: 18px;
+      line-height: 1.5;
+      color: var(--ink);
+      align-items: baseline;
+    }
+
+    .get-list li:last-child { border-bottom: 1px solid rgba(18,18,18,0.12); }
+
+    .get-list li::before {
+      content: counter(item, decimal-leading-zero);
+      font-family: var(--label);
+      font-size: 10px;
+      letter-spacing: 0.2em;
+      color: var(--rust);
+      padding-top: 4px;
+    }
+
+    /* ─── ASK / TWO-COL ───────────────────────────────── */
+    .twocol {
+      padding: 100px 40px;
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 40px 80px;
+      align-items: start;
+    }
+
+    .twocol-eyebrow {
+      grid-column: 1 / -1;
+      font-family: var(--label);
+      font-size: 10px;
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+      color: var(--rust);
+      margin-bottom: -20px;
+    }
+
+    .twocol-headline {
+      font-family: var(--display);
+      font-size: clamp(32px, 3.6vw, 52px);
+      font-weight: 500;
+      line-height: 1.1;
+      letter-spacing: -0.01em;
+    }
+
+    .twocol-headline em {
+      font-family: var(--serif);
+      font-style: italic;
+      font-weight: 400;
+      color: var(--rust);
+    }
+
+    .twocol-body {
+      font-size: 16px;
+      line-height: 1.75;
+      color: #444;
+      padding-top: 8px;
+    }
+
+    .twocol-body p + p { margin-top: 16px; }
+
+    /* ─── SPACE / IMAGE GRID ──────────────────────────── */
+    .space-grid {
+      padding: 0 40px 100px;
+      display: grid;
+      grid-template-columns: repeat(6, 1fr);
+      grid-auto-rows: 180px;
+      gap: 10px;
+    }
+
+    .space-grid figure {
+      overflow: hidden;
+      border-radius: 10px;
+      background: #ddd5c2;
+      position: relative;
+    }
+
+    .space-grid figure img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      display: block;
+      transition: transform 0.6s ease;
+    }
+
+    .space-grid figure:hover img { transform: scale(1.03); }
+
+    .sg-1 { grid-column: span 4; grid-row: span 2; }
+    .sg-2 { grid-column: span 2; grid-row: span 1; }
+    .sg-3 { grid-column: span 2; grid-row: span 1; }
+    .sg-4 { grid-column: span 3; grid-row: span 2; }
+    .sg-5 { grid-column: span 3; grid-row: span 2; }
+
+    .space-caption {
+      padding: 0 40px 100px;
+      max-width: 560px;
+    }
+
+    .space-caption p {
+      font-family: var(--serif);
+      font-style: italic;
+      font-size: 22px;
+      line-height: 1.45;
+      color: var(--ink);
+    }
+
+    /* ─── HOW IT WORKS ────────────────────────────────── */
+    .how {
+      padding: 0 40px 90px;
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 60px;
+      counter-reset: step;
+    }
+
+    .step {
+      counter-increment: step;
+    }
+
+    .step-num {
+      font-family: var(--display);
+      font-size: 88px;
+      line-height: 1;
+      font-weight: 500;
+      color: var(--rust);
+      letter-spacing: -0.02em;
+      margin-bottom: 24px;
+    }
+
+    .step-title {
+      font-family: var(--display);
+      font-size: 26px;
+      font-weight: 500;
+      letter-spacing: -0.01em;
+      margin-bottom: 14px;
+    }
+
+    .step-body {
+      font-size: 15px;
+      line-height: 1.7;
+      color: #444;
+    }
+
+    .how-cta {
+      padding: 0 40px 110px;
+    }
+
+    /* ─── COHORTS ─────────────────────────────────────── */
+    .cohorts {
+      padding: 0 40px 110px;
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 10px;
+    }
+
+    .cohort {
+      background: var(--offwhite);
+      padding: 36px 32px 40px;
+      border-radius: 10px;
+      display: flex;
+      flex-direction: column;
+      gap: 14px;
+      min-height: 220px;
+      justify-content: space-between;
+    }
+
+    .cohort-status {
+      font-family: var(--label);
+      font-size: 10px;
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+      color: var(--rust);
+    }
+
+    .cohort.closed .cohort-status { color: var(--mid); }
+
+    .cohort-title {
+      font-family: var(--display);
+      font-size: 32px;
+      font-weight: 500;
+      letter-spacing: -0.01em;
+    }
+
+    .cohort-body {
+      font-size: 14px;
+      line-height: 1.6;
+      color: #444;
+    }
+
+    /* ─── APPLY ───────────────────────────────────────── */
+    .apply {
+      background: var(--ink);
+      color: var(--cream);
+      padding: 100px 40px 110px;
+    }
+
+    .apply-head {
+      max-width: 720px;
+      margin-bottom: 50px;
+    }
+
+    .apply-eyebrow {
+      font-family: var(--label);
+      font-size: 10px;
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+      color: var(--rust);
+      margin-bottom: 22px;
+    }
+
+    .apply-title {
+      font-family: var(--display);
+      font-size: clamp(56px, 8vw, 120px);
+      font-weight: 500;
+      letter-spacing: -0.02em;
+      line-height: 0.95;
+      margin-bottom: 22px;
+    }
+
+    .apply-body {
+      font-size: 16px;
+      line-height: 1.7;
+      color: rgba(237,230,214,0.75);
+      max-width: 480px;
+    }
+
+    .apply-frame {
+      background: var(--cream);
+      border-radius: 12px;
+      overflow: hidden;
+      min-height: 620px;
+    }
+
+    .apply-frame iframe {
+      width: 100%;
+      height: 620px;
+      border: 0;
+      display: block;
+    }
+
+    /* ─── FAQ ─────────────────────────────────────────── */
+    .faq {
+      padding: 100px 40px 110px;
+      max-width: 1100px;
+      margin: 0 auto;
+    }
+
+    .faq-list {
+      margin-top: 50px;
+    }
+
+    details.faq-item {
+      border-top: 1px solid rgba(18,18,18,0.15);
+      padding: 26px 0;
+    }
+
+    details.faq-item:last-child {
+      border-bottom: 1px solid rgba(18,18,18,0.15);
+    }
+
+    details.faq-item summary {
+      list-style: none;
+      cursor: pointer;
+      display: flex;
+      justify-content: space-between;
+      align-items: baseline;
+      gap: 24px;
+      font-family: var(--display);
+      font-size: clamp(20px, 2.4vw, 26px);
+      font-weight: 500;
+      letter-spacing: -0.01em;
+      color: var(--ink);
+    }
+
+    details.faq-item summary::-webkit-details-marker { display: none; }
+
+    .faq-toggle {
+      font-family: var(--label);
+      font-size: 22px;
+      color: var(--rust);
+      transition: transform 0.25s ease;
+      line-height: 1;
+    }
+
+    details[open] .faq-toggle { transform: rotate(45deg); }
+
+    details.faq-item .faq-answer {
+      margin-top: 16px;
+      font-size: 16px;
+      line-height: 1.7;
+      color: #444;
+      max-width: 720px;
+    }
+
+    /* ─── CLOSING ─────────────────────────────────────── */
+    .closing {
+      padding: 140px 40px 140px;
+      text-align: center;
+    }
+
+    .closing-quote {
+      font-family: var(--display);
+      font-size: clamp(44px, 7vw, 104px);
+      font-weight: 500;
+      line-height: 1.05;
+      letter-spacing: -0.025em;
+      max-width: 1100px;
+      margin: 0 auto 50px;
+    }
+
+    .closing-quote em {
+      font-family: var(--serif);
+      font-style: italic;
+      font-weight: 400;
+      color: var(--rust);
+    }
+
+    /* ─── FOOTER ──────────────────────────────────────── */
+    footer {
+      border-top: 1px solid rgba(18,18,18,0.12);
+      padding: 60px 40px 50px;
+      display: grid;
+      grid-template-columns: 1fr 1fr 1fr 1fr;
+      gap: 40px;
+      align-items: start;
+    }
+
+    .footer-wordmark {
+      font-family: var(--display);
+      font-size: 16px;
+      font-weight: 500;
+      letter-spacing: 0.18em;
+      text-transform: uppercase;
+      margin-bottom: 10px;
+    }
+
+    .footer-tagline {
+      font-size: 13px;
+      color: var(--mid);
+      line-height: 1.55;
+      max-width: 220px;
+    }
+
+    .footer-col-title {
+      font-family: var(--label);
+      font-size: 10px;
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+      color: var(--mid);
+      margin-bottom: 14px;
+    }
+
+    .footer-col a, .footer-col p {
+      display: block;
+      font-size: 13px;
+      color: var(--ink);
+      text-decoration: none;
+      line-height: 1.9;
+      transition: color 0.2s;
+    }
+
+    .footer-col a:hover { color: var(--rust); }
+    .footer-email { color: var(--rust) !important; }
+
+    .footer-bottom {
+      grid-column: 1 / -1;
+      border-top: 1px solid rgba(18,18,18,0.08);
+      padding-top: 28px;
+      margin-top: 8px;
+    }
+
+    .footer-giant {
+      font-family: var(--display);
+      font-size: clamp(60px, 12vw, 180px);
+      font-weight: 500;
+      letter-spacing: -0.02em;
+      line-height: 1;
+      color: var(--ink);
+      opacity: 0.07;
+      user-select: none;
+      text-transform: uppercase;
+    }
+
+    /* ─── REVEAL ANIMATION ────────────────────────────── */
+    .reveal {
+      opacity: 0;
+      transform: translateY(20px);
+      transition: opacity 0.9s ease, transform 0.9s ease;
+    }
+    .reveal.visible {
+      opacity: 1;
+      transform: translateY(0);
+    }
+
+    @media (prefers-reduced-motion: reduce) {
+      html { scroll-behavior: auto; }
+      .reveal { opacity: 1; transform: none; transition: none; }
+    }
+
+    /* ─── RESPONSIVE ──────────────────────────────────── */
+    @media (max-width: 960px) {
+      .space-grid {
+        grid-template-columns: repeat(2, 1fr);
+        grid-auto-rows: 200px;
+      }
+      .sg-1, .sg-2, .sg-3, .sg-4, .sg-5 {
+        grid-column: span 2;
+        grid-row: span 1;
+      }
+      .sg-1 { grid-row: span 2; }
+
+      .how { grid-template-columns: 1fr; gap: 40px; }
+      .cohorts { grid-template-columns: 1fr; }
+    }
+
+    @media (max-width: 768px) {
+      :root { --frame: 10px; }
+
+      nav { padding: 0 20px; }
+
+      .hero-coords { top: 20px; left: 20px; }
+      .hero-label { top: 20px; right: 20px; }
+      .hero-content { left: 24px; right: 24px; bottom: 36px; }
+      .hero-desc { font-size: 14px; }
+
+      .intro {
+        padding: 70px 24px 70px;
+        grid-template-columns: 1fr;
+      }
+      .intro-eyebrow { grid-column: 1; }
+
+      .section-header { padding: 70px 24px 28px; flex-direction: column; align-items: flex-start; gap: 12px; }
+
+      .get {
+        padding: 0 24px 70px;
+        grid-template-columns: 1fr;
+        gap: 30px;
+      }
+      .get-list li { grid-template-columns: 40px 1fr; gap: 16px; font-size: 16px; }
+
+      .twocol {
+        padding: 70px 24px;
+        grid-template-columns: 1fr;
+      }
+      .twocol-eyebrow { grid-column: 1; }
+
+      .space-grid { padding: 0 24px 60px; grid-auto-rows: 180px; }
+      .space-caption { padding: 0 24px 70px; }
+      .space-caption p { font-size: 18px; }
+
+      .how { padding: 0 24px 60px; }
+      .how-cta { padding: 0 24px 80px; }
+      .cohorts { padding: 0 24px 80px; }
+
+      .apply { padding: 70px 24px 80px; }
+      .apply-frame iframe { height: 540px; }
+
+      .faq { padding: 70px 24px 80px; }
+
+      .closing { padding: 100px 24px 100px; }
+
+      footer {
+        grid-template-columns: 1fr 1fr;
+        padding: 50px 24px 40px;
+      }
+      .footer-bottom { grid-column: 1 / -1; }
+
+      .divider {
+        width: calc(100% - 48px);
+        margin: 0 24px;
+      }
+    }
+
+    @media (max-width: 480px) {
+      .nav-left { display: none; }
+      .hero-title { font-size: clamp(72px, 22vw, 140px); }
+      .step-num { font-size: 64px; }
+      footer { grid-template-columns: 1fr; }
+    }
+  </style>
+</head>
+
+<body>
+
+  <!-- NAV -->
+  <nav id="main-nav">
+    <div class="nav-left">
+      <a href="arc.html" class="active">artist residency</a>
+      <a href="index.html#work">work</a>
+      <a href="index.html#about">about</a>
+    </div>
+    <a href="index.html" class="nav-logo">contorno</a>
+    <div class="nav-right">
+      <a href="mailto:hello@contornocollective.com" class="nav-cta">contact →</a>
+    </div>
+  </nav>
+
+  <!-- HERO -->
+  <div class="hero-wrapper">
+    <section class="hero">
+      <img class="hero-img" src="Edited copy/Nick Paxifico.jpg" alt="ARC — Artist Residency at Contorno">
+      <div class="hero-overlay"></div>
+
+      <div class="hero-coords">
+        15.8442° N<br>
+        97.0418° W
+      </div>
+
+      <div class="hero-label">Artist Residency · Puerto Escondido</div>
+
+      <div class="hero-content">
+        <p class="hero-eyebrow">Artist Residency at Contorno</p>
+        <h1 class="hero-title">ARC</h1>
+        <p class="hero-subhead">A month. A unit. A meal. The Pacific.</p>
+        <p class="hero-desc">Most residencies give you a desk. We give you a month, meals from Tea &amp; Sol, and views that make you forget your phone exists.</p>
+        <a href="#apply" class="btn btn-light">Apply for Fall 2025 →</a>
+      </div>
+    </section>
+  </div>
+
+  <!-- WHAT IT IS -->
+  <section class="intro reveal">
+    <p class="intro-eyebrow">the program</p>
+    <h2 class="intro-headline">
+      Three to four artists. <em>One month each.</em>
+    </h2>
+    <div class="intro-body">
+      <p>
+        Three to four artists per year. One month each in Puerto Escondido. Rent covered, meals handled, a per diem for everything else. You make work. You leave one piece behind that lives at Contorno.
+      </p>
+      <p>
+        <strong>That's it. That's the program.</strong>
+      </p>
+    </div>
+  </section>
+
+  <div class="divider"></div>
+
+  <!-- WHAT YOU GET -->
+  <div class="section-header reveal">
+    <h2 class="section-title">what you <em>get</em></h2>
+    <span class="section-tag">included · the residency</span>
+  </div>
+
+  <section class="get reveal">
+    <p class="get-aside">
+      The residency covers what most don't, so you can spend a month doing what you're here to do.
+    </p>
+    <ol class="get-list">
+      <li>A private unit at Contorno with La Punta views</li>
+      <li>Meals at Tea &amp; Sol, on us</li>
+      <li>Per diem for everything else</li>
+      <li>A studio space and the run of the property</li>
+      <li>A month of uninterrupted time</li>
+      <li>Your work shown, your story told, your audience grown</li>
+    </ol>
+  </section>
+
+  <div class="divider"></div>
+
+  <!-- WHAT WE ASK -->
+  <section class="twocol reveal">
+    <p class="twocol-eyebrow">what we ask</p>
+    <h2 class="twocol-headline">
+      One piece. Made here, <em>for here.</em>
+    </h2>
+    <div class="twocol-body">
+      <p>
+        Something that becomes part of Contorno after you've gone.
+      </p>
+      <p>
+        You cover your flight to PXM. We handle the rest.
+      </p>
+    </div>
+  </section>
+
+  <div class="divider"></div>
+
+  <!-- WHO IT'S FOR -->
+  <section class="twocol reveal">
+    <p class="twocol-eyebrow">who it's for</p>
+    <h2 class="twocol-headline">
+      Artists with a body of work and <em>a point of view.</em>
+    </h2>
+    <div class="twocol-body">
+      <p>
+        Painters, photographers, sculptors, filmmakers, musicians, writers, anyone whose practice could use a month somewhere unfamiliar.
+      </p>
+      <p>
+        We're not looking for the most credentialed artist. We're looking for the one whose work we can't stop thinking about.
+      </p>
+    </div>
+  </section>
+
+  <div class="divider"></div>
+
+  <!-- THE SPACE -->
+  <div class="section-header reveal">
+    <h2 class="section-title">the <em>space</em></h2>
+    <span class="section-tag">Puerto Escondido · La Punta</span>
+  </div>
+
+  <section class="space-grid reveal">
+    <figure class="sg-1"><img src="Edited copy/L3 Construction.jpg" alt="Property exterior"></figure>
+    <figure class="sg-2"><img src="Edited copy/Nick Paxifico.jpg" alt="La Punta views"></figure>
+    <figure class="sg-3"><img src="Edited copy/Black%20%26%20White.jpg" alt="Studio interior"></figure>
+    <figure class="sg-4"><img src="Edited copy/I like this one.jpg" alt="Tea and Sol"></figure>
+    <figure class="sg-5"><img src="Edited copy/Ricardo Lines.jpg" alt="Puerto Escondido coastline"></figure>
+  </section>
+
+  <div class="space-caption reveal">
+    <p>
+      Polished concrete, jungle palms, a gym that doesn't suck, and the Pacific 200 meters away. Designed by an architect who fell in love with this place. Built for makers.
+    </p>
+  </div>
+
+  <div class="divider"></div>
+
+  <!-- HOW IT WORKS -->
+  <div class="section-header reveal">
+    <h2 class="section-title">how it <em>works</em></h2>
+    <span class="section-tag">three steps</span>
+  </div>
+
+  <section class="how reveal">
+    <div class="step">
+      <div class="step-num">01</div>
+      <h3 class="step-title">Apply</h3>
+      <p class="step-body">Fill out the application. Takes about ten minutes. We read every one.</p>
+    </div>
+    <div class="step">
+      <div class="step-num">02</div>
+      <h3 class="step-title">Hear back</h3>
+      <p class="step-body">We respond to every applicant within three weeks. Selected artists get a call.</p>
+    </div>
+    <div class="step">
+      <div class="step-num">03</div>
+      <h3 class="step-title">Come make something</h3>
+      <p class="step-body">Show up at PXM with your tools and an open month. We'll handle the rest.</p>
+    </div>
+  </section>
+
+  <div class="how-cta reveal">
+    <a href="#apply" class="btn btn-dark">Apply for Fall 2025 →</a>
+  </div>
+
+  <div class="divider"></div>
+
+  <!-- COHORTS -->
+  <div class="section-header reveal">
+    <h2 class="section-title"><em>cohorts</em></h2>
+    <span class="section-tag">2025 · 2026</span>
+  </div>
+
+  <section class="cohorts reveal">
+    <div class="cohort">
+      <div>
+        <div class="cohort-status">Applications open now</div>
+        <h3 class="cohort-title">Fall 2025</h3>
+      </div>
+      <p class="cohort-body">Residencies running Aug, Sep, and Oct.</p>
+    </div>
+    <div class="cohort closed">
+      <div>
+        <div class="cohort-status">Opens Sep 2025</div>
+        <h3 class="cohort-title">Winter 2026</h3>
+      </div>
+      <p class="cohort-body">Applications open September 2025.</p>
+    </div>
+    <div class="cohort closed">
+      <div>
+        <div class="cohort-status">Opens Dec 2025</div>
+        <h3 class="cohort-title">Spring 2026</h3>
+      </div>
+      <p class="cohort-body">Applications open December 2025.</p>
+    </div>
+  </section>
+
+  <!-- APPLY -->
+  <section class="apply reveal" id="apply">
+    <div class="apply-head">
+      <p class="apply-eyebrow">apply</p>
+      <h2 class="apply-title">Apply.</h2>
+      <p class="apply-body">Takes about ten minutes. We read every one.</p>
+    </div>
+
+    <div class="apply-frame">
+      <iframe
+        src="TYPEFORM_URL"
+        title="ARC application — Typeform"
+        allow="camera; microphone; autoplay; encrypted-media;"
+        loading="lazy"
+      ></iframe>
+    </div>
+  </section>
+
+  <!-- FAQ -->
+  <section class="faq reveal">
+    <div style="display:flex;align-items:baseline;justify-content:space-between;gap:24px;flex-wrap:wrap;">
+      <h2 class="section-title" style="padding:0;"><em>faq</em></h2>
+      <span class="section-tag">questions, answered</span>
+    </div>
+
+    <div class="faq-list">
+      <details class="faq-item">
+        <summary>Do I need to be represented by a gallery? <span class="faq-toggle">+</span></summary>
+        <div class="faq-answer">No.</div>
+      </details>
+      <details class="faq-item">
+        <summary>Do I need a certain follower count? <span class="faq-toggle">+</span></summary>
+        <div class="faq-answer">No, but we do look at how you share your work and the audience around it. Not as a gate. One signal among many.</div>
+      </details>
+      <details class="faq-item">
+        <summary>Can I bring a partner? <span class="faq-toggle">+</span></summary>
+        <div class="faq-answer">Yes. Note it in the application.</div>
+      </details>
+      <details class="faq-item">
+        <summary>What if I don't know what I'd make for the space yet? <span class="faq-toggle">+</span></summary>
+        <div class="faq-answer">That's fine. We want to see how you think, not a finished pitch.</div>
+      </details>
+      <details class="faq-item">
+        <summary>Is there an application fee? <span class="faq-toggle">+</span></summary>
+        <div class="faq-answer">No.</div>
+      </details>
+    </div>
+  </section>
+
+  <div class="divider"></div>
+
+  <!-- CLOSING -->
+  <section class="closing reveal">
+    <h2 class="closing-quote">
+      Some people collect art. <br><em>We collect artists.</em>
+    </h2>
+    <a href="#apply" class="btn btn-rust">Apply for Fall 2025 →</a>
+  </section>
+
+  <!-- FOOTER -->
+  <footer>
+    <div class="footer-brand">
+      <p class="footer-wordmark">contorno</p>
+      <p class="footer-tagline">building in Puerto Escondido, Oaxaca — documented in real time.</p>
+    </div>
+
+    <div class="footer-col">
+      <p class="footer-col-title">location</p>
+      <p>Puerto Escondido</p>
+      <p>Oaxaca, México</p>
+    </div>
+
+    <div class="footer-col">
+      <p class="footer-col-title">links</p>
+      <a href="index.html">contorno</a>
+      <a href="arc.html">artist residency</a>
+      <a href="https://instagram.com/contornocollective" target="_blank" rel="noopener">instagram</a>
+    </div>
+
+    <div class="footer-col">
+      <p class="footer-col-title">contact</p>
+      <a href="mailto:hello@contornocollective.com" class="footer-email">hello@contornocollective.com</a>
+    </div>
+
+    <div class="footer-bottom">
+      <p class="footer-giant">arc</p>
+    </div>
+  </footer>
+
+  <script>
+    // Subtle reveal on scroll
+    const io = new IntersectionObserver((entries) => {
+      entries.forEach((entry) => {
+        if (entry.isIntersecting) {
+          entry.target.classList.add('visible');
+          io.unobserve(entry.target);
+        }
+      });
+    }, { threshold: 0.12, rootMargin: '0px 0px -60px 0px' });
+
+    document.querySelectorAll('.reveal').forEach((el) => io.observe(el));
+  </script>
+
+</body>
+</html>
