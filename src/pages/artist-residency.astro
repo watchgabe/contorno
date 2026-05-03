@@ -1,0 +1,80 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+
+const BASE = import.meta.env.BASE_URL.replace(/\/$/, '');
+const img = (file: string) => `${BASE}/Edited copy/${file}`;
+---
+
+<BaseLayout
+  title="Artist Residency — Contorno"
+  description="The Contorno Artist Residency — a place to make work in Puerto Escondido, Oaxaca."
+>
+  <header class="page-header">
+    <p class="page-eyebrow">artist residency</p>
+    <h1 class="page-title">
+      a place to <em>make</em><br />
+      something here.
+    </h1>
+    <p class="page-lede">
+      The Contorno residency invites artists to live and work on site in
+      Puerto Escondido — to make in the same place we are building.
+    </p>
+  </header>
+
+  <div class="divider"></div>
+
+  <section class="page-section">
+    <h2>What it is</h2>
+    <div class="body">
+      <p>
+        A short residency for artists, photographers, writers, and makers
+        whose practice is shaped by place. Residents are hosted on site
+        during active construction — surrounded by the materials, the
+        landscape, and the people building Contorno.
+      </p>
+      <p>
+        We're keeping the program small and intentional. Details on dates,
+        application, and stipends will be shared as the first cohort is
+        announced.
+      </p>
+    </div>
+  </section>
+
+  <div class="divider"></div>
+
+  <section class="page-section">
+    <h2>Who it's for</h2>
+    <div class="body">
+      <p>
+        Artists working in any medium whose practice benefits from immersion —
+        in landscape, in process, in the slow accumulation of a place.
+      </p>
+      <p>
+        We're especially interested in work that engages with construction,
+        materiality, labor, climate, and the everyday rituals of building.
+      </p>
+    </div>
+  </section>
+
+  <div class="divider"></div>
+
+  <section class="page-section">
+    <h2>Get in touch</h2>
+    <div class="body">
+      <p>
+        The first residency cohort opens in 2026. To be notified when
+        applications open, write to
+        <a href="mailto:hello@contornocollective.com" style="color: var(--rust);">hello@contornocollective.com</a>.
+      </p>
+    </div>
+  </section>
+
+  <section class="feature">
+    <img src={img('Nick & Ricardo 1.jpg')} alt="On site at Contorno" />
+    <div class="feature-overlay"></div>
+    <div class="feature-caption">
+      <span class="feature-caption-label">residency</span>
+      <span class="feature-caption-label">Puerto Escondido, Oaxaca</span>
+    </div>
+  </section>
+</BaseLayout>
