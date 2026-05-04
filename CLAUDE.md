@@ -7,13 +7,13 @@ This file is read automatically at the start of every Claude Code session. It co
 The website for **Contorno Collective**, an arts collective. Live at:
 
 - **Production:** https://contornocollective.com
-- **GitHub Pages mirror:** https://watchgabe.github.io/contorno (legacy URL, may redirect)
+- **Vercel preview URL:** https://contorno.vercel.app
 - **Repo:** https://github.com/watchgabe/contorno
 
 ## Tech stack
 
 - **Astro 4.16** — static site generator. Builds to plain HTML/CSS/JS in `dist/`.
-- **GitHub Pages** — hosts the built site. Deploys via GitHub Actions on every push to `main`.
+- **Vercel** — hosts the built site. Auto-deploys on every push to `main`. Every PR also gets its own preview URL.
 - **GoDaddy** — registrar + DNS for `contornocollective.com`.
 - **Google Workspace** — email for `hello@contornocollective.com` (do NOT touch MX/SPF/DKIM/DMARC records).
 
@@ -24,23 +24,20 @@ contorno/
 ├── astro.config.mjs           ← site URL config
 ├── package.json               ← npm scripts (dev/build/preview)
 ├── public/
-│   ├── CNAME                  ← tells GH Pages to serve at contornocollective.com (DO NOT DELETE)
 │   ├── arc.html               ← legacy ARC page (static)
 │   ├── brandguide.html        ← brand guidelines reference page
 │   └── Edited copy/           ← brand assets
-├── src/
-│   ├── layouts/
-│   │   └── BaseLayout.astro   ← <head>, fonts, page shell — wraps every page
-│   ├── components/
-│   │   ├── Nav.astro          ← top nav (links + contact email)
-│   │   └── Footer.astro       ← footer (links + contact email)
-│   ├── pages/
-│   │   ├── index.astro        ← homepage content
-│   │   └── artist-residency.astro  ← /artist-residency page
-│   └── styles/
-│       └── global.css         ← brand colors, fonts, all site-wide CSS
-└── .github/workflows/
-    └── deploy.yml             ← CI: builds Astro, deploys dist/ to GH Pages on push to main
+└── src/
+    ├── layouts/
+    │   └── BaseLayout.astro   ← <head>, fonts, page shell — wraps every page
+    ├── components/
+    │   ├── Nav.astro          ← top nav (links + contact email)
+    │   └── Footer.astro       ← footer (links + contact email)
+    ├── pages/
+    │   ├── index.astro        ← homepage content
+    │   └── artist-residency.astro  ← /artist-residency page
+    └── styles/
+        └── global.css         ← brand colors, fonts, all site-wide CSS
 ```
 
 ## How to make changes
@@ -73,9 +70,9 @@ Live reference: https://contornocollective.com/brandguide.html
 ## Deploy flow
 
 1. Edit files locally
-2. Commit + push to `main` (or feature branch + PR + merge)
-3. GitHub Actions runs `npm ci && npm run build`, uploads `dist/`, deploys to Pages
-4. Live in ~1 minute
+2. Commit + push (any branch)
+3. **Push to `main`** → Vercel deploys to production at `contornocollective.com` (~10–20 sec)
+4. **Push to a feature branch / open a PR** → Vercel builds a preview URL for review
 
 **Local dev:** `npm install` then `npm run dev` → http://localhost:4321
 
@@ -85,25 +82,27 @@ Live reference: https://contornocollective.com/brandguide.html
 - Claude sessions develop on a feature branch (specified in session config), then open a PR into `main`
 - **Never push directly to `main` without explicit user permission**
 - **Never open a PR unless the user asks**
+- Use Vercel's PR preview URL to review changes before merging
 
 ## DNS setup (already done — for reference only)
 
-GoDaddy DNS for contornocollective.com:
+GoDaddy DNS for contornocollective.com points at Vercel:
 
-- **A `@`** → 4 records pointing to GitHub Pages: `185.199.108.153`, `.109.153`, `.110.153`, `.111.153`
-- **CNAME `www`** → `watchgabe.github.io`
-- **TXT `_github-pages-challenge-watchgabe`** → ownership verification (leave it)
+- **A `@`** → `76.76.21.21` (Vercel)
+- **CNAME `www`** → `cname.vercel-dns.com`
 - **MX / SPF / DKIM / DMARC records** → Google Workspace email — **NEVER DELETE OR MODIFY**
 - **CNAME `pay`** → GoDaddy commerce paylinks
+- **TXT `_github-pages-challenge-watchgabe`** → leftover from prior GitHub Pages setup, harmless to leave
 
-GitHub repo Settings → Pages → Custom domain: `contornocollective.com` (Enforce HTTPS enabled).
+In Vercel project → Domains: `contornocollective.com` and `www.contornocollective.com` are both attached.
 
 ## Common gotchas
 
-- **`public/CNAME` must stay** — without it, GH Pages drops the custom domain on redeploy.
 - **Don't touch email DNS records** — breaks `hello@contornocollective.com` instantly.
+- **Don't add a `public/CNAME` file** — that's a GitHub Pages artifact. Vercel ignores it. The site is no longer served from GitHub Pages.
 - **Astro pages are `.astro`** — frontmatter (between `---`) is server-side, body is HTML/JSX-like.
 - **Shared components** — edit `Nav.astro` or `Footer.astro` once, every page updates.
+- **No GitHub Actions deploy** — Vercel handles deploys directly from GitHub. There's no `.github/workflows/` directory.
 
 ## Contact
 
