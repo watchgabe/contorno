@@ -697,6 +697,17 @@ footer {
   transition: color 0.2s;
 }
 .coming-form button:hover { color: var(--rust); }
+.coming-form button[disabled] { opacity: 0.55; cursor: default; }
+.coming-msg {
+  margin: 14px 0 0;
+  min-height: 1.4em;
+  font-family: var(--sans);
+  font-size: 13px;
+  letter-spacing: 0.02em;
+  color: var(--mid);
+}
+.coming-msg.is-success { color: var(--ink); }
+.coming-msg.is-error { color: var(--rust); }
 .coming-note {
   margin-top: 22px;
   font-family: var(--label);
