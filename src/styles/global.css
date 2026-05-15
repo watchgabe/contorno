@@ -191,10 +191,11 @@ nav {
 }
 
 .intro-headline em {
-  font-family: var(--serif);
-  font-style: italic;
-  font-weight: 400;
-  color: var(--rust);
+  /* Headlines stay solid — no italic, no terracotta. */
+  font-family: inherit;
+  font-style: normal;
+  font-weight: inherit;
+  color: inherit;
 }
 
 .intro-body {
@@ -347,10 +348,11 @@ nav {
 }
 
 .about-headline em {
-  font-family: var(--serif);
-  font-style: italic;
-  font-weight: 400;
-  color: var(--rust);
+  /* Headlines stay solid — no italic, no terracotta. */
+  font-family: inherit;
+  font-style: normal;
+  font-weight: inherit;
+  color: inherit;
 }
 
 .about-body {
@@ -401,10 +403,11 @@ nav {
 }
 
 .page-title em {
-  font-family: var(--serif);
-  font-style: italic;
-  font-weight: 400;
-  color: var(--rust);
+  /* Headlines stay solid — no italic, no terracotta. */
+  font-family: inherit;
+  font-style: normal;
+  font-weight: inherit;
+  color: inherit;
 }
 
 .page-lede {
