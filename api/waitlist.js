@@ -86,7 +86,10 @@ export default async function handler(req, res) {
 
     if (!sub.ok) {
       console.error('Kit subscribe error', sub.status, sub.raw);
-      return res.status(502).json({ error: 'Subscription service is unavailable.' });
+      // Surface the real error in debug mode so the UI can show it
+      const debug = req.query && req.query.debug === '1';
+      const detail = debug ? ` [${sub.status}: ${sub.raw.slice(0, 200)}]` : '';
+      return res.status(502).json({ error: 'Subscription service is unavailable.' + detail });
     }
 
     const subscriberId =

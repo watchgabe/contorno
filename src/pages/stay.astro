@@ -50,7 +50,8 @@ import BaseLayout from '../layouts/BaseLayout.astro';
       msg.classList.remove('is-error', 'is-success');
 
       try {
-        var res = await fetch('/api/waitlist', {
+        var debug = new URLSearchParams(location.search).get('debug') === '1';
+        var res = await fetch('/api/waitlist' + (debug ? '?debug=1' : ''), {
           method: 'POST',
           headers: { 'Content-Type': 'application/json' },
           body: JSON.stringify({ email: email })
