@@ -9,8 +9,8 @@ interface Props {
 }
 
 const {
-  title = 'contorno',
-  description = 'Contorno — documenting the process of building in Puerto Escondido, México.',
+  title = 'Contorno Collective — Puerto Escondido',
+  description = 'Contorno — building in Puerto Escondido, México.',
 } = Astro.props;
 ---
 
@@ -25,7 +25,7 @@ const {
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
     <link
-      href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;1,300;1,400&family=DM+Sans:wght@300;400;500;700&family=Gabarito:wght@400;500;600;700&display=swap"
+      href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;1,300;1,400&family=DM+Sans:wght@300;400;500&family=Gabarito:wght@400;500;600&display=swap"
       rel="stylesheet"
     />
   </head>
@@ -33,5 +33,24 @@ const {
     <Nav />
     <slot />
     <Footer />
+
+    <script is:inline>
+      (function () {
+        var els = document.querySelectorAll('.reveal');
+        if (!els.length || !('IntersectionObserver' in window)) {
+          els.forEach(function (el) { el.classList.add('visible'); });
+          return;
+        }
+        var io = new IntersectionObserver(function (entries) {
+          entries.forEach(function (e) {
+            if (e.isIntersecting) {
+              e.target.classList.add('visible');
+              io.unobserve(e.target);
+            }
+          });
+        }, { threshold: 0.1, rootMargin: '0px 0px -60px 0px' });
+        els.forEach(function (el) { io.observe(el); });
+      })();
+    </script>
   </body>
 </html>

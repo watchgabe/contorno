@@ -1,19 +1,13 @@
 ---
 const base = import.meta.env.BASE_URL.replace(/\/$/, '');
-const link = (path: string) => `${base}${path}`;
+const link = (path: string) => `${base}${path}` || '/';
 const CONTACT_EMAIL = 'hello@contornocollective.com';
 ---
 
-<footer>
+<footer class="site-footer">
   <div class="footer-brand">
     <p class="footer-wordmark">contorno</p>
-    <p class="footer-tagline">building in Puerto Escondido, Oaxaca — documented in real time.</p>
-  </div>
-
-  <div class="footer-col">
-    <p class="footer-col-title">location</p>
-    <p>Puerto Escondido</p>
-    <p>Oaxaca, México</p>
+    <p class="footer-tagline">Building in Puerto Escondido, Oaxaca — documented in real time.</p>
   </div>
 
   <div class="footer-col">
@@ -24,11 +18,19 @@ const CONTACT_EMAIL = 'hello@contornocollective.com';
   </div>
 
   <div class="footer-col">
+    <p class="footer-col-title">location</p>
+    <p>Puerto Escondido</p>
+    <p>Oaxaca, México</p>
+  </div>
+
+  <div class="footer-col">
     <p class="footer-col-title">contact</p>
     <a href={`mailto:${CONTACT_EMAIL}`} class="footer-email">{CONTACT_EMAIL}</a>
+    <a href="https://instagram.com/contornocollective" target="_blank" rel="noopener">@contornocollective</a>
   </div>
 
   <div class="footer-bottom">
-    <p class="footer-giant">contorno</p>
+    <p class="footer-legal">© 2026 Contorno Collective</p>
+    <p class="footer-legal">15.8442° N · 97.0418° W</p>
   </div>
 </footer>

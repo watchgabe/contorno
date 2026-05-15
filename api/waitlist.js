@@ -12,6 +12,8 @@ const KIT_BASE = 'https://api.kit.com/v4';
 // Module-level cache so warm invocations skip the tag lookup
 let cachedTagId = null;
 let cachedTagName = null;
+let cachedFormId = null;
+let cachedFormKey = null;
 
 async function kitFetch(path, { method = 'GET', body } = {}) {
   const res = await fetch(`${KIT_BASE}${path}`, {
@@ -52,6 +54,40 @@ async function resolveTagId(tagName) {
   return null;
 }
 
+// Kit V4 form endpoints require the NUMERIC form id (e.g. 1234567), not the
+// hex embed UID (e.g. "1b272f8845") used in V3 / embed snippets. If the
+// configured value isn't numeric, look the form up via GET /v4/forms and
+// match it against the form's id / uid / embed url, then use the numeric id.
+async function resolveFormId(configured) {
+  if (!configured) return null;
+  const value = String(configured).trim();
+  if (/^\d+$/.test(value)) return value;
+  if (cachedFormId && cachedFormKey === value) return cachedFormId;
+
+  let after = null;
+  for (let page = 0; page < 10; page++) {
+    const qs = after ? `?after=${encodeURIComponent(after)}` : '';
+    const { ok, data } = await kitFetch(`/forms${qs}`);
+    if (!ok) break;
+    const forms = Array.isArray(data.forms) ? data.forms : [];
+    const match = forms.find((f) => {
+      const blob = [f.id, f.uid, f.embed_url, f.embed_js, f.url, f.slug]
+        .filter(Boolean)
+        .map(String)
+        .join(' ');
+      return blob.includes(value);
+    });
+    if (match && match.id != null) {
+      cachedFormId = String(match.id);
+      cachedFormKey = value;
+      return cachedFormId;
+    }
+    after = data.pagination && data.pagination.has_next_page ? data.pagination.end_cursor : null;
+    if (!after) break;
+  }
+  return null;
+}
+
 export default async function handler(req, res) {
   res.setHeader('Access-Control-Allow-Origin', '*');
   res.setHeader('Access-Control-Allow-Methods', 'POST, OPTIONS');
@@ -77,9 +113,22 @@ export default async function handler(req, res) {
     return res.status(400).json({ error: 'Please provide a valid email.' });
   }
 
+  const debug = req.query && req.query.debug === '1';
+
   try {
+    // 0) Resolve the numeric form id (Kit V4 needs the numeric id, not the
+    //    hex embed UID). Self-heals whether the env var holds either value.
+    const formId = await resolveFormId(KIT_FORM_UID);
+    if (!formId) {
+      console.error('Kit form not resolvable from KIT_FORM_UID:', KIT_FORM_UID);
+      const detail = debug
+        ? ` [KIT_FORM_UID="${KIT_FORM_UID}" is not a numeric Kit V4 form id and no matching form was found via GET /v4/forms]`
+        : '';
+      return res.status(502).json({ error: 'Subscription service is unavailable.' + detail });
+    }
+
     // 1) Subscribe to the form
-    const sub = await kitFetch(`/forms/${KIT_FORM_UID}/subscribers`, {
+    const sub = await kitFetch(`/forms/${formId}/subscribers`, {
       method: 'POST',
       body: { email_address: email },
     });
@@ -87,7 +136,6 @@ export default async function handler(req, res) {
     if (!sub.ok) {
       console.error('Kit subscribe error', sub.status, sub.raw);
       // Surface the real error in debug mode so the UI can show it
-      const debug = req.query && req.query.debug === '1';
       const detail = debug ? ` [${sub.status}: ${sub.raw.slice(0, 200)}]` : '';
       return res.status(502).json({ error: 'Subscription service is unavailable.' + detail });
     }

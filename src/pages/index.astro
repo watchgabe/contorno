@@ -81,47 +81,39 @@ const galleryImages = [
 ];
 ---
 
-<BaseLayout>
+<BaseLayout
+  title="Contorno Collective — Puerto Escondido"
+  description="Contorno — building in Puerto Escondido, México."
+>
   <div class="hero-wrapper">
     <section class="hero">
-      <img class="hero-img" src={img('L3 Construction.jpg')} alt="Contorno — building in Puerto Escondido" fetchpriority="high" decoding="async" />
+      <img class="hero-img" src={img('L3 Construction.jpg')} alt="Construction at Contorno" fetchpriority="high" decoding="async" />
       <div class="hero-overlay"></div>
 
       <div class="hero-coords">
         15.8442° N<br />
         97.0418° W
       </div>
-
-      <div class="hero-label">Puerto Escondido · 2026</div>
+      <div class="hero-label">Puerto Escondido · Oaxaca</div>
 
       <div class="hero-content">
+        <p class="hero-eyebrow">Documented in real time</p>
         <h1 class="hero-title">contorno</h1>
-        <p class="hero-desc">the process of building — documented from the ground up.</p>
+        <p class="hero-subhead">The process of building — documented from the ground up.</p>
       </div>
     </section>
   </div>
 
-  <section class="suite">
+  <section class="suite reveal">
     <div class="suite-image">
-      <img
-        src={`${BASE}/img/project-stair.jpg`}
-        alt="Contorno — concrete stair, Puerto Escondido"
-        fetchpriority="high"
-        decoding="async"
-      />
+      <img src={`${BASE}/img/project-stair.jpg`} alt="Contorno — concrete stair, Puerto Escondido" fetchpriority="high" decoding="async" />
       <span class="label">The Project</span>
     </div>
     <div class="suite-body">
       <h2 class="suite-heading">A record of construction in progress.</h2>
       <div class="suite-copy">
-        <p>
-          Contorno documents the way a building takes shape — the decisions made on site,
-          the materials handled by hand, the moments between the plans and the pour.
-        </p>
-        <p>
-          Based in Puerto Escondido, the project follows Nick and Ricardo through the arc of
-          building: from raw land to finished structure, told in photographs and in real time.
-        </p>
+        <p>Contorno documents the way a building takes shape — the decisions made on site, the materials handled by hand, the moments between the plans and the pour.</p>
+        <p>Based in Puerto Escondido, the project follows Nick and Ricardo through the arc of building: from raw land to finished structure, told in photographs and in real time.</p>
       </div>
       <ul class="suite-features">
         <li><span class="name">Location</span><span class="desc">Puerto Escondido, Oaxaca</span><span class="dot"></span></li>
@@ -135,60 +127,125 @@ const galleryImages = [
 
   <div class="divider"></div>
 
-  <section id="work">
-    <div class="section-header">
-      <h2 class="section-title">the build</h2>
-      <span class="section-tag">Puerto Escondido · 2026</span>
-    </div>
-
-    <div class="gallery">
-      {galleryImages.map((file) => (
-        <figure><img src={img(file)} alt="" loading="lazy" decoding="async" fetchpriority="low" /></figure>
-      ))}
-    </div>
-  </section>
-
-  <div class="divider"></div>
-
-  <section class="feature">
-    <img src={img('Nick & Ricardo Posing.jpg')} alt="Nick and Ricardo on site" loading="lazy" decoding="async" />
-    <div class="feature-overlay"></div>
-    <div class="feature-caption">
-      <span class="feature-caption-label">on site</span>
-      <span class="feature-caption-label">Puerto Escondido, Oaxaca</span>
-    </div>
-  </section>
-
-  <section class="about" id="about">
-    <div class="about-image">
-      <img src={img('Black & White.jpg')} alt="Contorno — construction detail" loading="lazy" decoding="async" />
-    </div>
-    <div class="about-text">
-      <p class="about-eyebrow">the people</p>
-      <h2 class="about-headline">
-        two people building<br />
-        something <em>real</em>.
-      </h2>
-      <div class="about-body">
-        <p>
-          Nick and Ricardo are the people behind Contorno — not developers,
-          not a firm. Two individuals who decided to build something themselves,
-          in a place they love, with their hands.
-        </p>
-        <p>
-          The project lives in Puerto Escondido, Oaxaca. The photographs
-          document what happens between the idea and the thing: the concrete
-          poured, the steel bent, the decisions made in daylight on a
-          half-finished floor.
-        </p>
-        <p>
-          Contorno is the outline of a building taking shape.
-        </p>
-      </div>
-      <div class="about-names">
-        <span class="about-name">Nick —</span>
-        <span class="about-name">Ricardo —</span>
-      </div>
-    </div>
+  <section class="gallery reveal">
+    {galleryImages.map((file) => (
+      <figure><img loading="lazy" decoding="async" fetchpriority="low" src={img(file)} alt="" /></figure>
+    ))}
   </section>
 </BaseLayout>
+
+<style>
+  /* ─── SUITE BLOCK (image left, write-up + features right) ─── */
+  .suite {
+    padding: 110px 40px 120px;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 80px;
+    align-items: center;
+    max-width: 1280px;
+    margin: 0 auto;
+  }
+  .suite-image {
+    position: relative;
+    border-radius: 12px;
+    overflow: hidden;
+    aspect-ratio: 4 / 5;
+    background: #ddd5c2;
+  }
+  .suite-image img {
+    width: 100%; height: 100%;
+    object-fit: cover;
+  }
+  .suite-image .label {
+    position: absolute;
+    top: 22px; left: 22px;
+    font-family: var(--sans);
+    font-weight: 500;
+    font-size: 10px;
+    letter-spacing: 0.22em;
+    text-transform: uppercase;
+    color: rgba(255,255,255,0.86);
+    text-shadow: 0 1px 12px rgba(0,0,0,0.55);
+  }
+
+  .suite-body { padding-right: 20px; }
+  .suite-heading {
+    font-family: var(--serif);
+    font-weight: 300;
+    font-size: clamp(32px, 3.6vw, 48px);
+    line-height: 1.14;
+    letter-spacing: -0.005em;
+    color: var(--ink);
+    margin-bottom: 24px;
+  }
+  .suite-copy {
+    font-family: var(--sans);
+    font-weight: 300;
+    font-size: 15.5px;
+    line-height: 1.75;
+    color: var(--ink-soft);
+    max-width: 460px;
+    margin-bottom: 40px;
+  }
+  .suite-copy p + p { margin-top: 14px; }
+
+  .suite-features { list-style: none; }
+  .suite-features li {
+    display: grid;
+    grid-template-columns: 160px 1fr 18px;
+    gap: 24px;
+    align-items: start;
+    padding: 18px 0;
+    border-top: 1px solid var(--hairline);
+  }
+  .suite-features li:last-child { border-bottom: 1px solid var(--hairline); }
+  .suite-features li .name {
+    font-family: var(--sans);
+    font-weight: 500;
+    font-size: 14.5px;
+    color: var(--ink);
+    line-height: 1.45;
+  }
+  .suite-features li .desc {
+    font-family: var(--sans);
+    font-weight: 300;
+    font-size: 13.5px;
+    color: var(--ink-soft);
+    line-height: 1.55;
+  }
+  .suite-features li .dot {
+    width: 7px; height: 7px;
+    border-radius: 100px;
+    background: var(--terra);
+    margin-top: 8px;
+    justify-self: end;
+  }
+
+  /* ─── IMAGE GALLERY (masonry columns, matches live site) ─── */
+  .gallery {
+    padding: 20px 40px 100px;
+    column-count: 4;
+    column-gap: 10px;
+  }
+  .gallery figure {
+    break-inside: avoid;
+    margin: 0 0 10px;
+    overflow: hidden;
+    border-radius: 6px;
+    background: #ddd5c2;
+  }
+  .gallery figure img {
+    display: block;
+    width: 100%;
+    height: auto;
+    transition: transform 0.7s ease;
+  }
+  .gallery figure:hover img { transform: scale(1.02); }
+
+  @media (max-width: 960px) {
+    .suite { grid-template-columns: 1fr; padding: 70px 24px 80px; gap: 32px; }
+    .suite-body { padding-right: 0; }
+    .suite-features li { grid-template-columns: 130px 1fr 12px; gap: 16px; }
+    .gallery { column-count: 2; padding: 20px 24px 70px; }
+  }
+</style>
