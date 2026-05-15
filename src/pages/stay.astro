@@ -1,0 +1,79 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+---
+
+<BaseLayout
+  title="Stay — Contorno"
+  description="Bookings at Contorno are coming soon. Join the waitlist to hear first."
+>
+  <section class="coming">
+    <p class="coming-eyebrow">Bookings</p>
+    <h1 class="coming-title">stay</h1>
+    <p class="coming-lede">
+      Coming soon. Leave your email and we'll write once when the doors open.
+      No newsletter, no marketing — just a note from us when there's something to book.
+    </p>
+
+    <form id="waitlist-form" class="coming-form" novalidate>
+      <input
+        type="email"
+        name="email"
+        placeholder="your email"
+        required
+        autocomplete="email"
+      />
+      <button type="submit">join waitlist →</button>
+    </form>
+    <p id="waitlist-msg" class="coming-msg" role="status" aria-live="polite"></p>
+
+    <p class="coming-note">Puerto Escondido · Oaxaca</p>
+  </section>
+</BaseLayout>
+
+<script is:inline>
+  (function () {
+    var form = document.getElementById('waitlist-form');
+    if (!form) return;
+    var msg = document.getElementById('waitlist-msg');
+    var btn = form.querySelector('button[type="submit"]');
+    var input = form.querySelector('input[name="email"]');
+
+    form.addEventListener('submit', async function (e) {
+      e.preventDefault();
+      var email = (input.value || '').trim();
+      if (!email) return;
+
+      btn.disabled = true;
+      var originalLabel = btn.textContent;
+      btn.textContent = 'sending…';
+      msg.textContent = '';
+      msg.classList.remove('is-error', 'is-success');
+
+      try {
+        var debug = new URLSearchParams(location.search).get('debug') === '1';
+        var res = await fetch('/api/waitlist' + (debug ? '?debug=1' : ''), {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ email: email })
+        });
+        var data = await res.json().catch(function () { return {}; });
+        if (res.ok && data.ok) {
+          form.reset();
+          msg.textContent = "You're on the list. We'll write when there's something to book.";
+          msg.classList.add('is-success');
+          btn.textContent = 'joined ✓';
+        } else {
+          msg.textContent = data.error || 'Something went wrong. Please try again.';
+          msg.classList.add('is-error');
+          btn.textContent = originalLabel;
+          btn.disabled = false;
+        }
+      } catch (err) {
+        msg.textContent = 'Network error. Please try again.';
+        msg.classList.add('is-error');
+        btn.textContent = originalLabel;
+        btn.disabled = false;
+      }
+    });
+  })();
+</script>
