@@ -1,0 +1,34 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+---
+
+<BaseLayout
+  title="Stay — Contorno"
+  description="Bookings at Contorno are coming soon. Join the waitlist to hear first."
+>
+  <section class="coming">
+    <p class="coming-eyebrow">Bookings</p>
+    <h1 class="coming-title">stay</h1>
+    <p class="coming-lede">
+      Coming soon. Leave your email and we'll write once when the doors open.
+      No newsletter, no marketing — just a note from us when there's something to book.
+    </p>
+
+    <form
+      class="coming-form"
+      action="https://formspree.io/f/REPLACE_WITH_YOUR_FORM_ID"
+      method="POST"
+    >
+      <input
+        type="email"
+        name="email"
+        placeholder="your email"
+        required
+        autocomplete="email"
+      />
+      <button type="submit">join waitlist →</button>
+    </form>
+
+    <p class="coming-note">Puerto Escondido · Oaxaca</p>
+  </section>
+</BaseLayout>

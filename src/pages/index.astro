@@ -84,7 +84,7 @@ const galleryImages = [
 <BaseLayout>
   <div class="hero-wrapper">
     <section class="hero">
-      <img class="hero-img" src={img('L3 Construction.jpg')} alt="Contorno — building in Puerto Escondido" />
+      <img class="hero-img" src={img('L3 Construction.jpg')} alt="Contorno — building in Puerto Escondido" fetchpriority="high" decoding="async" />
       <div class="hero-overlay"></div>
 
       <div class="hero-coords">
@@ -101,23 +101,35 @@ const galleryImages = [
     </section>
   </div>
 
-  <section class="intro">
-    <p class="intro-eyebrow">the project</p>
-    <h2 class="intro-headline">
-      not a finished thing —<br />
-      a thing <em>becoming</em>.
-    </h2>
-    <div class="intro-body">
-      <p>
-        Contorno is a record of construction in progress. It documents the way a building
-        takes shape — the decisions made on site, the materials handled by hand, the moments
-        between the plans and the pour.
-      </p>
-      <p>
-        Based in Puerto Escondido, Oaxaca, the project follows Nick and Ricardo
-        through the arc of building: from raw land to finished structure,
-        told in photographs and in real time.
-      </p>
+  <section class="suite">
+    <div class="suite-image">
+      <img
+        src={`${BASE}/img/project-stair.jpg`}
+        alt="Contorno — concrete stair, Puerto Escondido"
+        fetchpriority="high"
+        decoding="async"
+      />
+      <span class="label">The Project</span>
+    </div>
+    <div class="suite-body">
+      <h2 class="suite-heading">A record of construction in progress.</h2>
+      <div class="suite-copy">
+        <p>
+          Contorno documents the way a building takes shape — the decisions made on site,
+          the materials handled by hand, the moments between the plans and the pour.
+        </p>
+        <p>
+          Based in Puerto Escondido, the project follows Nick and Ricardo through the arc of
+          building: from raw land to finished structure, told in photographs and in real time.
+        </p>
+      </div>
+      <ul class="suite-features">
+        <li><span class="name">Location</span><span class="desc">Puerto Escondido, Oaxaca</span><span class="dot"></span></li>
+        <li><span class="name">Year</span><span class="desc">2024 — ongoing</span><span class="dot"></span></li>
+        <li><span class="name">Builders</span><span class="desc">Nick &amp; Ricardo</span><span class="dot"></span></li>
+        <li><span class="name">Materials</span><span class="desc">Concrete, steel, palm</span><span class="dot"></span></li>
+        <li><span class="name">Volume</span><span class="desc">Vol. 01 — Foundations</span><span class="dot"></span></li>
+      </ul>
     </div>
   </section>
 
@@ -131,7 +143,7 @@ const galleryImages = [
 
     <div class="gallery">
       {galleryImages.map((file) => (
-        <figure><img src={img(file)} alt="" loading="lazy" /></figure>
+        <figure><img src={img(file)} alt="" loading="lazy" decoding="async" fetchpriority="low" /></figure>
       ))}
     </div>
   </section>
@@ -139,7 +151,7 @@ const galleryImages = [
   <div class="divider"></div>
 
   <section class="feature">
-    <img src={img('Nick & Ricardo Posing.jpg')} alt="Nick and Ricardo on site" />
+    <img src={img('Nick & Ricardo Posing.jpg')} alt="Nick and Ricardo on site" loading="lazy" decoding="async" />
     <div class="feature-overlay"></div>
     <div class="feature-caption">
       <span class="feature-caption-label">on site</span>
@@ -149,7 +161,7 @@ const galleryImages = [
 
   <section class="about" id="about">
     <div class="about-image">
-      <img src={img('Black & White.jpg')} alt="Contorno — construction detail" />
+      <img src={img('Black & White.jpg')} alt="Contorno — construction detail" loading="lazy" decoding="async" />
     </div>
     <div class="about-text">
       <p class="about-eyebrow">the people</p>

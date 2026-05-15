@@ -2,13 +2,15 @@
 const base = import.meta.env.BASE_URL.replace(/\/$/, '');
 const link = (path: string) => `${base}${path}`;
 const CONTACT_EMAIL = 'hello@contornocollective.com';
+const path = Astro.url.pathname.replace(/\/$/, '');
+const isActive = (p: string) => path === p || (p !== '/' && path.startsWith(p));
 ---
 
 <nav id="main-nav">
   <div class="nav-left">
-    <a href={link('/artist-residency')}>artist residency</a>
-    <a href={link('/#work')}>work</a>
-    <a href={link('/#about')}>about</a>
+    <a href={link('/')} class={isActive('/') && path === '' ? 'active' : ''}>the project</a>
+    <a href={link('/artist-residency')} class={isActive('/artist-residency') ? 'active' : ''}>residency</a>
+    <a href={link('/stay')} class={isActive('/stay') ? 'active' : ''}>stay</a>
   </div>
   <a href={link('/')} class="nav-logo">contorno</a>
   <div class="nav-right">

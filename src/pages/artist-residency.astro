@@ -3,6 +3,8 @@ import BaseLayout from '../layouts/BaseLayout.astro';
 
 const BASE = import.meta.env.BASE_URL.replace(/\/$/, '');
 const img = (file: string) => `${BASE}/Edited copy/${file}`;
+
+const TYPEFORM_URL = 'https://453f8jrwcv1.typeform.com/to/QAik2KWu';
 ---
 
 <BaseLayout
@@ -23,58 +25,51 @@ const img = (file: string) => `${BASE}/Edited copy/${file}`;
 
   <div class="divider"></div>
 
-  <section class="page-section">
-    <h2>What it is</h2>
-    <div class="body">
-      <p>
-        A short residency for artists, photographers, writers, and makers
-        whose practice is shaped by place. Residents are hosted on site
-        during active construction — surrounded by the materials, the
-        landscape, and the people building Contorno.
-      </p>
-      <p>
-        We're keeping the program small and intentional. Details on dates,
-        application, and stipends will be shared as the first cohort is
-        announced.
-      </p>
+  <section class="suite">
+    <div class="suite-image">
+      <img
+        src={img('I like this one.jpg')}
+        alt="The residency space at Contorno"
+        loading="lazy"
+        decoding="async"
+      />
+      <span class="label">The Residency</span>
+    </div>
+    <div class="suite-body">
+      <h2 class="suite-heading">A month on site. One artist at a time.</h2>
+      <div class="suite-copy">
+        <p>
+          A short residency for artists, photographers, writers, and makers
+          whose practice is shaped by place. Residents are hosted on site
+          during active construction — surrounded by the materials, the
+          landscape, and the people building Contorno.
+        </p>
+        <p>
+          We're keeping it small and intentional. You arrive, you make,
+          you leave one piece behind that lives at Contorno.
+        </p>
+      </div>
+      <ul class="suite-features">
+        <li><span class="name">Location</span><span class="desc">Puerto Escondido, Oaxaca</span><span class="dot"></span></li>
+        <li><span class="name">Duration</span><span class="desc">One month</span><span class="dot"></span></li>
+        <li><span class="name">Includes</span><span class="desc">Private unit, meals, studio &amp; grounds</span><span class="dot"></span></li>
+        <li><span class="name">For</span><span class="desc">Any medium — work shaped by place</span><span class="dot"></span></li>
+        <li><span class="name">Cohort</span><span class="desc">First residencies open 2026</span><span class="dot"></span></li>
+      </ul>
     </div>
   </section>
 
   <div class="divider"></div>
 
-  <section class="page-section">
-    <h2>Who it's for</h2>
-    <div class="body">
-      <p>
-        Artists working in any medium whose practice benefits from immersion —
-        in landscape, in process, in the slow accumulation of a place.
-      </p>
-      <p>
-        We're especially interested in work that engages with construction,
-        materiality, labor, climate, and the everyday rituals of building.
-      </p>
-    </div>
-  </section>
-
-  <div class="divider"></div>
-
-  <section class="page-section">
-    <h2>Get in touch</h2>
-    <div class="body">
-      <p>
-        The first residency cohort opens in 2026. To be notified when
-        applications open, write to
-        <a href="mailto:hello@contornocollective.com" style="color: var(--rust);">hello@contornocollective.com</a>.
-      </p>
-    </div>
-  </section>
-
-  <section class="feature">
-    <img src={img('Nick & Ricardo 1.jpg')} alt="On site at Contorno" />
-    <div class="feature-overlay"></div>
-    <div class="feature-caption">
-      <span class="feature-caption-label">residency</span>
-      <span class="feature-caption-label">Puerto Escondido, Oaxaca</span>
-    </div>
+  <section class="apply-wrap">
+    <p class="apply-eyebrow">apply</p>
+    <h2 class="apply-heading">Takes about ten minutes. We read every one.</h2>
+    <iframe
+      class="apply-frame"
+      src={TYPEFORM_URL}
+      title="Contorno Artist Residency Application"
+      loading="lazy"
+      allow="camera; microphone; autoplay; encrypted-media; fullscreen"
+    ></iframe>
   </section>
 </BaseLayout>
