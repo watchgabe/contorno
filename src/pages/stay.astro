@@ -1,32 +1,39 @@
 ---
 import BaseLayout from '../layouts/BaseLayout.astro';
+
+const BASE = import.meta.env.BASE_URL.replace(/\/$/, '');
+const img = (file: string) => `${BASE}/Edited copy/${file}`;
 ---
 
-<BaseLayout
-  title="Stay — Contorno"
-  description="Bookings at Contorno are coming soon. Join the waitlist to hear first."
->
+<BaseLayout title="Stay — Contorno" description="Bookings coming soon. Join the waitlist.">
   <section class="coming">
-    <p class="coming-eyebrow">Bookings</p>
-    <h1 class="coming-title">stay</h1>
-    <p class="coming-lede">
-      Coming soon. Leave your email and we'll write once when the doors open.
-      No newsletter, no marketing — just a note from us when there's something to book.
-    </p>
+    <div class="coming-text">
+      <p class="coming-eyebrow">Bookings</p>
+      <h1 class="coming-heading">Coming soon.</h1>
+      <p class="coming-body">
+        Contorno isn't open for stays just yet. The space is still being built — pour by pour, room by room.
+      </p>
+      <p class="coming-body">
+        Leave your email and we'll write once when the doors open. No newsletter, no marketing — just a note from us when there's something to book.
+      </p>
 
-    <form id="waitlist-form" class="coming-form" novalidate>
-      <input
-        type="email"
-        name="email"
-        placeholder="your email"
-        required
-        autocomplete="email"
-      />
-      <button type="submit">join waitlist →</button>
-    </form>
-    <p id="waitlist-msg" class="coming-msg" role="status" aria-live="polite"></p>
+      <form id="waitlist-form" class="waitlist-form" novalidate>
+        <input type="email" name="email" placeholder="you@email.com" required autocomplete="email" />
+        <button type="submit" class="btn btn-dark">Join the waitlist <span class="arr">→</span></button>
+      </form>
+      <p id="waitlist-msg" class="waitlist-msg" role="status" aria-live="polite"></p>
 
-    <p class="coming-note">Puerto Escondido · Oaxaca</p>
+      <p class="coming-fine">We'll only email you when there's news worth sending.</p>
+    </div>
+
+    <div class="coming-image">
+      <img src={img('Nick Paxifico.jpg')} alt="Puerto Escondido coastline" loading="lazy" decoding="async" />
+      <span class="label">Puerto Escondido · Oaxaca</span>
+      <div class="coords">
+        15.8442° N<br />
+        97.0418° W
+      </div>
+    </div>
   </section>
 </BaseLayout>
 
@@ -37,6 +44,7 @@ import BaseLayout from '../layouts/BaseLayout.astro';
     var msg = document.getElementById('waitlist-msg');
     var btn = form.querySelector('button[type="submit"]');
     var input = form.querySelector('input[name="email"]');
+    var btnLabel = btn.innerHTML;
 
     form.addEventListener('submit', async function (e) {
       e.preventDefault();
@@ -44,8 +52,7 @@ import BaseLayout from '../layouts/BaseLayout.astro';
       if (!email) return;
 
       btn.disabled = true;
-      var originalLabel = btn.textContent;
-      btn.textContent = 'sending…';
+      btn.innerHTML = 'Sending…';
       msg.textContent = '';
       msg.classList.remove('is-error', 'is-success');
 
@@ -61,17 +68,17 @@ import BaseLayout from '../layouts/BaseLayout.astro';
           form.reset();
           msg.textContent = "You're on the list. We'll write when there's something to book.";
           msg.classList.add('is-success');
-          btn.textContent = 'joined ✓';
+          btn.innerHTML = 'Joined ✓';
         } else {
           msg.textContent = data.error || 'Something went wrong. Please try again.';
           msg.classList.add('is-error');
-          btn.textContent = originalLabel;
+          btn.innerHTML = btnLabel;
           btn.disabled = false;
         }
       } catch (err) {
         msg.textContent = 'Network error. Please try again.';
         msg.classList.add('is-error');
-        btn.textContent = originalLabel;
+        btn.innerHTML = btnLabel;
         btn.disabled = false;
       }
     });

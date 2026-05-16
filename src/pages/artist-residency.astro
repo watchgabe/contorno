@@ -3,73 +3,121 @@ import BaseLayout from '../layouts/BaseLayout.astro';
 
 const BASE = import.meta.env.BASE_URL.replace(/\/$/, '');
 const img = (file: string) => `${BASE}/Edited copy/${file}`;
-
 const TYPEFORM_URL = 'https://453f8jrwcv1.typeform.com/to/QAik2KWu';
 ---
 
-<BaseLayout
-  title="Artist Residency — Contorno"
-  description="The Contorno Artist Residency — a place to make work in Puerto Escondido, Oaxaca."
->
-  <header class="page-header">
-    <p class="page-eyebrow">artist residency</p>
-    <h1 class="page-title">
-      a place to <em>make</em><br />
-      something here.
-    </h1>
-    <p class="page-lede">
-      The Contorno residency invites artists to live and work on site in
-      Puerto Escondido — to make in the same place we are building.
-    </p>
-  </header>
+<BaseLayout title="Artist Residency — Contorno" description="A month in Puerto Escondido for artists with a body of work and a point of view.">
+  <!-- HERO -->
+  <div class="hero-wrapper">
+    <section class="hero">
+      <img class="hero-img" src={img('I like this one.jpg')} alt="Artist residency at Contorno" fetchpriority="high" decoding="async" />
+      <div class="hero-overlay"></div>
 
-  <div class="divider"></div>
+      <div class="hero-coords">
+        15.8442° N<br />
+        97.0418° W
+      </div>
+      <div class="hero-label">Artist Residency</div>
 
-  <section class="suite">
+      <div class="hero-content">
+        <p class="hero-eyebrow">Artist Residency at Contorno</p>
+        <h1 class="hero-title" style="font-size: clamp(96px, 18vw, 240px); letter-spacing: 0.02em;">arc</h1>
+        <p class="hero-subhead">A month. A unit. A meal. The Pacific.</p>
+      </div>
+    </section>
+  </div>
+
+  <!-- SUITE BLOCK — the program + what's included -->
+  <section class="suite reveal">
     <div class="suite-image">
-      <img
-        src={img('I like this one.jpg')}
-        alt="The residency space at Contorno"
-        loading="lazy"
-        decoding="async"
-      />
+      <img src={img('I like this one.jpg')} alt="The residency unit at Contorno" loading="lazy" decoding="async" />
       <span class="label">The Residency</span>
     </div>
     <div class="suite-body">
-      <h2 class="suite-heading">A month on site. One artist at a time.</h2>
+      <h2 class="suite-heading">Three to four artists. One month each.</h2>
       <div class="suite-copy">
-        <p>
-          A short residency for artists, photographers, writers, and makers
-          whose practice is shaped by place. Residents are hosted on site
-          during active construction — surrounded by the materials, the
-          landscape, and the people building Contorno.
-        </p>
-        <p>
-          We're keeping it small and intentional. You arrive, you make,
-          you leave one piece behind that lives at Contorno.
-        </p>
+        <p>Rent covered, meals handled, a per diem for everything else. You make work. You leave one piece behind that lives at Contorno.</p>
+        <p>That's it. That's the program.</p>
       </div>
       <ul class="suite-features">
-        <li><span class="name">Location</span><span class="desc">Puerto Escondido, Oaxaca</span><span class="dot"></span></li>
-        <li><span class="name">Duration</span><span class="desc">One month</span><span class="dot"></span></li>
-        <li><span class="name">Includes</span><span class="desc">Private unit, meals, studio &amp; grounds</span><span class="dot"></span></li>
-        <li><span class="name">For</span><span class="desc">Any medium — work shaped by place</span><span class="dot"></span></li>
-        <li><span class="name">Cohort</span><span class="desc">First residencies open 2026</span><span class="dot"></span></li>
+        <li><span class="name">Private unit</span><span class="desc">A studio at Contorno with views of La Punta.</span><span class="dot"></span></li>
+        <li><span class="name">Meals at Boca</span><span class="desc">Breakfast and dinner, on us.</span><span class="dot"></span></li>
+        <li><span class="name">Daily per diem</span><span class="desc">Covers everything else while you're here.</span><span class="dot"></span></li>
+        <li><span class="name">Studio &amp; grounds</span><span class="desc">Workspace and the full run of the property.</span><span class="dot"></span></li>
+        <li><span class="name">Uninterrupted time</span><span class="desc">A full month of focus on the Pacific.</span><span class="dot"></span></li>
       </ul>
     </div>
   </section>
 
   <div class="divider"></div>
 
-  <section class="apply-wrap">
-    <p class="apply-eyebrow">apply</p>
-    <h2 class="apply-heading">Takes about ten minutes. We read every one.</h2>
-    <iframe
-      class="apply-frame"
-      src={TYPEFORM_URL}
-      title="Contorno Artist Residency Application"
-      loading="lazy"
-      allow="camera; microphone; autoplay; encrypted-media; fullscreen"
-    ></iframe>
+  <!-- SPACE -->
+  <div class="section-header reveal">
+    <h2 class="section-title">The space</h2>
+    <span class="section-tag">Puerto Escondido · La Punta</span>
+  </div>
+
+  <section class="space reveal">
+    <figure class="s-1"><img src={img('L3 Construction.jpg')} alt="" loading="lazy" decoding="async" /></figure>
+    <figure class="s-2"><img src={img('Nick Paxifico.jpg')} alt="" loading="lazy" decoding="async" /></figure>
+    <figure class="s-3"><img src={img('Black & White.jpg')} alt="" loading="lazy" decoding="async" /></figure>
+    <figure class="s-4"><img src={img('I like this one.jpg')} alt="" loading="lazy" decoding="async" /></figure>
+    <figure class="s-5"><img src={img('Ricardo Lines.jpg')} alt="" loading="lazy" decoding="async" /></figure>
+  </section>
+
+  <div class="divider"></div>
+
+  <!-- APPLY (Typeform) -->
+  <section class="apply reveal" id="apply">
+    <div class="apply-head">
+      <p class="apply-eyebrow">Apply</p>
+      <h2 class="apply-heading">Takes about ten minutes. We read every one.</h2>
+    </div>
+    <div class="apply-frame">
+      <iframe
+        src={TYPEFORM_URL}
+        title="Contorno Artist Residency Application"
+        allow="camera; microphone; autoplay; encrypted-media;"
+        loading="lazy"
+      ></iframe>
+    </div>
+  </section>
+
+  <!-- FAQ -->
+  <section class="faq reveal">
+    <div class="faq-head">
+      <h2 class="section-title">FAQ</h2>
+      <span class="section-tag">questions, answered</span>
+    </div>
+
+    <details class="faq-item">
+      <summary>Do I need to be represented by a gallery? <span class="faq-toggle">+</span></summary>
+      <div class="faq-answer">No.</div>
+    </details>
+    <details class="faq-item">
+      <summary>Do I need a certain follower count? <span class="faq-toggle">+</span></summary>
+      <div class="faq-answer">No, but we do look at how you share your work and the audience around it. Not as a gate — one signal among many.</div>
+    </details>
+    <details class="faq-item">
+      <summary>Can I bring a partner? <span class="faq-toggle">+</span></summary>
+      <div class="faq-answer">Yes. Note it in the application.</div>
+    </details>
+    <details class="faq-item">
+      <summary>What if I don't know what I'd make for the space yet? <span class="faq-toggle">+</span></summary>
+      <div class="faq-answer">That's fine. We want to see how you think, not a finished pitch.</div>
+    </details>
+    <details class="faq-item">
+      <summary>Is there an application fee? <span class="faq-toggle">+</span></summary>
+      <div class="faq-answer">No.</div>
+    </details>
   </section>
 </BaseLayout>
+
+<script is:inline>
+  const io = new IntersectionObserver((entries) => {
+    entries.forEach((e) => {
+      if (e.isIntersecting) { e.target.classList.add('visible'); io.unobserve(e.target); }
+    });
+  }, { threshold: 0.1, rootMargin: '0px 0px -60px 0px' });
+  document.querySelectorAll('.reveal').forEach((el) => io.observe(el));
+</script>

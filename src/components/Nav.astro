@@ -3,17 +3,18 @@ const base = import.meta.env.BASE_URL.replace(/\/$/, '');
 const link = (path: string) => `${base}${path}`;
 const CONTACT_EMAIL = 'hello@contornocollective.com';
 const path = Astro.url.pathname.replace(/\/$/, '');
-const isActive = (p: string) => path === p || (p !== '/' && path.startsWith(p));
+const isActive = (p: string) => p === '/' ? path === '' : path === p || path.startsWith(p);
 ---
 
-<nav id="main-nav">
+<nav class="site-nav">
   <div class="nav-left">
-    <a href={link('/')} class={isActive('/') && path === '' ? 'active' : ''}>the project</a>
+    <a href={link('/')} class={path === '' ? 'active' : ''}>the project</a>
     <a href={link('/artist-residency')} class={isActive('/artist-residency') ? 'active' : ''}>residency</a>
     <a href={link('/stay')} class={isActive('/stay') ? 'active' : ''}>stay</a>
   </div>
   <a href={link('/')} class="nav-logo">contorno</a>
   <div class="nav-right">
-    <a href={`mailto:${CONTACT_EMAIL}`} class="nav-cta">contact →</a>
+    <a href="https://instagram.com/contornocollective" target="_blank" rel="noopener">instagram</a>
+    <a href={`mailto:${CONTACT_EMAIL}`}>contact</a>
   </div>
 </nav>
