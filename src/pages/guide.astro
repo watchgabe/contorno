@@ -1,0 +1,429 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import guide from '../data/guide.json';
+
+type Entry = {
+  slug: string;
+  district: string;
+  type: string;
+  name: string | null;
+  displayName: string;
+  nickname: string | null;
+  vibe: string | null;
+  mustGo: boolean;
+  description: string | null;
+  orderThis: string | null;
+  gmap: string | null;
+  instagram: string | null;
+};
+
+const entries = guide.entries as Entry[];
+
+// Derive unique districts + types for filter chips, preserving order of first appearance
+const uniq = <T,>(xs: T[]) => Array.from(new Set(xs));
+const districts = uniq(entries.map((e) => e.district)).sort();
+const types = uniq(entries.map((e) => e.type)).sort();
+const mustGoCount = entries.filter((e) => e.mustGo).length;
+---
+
+<BaseLayout
+  title="Guide — Puerto Escondido"
+  description="A living guide to the places we go in Puerto Escondido. Sortable by district and type."
+>
+  <header class="guide-header">
+    <p class="guide-eyebrow">Puerto Escondido</p>
+    <h1 class="guide-title">Guide</h1>
+    <p class="guide-lede">
+      The places we go and what to order when you get there. Sortable by district and type.
+    </p>
+  </header>
+
+  <section class="guide-filters" aria-label="Filter places">
+    <div class="filter-row">
+      <span class="filter-label">District</span>
+      <div class="chip-group" data-group="district" role="group" aria-label="Filter by district">
+        <button type="button" class="chip is-active" data-value="all" aria-pressed="true">All</button>
+        {districts.map((d) => (
+          <button type="button" class="chip" data-value={d} aria-pressed="false">{d}</button>
+        ))}
+      </div>
+    </div>
+
+    <div class="filter-row">
+      <span class="filter-label">Type</span>
+      <div class="chip-group" data-group="type" role="group" aria-label="Filter by type">
+        <button type="button" class="chip is-active" data-value="all" aria-pressed="true">All</button>
+        {types.map((t) => (
+          <button type="button" class="chip" data-value={t} aria-pressed="false">{t}</button>
+        ))}
+      </div>
+    </div>
+
+    <div class="filter-row">
+      <span class="filter-label">Priority</span>
+      <div class="chip-group" data-group="mustgo" role="group" aria-label="Filter by priority">
+        <button type="button" class="chip is-active" data-value="all" aria-pressed="true">All places</button>
+        <button type="button" class="chip chip-star" data-value="must" aria-pressed="false">
+          <span class="star" aria-hidden="true">★</span> Must go ({mustGoCount})
+        </button>
+      </div>
+    </div>
+
+    <p class="guide-count"><span id="guide-count">{entries.length}</span> places</p>
+  </section>
+
+  <section class="guide-grid" id="guide-grid" aria-live="polite">
+    {entries.map((e) => (
+      <article
+        class="card"
+        data-district={e.district}
+        data-type={e.type}
+        data-mustgo={e.mustGo ? '1' : '0'}
+      >
+        {e.mustGo && (
+          <span class="card-star" title="Must go" aria-label="Must go">★</span>
+        )}
+
+        <div class="card-meta">
+          <span class="card-district">{e.district}</span>
+          <span class="card-dot" aria-hidden="true">·</span>
+          <span class="card-type">{e.type}</span>
+        </div>
+
+        <h2 class="card-name">{e.displayName}</h2>
+
+        {e.nickname && e.nickname !== e.displayName && (
+          <p class="card-nickname">aka <em>{e.nickname}</em></p>
+        )}
+
+        {e.vibe && <p class="card-vibe">{e.vibe}</p>}
+
+        {e.description && <p class="card-desc">{e.description}</p>}
+
+        {e.orderThis && (
+          <div class="card-order">
+            <p class="card-order-label">Order this</p>
+            <p class="card-order-body">{e.orderThis}</p>
+          </div>
+        )}
+
+        {(e.gmap || e.instagram) && (
+          <div class="card-links">
+            {e.gmap && <a href={e.gmap} target="_blank" rel="noopener">Map ↗</a>}
+            {e.instagram && <a href={e.instagram} target="_blank" rel="noopener">Instagram ↗</a>}
+          </div>
+        )}
+      </article>
+    ))}
+
+    <p id="guide-empty" class="guide-empty" hidden>
+      No places match. Try clearing a filter.
+    </p>
+  </section>
+</BaseLayout>
+
+<style>
+  /* Header */
+  .guide-header {
+    padding: calc(var(--nav-h) + 80px) 40px 40px;
+    max-width: 900px;
+  }
+  .guide-eyebrow {
+    font-family: var(--label);
+    font-size: 10px;
+    letter-spacing: 0.22em;
+    text-transform: uppercase;
+    color: var(--rust);
+    margin-bottom: 24px;
+  }
+  .guide-title {
+    font-family: var(--display);
+    font-weight: 500;
+    font-size: clamp(56px, 9vw, 128px);
+    letter-spacing: -0.02em;
+    line-height: 0.95;
+    color: var(--ink);
+    margin-bottom: 22px;
+  }
+  .guide-lede {
+    font-family: var(--serif);
+    font-style: italic;
+    font-weight: 400;
+    font-size: clamp(18px, 2vw, 24px);
+    line-height: 1.4;
+    color: var(--ink);
+    max-width: 620px;
+  }
+
+  /* Filters */
+  .guide-filters {
+    padding: 20px 40px 30px;
+    border-top: 1px solid rgba(42, 42, 42, 0.12);
+    border-bottom: 1px solid rgba(42, 42, 42, 0.12);
+    margin: 30px 40px 40px;
+    display: grid;
+    gap: 18px;
+  }
+  .filter-row {
+    display: grid;
+    grid-template-columns: 96px 1fr;
+    gap: 20px;
+    align-items: center;
+  }
+  .filter-label {
+    font-family: var(--label);
+    font-size: 10px;
+    letter-spacing: 0.22em;
+    text-transform: uppercase;
+    color: var(--mid);
+  }
+  .chip-group {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 6px;
+  }
+  .chip {
+    background: transparent;
+    border: 1px solid rgba(42, 42, 42, 0.18);
+    color: var(--ink);
+    font-family: var(--label);
+    font-size: 11px;
+    font-weight: 500;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    padding: 8px 14px;
+    border-radius: 100px;
+    cursor: pointer;
+    transition: background 0.18s, color 0.18s, border-color 0.18s;
+  }
+  .chip:hover { border-color: var(--ink); }
+  .chip.is-active {
+    background: var(--ink);
+    color: var(--cream);
+    border-color: var(--ink);
+  }
+  .chip-star .star {
+    color: var(--rust);
+    margin-right: 4px;
+    font-size: 12px;
+  }
+  .chip-star.is-active .star { color: var(--cream); }
+
+  .guide-count {
+    grid-column: 1 / -1;
+    font-family: var(--label);
+    font-size: 10px;
+    letter-spacing: 0.22em;
+    text-transform: uppercase;
+    color: var(--mid);
+    margin-top: 4px;
+  }
+
+  /* Grid */
+  .guide-grid {
+    padding: 0 40px 120px;
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 20px;
+    position: relative;
+  }
+
+  /* Card */
+  .card {
+    position: relative;
+    background: var(--offwhite);
+    border: 1px solid rgba(42, 42, 42, 0.08);
+    border-radius: 10px;
+    padding: 24px 24px 26px;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    transition: transform 0.2s ease, box-shadow 0.2s ease, border-color 0.2s;
+  }
+  .card:hover {
+    transform: translateY(-2px);
+    border-color: rgba(42, 42, 42, 0.18);
+    box-shadow: 0 8px 24px rgba(42, 42, 42, 0.06);
+  }
+  .card[hidden] { display: none; }
+
+  .card-star {
+    position: absolute;
+    top: 18px;
+    right: 20px;
+    font-size: 16px;
+    color: var(--rust);
+    line-height: 1;
+  }
+
+  .card-meta {
+    font-family: var(--label);
+    font-size: 10px;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    color: var(--mid);
+    display: flex;
+    gap: 8px;
+    align-items: center;
+    margin-bottom: 2px;
+  }
+  .card-district { color: var(--rust); }
+  .card-dot { opacity: 0.6; }
+
+  .card-name {
+    font-family: var(--display);
+    font-weight: 500;
+    font-size: 26px;
+    letter-spacing: -0.01em;
+    line-height: 1.1;
+    color: var(--ink);
+    padding-right: 24px; /* room for star */
+  }
+
+  .card-nickname {
+    font-family: var(--sans);
+    font-size: 12px;
+    color: var(--mid);
+    letter-spacing: 0.02em;
+  }
+  .card-nickname em {
+    font-family: var(--serif);
+    font-style: italic;
+    font-weight: 400;
+    font-size: 14px;
+    color: var(--ink);
+  }
+
+  .card-vibe {
+    font-family: var(--serif);
+    font-style: italic;
+    font-weight: 400;
+    font-size: 16px;
+    line-height: 1.35;
+    color: var(--ink);
+    opacity: 0.85;
+  }
+
+  .card-desc {
+    font-family: var(--sans);
+    font-size: 14px;
+    line-height: 1.65;
+    color: #444;
+    margin-top: 2px;
+  }
+
+  .card-order {
+    margin-top: 8px;
+    padding-top: 14px;
+    border-top: 1px solid rgba(42, 42, 42, 0.1);
+  }
+  .card-order-label {
+    font-family: var(--label);
+    font-size: 10px;
+    letter-spacing: 0.22em;
+    text-transform: uppercase;
+    color: var(--rust);
+    margin-bottom: 6px;
+  }
+  .card-order-body {
+    font-family: var(--sans);
+    font-size: 13.5px;
+    line-height: 1.6;
+    color: var(--ink);
+  }
+
+  .card-links {
+    margin-top: 8px;
+    display: flex;
+    gap: 16px;
+  }
+  .card-links a {
+    font-family: var(--label);
+    font-size: 11px;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    color: var(--ink);
+    text-decoration: none;
+    border-bottom: 1px solid var(--rust);
+    padding-bottom: 2px;
+    transition: color 0.2s;
+  }
+  .card-links a:hover { color: var(--rust); }
+
+  .guide-empty {
+    grid-column: 1 / -1;
+    padding: 60px 20px;
+    text-align: center;
+    font-family: var(--serif);
+    font-style: italic;
+    font-size: 20px;
+    color: var(--mid);
+  }
+
+  /* Responsive */
+  @media (max-width: 1080px) {
+    .guide-grid { grid-template-columns: repeat(2, 1fr); }
+  }
+  @media (max-width: 768px) {
+    .guide-header { padding: calc(var(--nav-h) + 50px) 24px 30px; }
+    .guide-filters {
+      padding: 18px 24px 24px;
+      margin: 20px 24px 30px;
+    }
+    .filter-row {
+      grid-template-columns: 1fr;
+      gap: 10px;
+      align-items: start;
+    }
+    .guide-grid { grid-template-columns: 1fr; padding: 0 24px 80px; gap: 16px; }
+    .card { padding: 22px 20px 24px; }
+  }
+</style>
+
+<script is:inline>
+  (function () {
+    var grid = document.getElementById('guide-grid');
+    if (!grid) return;
+    var cards = Array.from(grid.querySelectorAll('.card'));
+    var counter = document.getElementById('guide-count');
+    var empty = document.getElementById('guide-empty');
+    var groups = Array.from(document.querySelectorAll('.chip-group'));
+
+    var state = { district: 'all', type: 'all', mustgo: 'all' };
+
+    function apply() {
+      var visible = 0;
+      cards.forEach(function (card) {
+        var d = card.getAttribute('data-district');
+        var t = card.getAttribute('data-type');
+        var m = card.getAttribute('data-mustgo') === '1';
+        var show =
+          (state.district === 'all' || state.district === d) &&
+          (state.type === 'all' || state.type === t) &&
+          (state.mustgo === 'all' || (state.mustgo === 'must' && m));
+        card.hidden = !show;
+        if (show) visible++;
+      });
+      if (counter) counter.textContent = String(visible);
+      if (empty) empty.hidden = visible !== 0;
+    }
+
+    groups.forEach(function (group) {
+      var name = group.getAttribute('data-group');
+      group.addEventListener('click', function (ev) {
+        var btn = ev.target.closest('.chip');
+        if (!btn || !group.contains(btn)) return;
+        var value = btn.getAttribute('data-value');
+        state[name] = value;
+        group.querySelectorAll('.chip').forEach(function (c) {
+          var active = c === btn;
+          c.classList.toggle('is-active', active);
+          c.setAttribute('aria-pressed', active ? 'true' : 'false');
+        });
+        apply();
+      });
+    });
+
+    apply();
+  })();
+</script>

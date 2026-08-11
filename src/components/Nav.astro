@@ -11,6 +11,7 @@ const isActive = (p: string) => path === p || (p !== '/' && path.startsWith(p));
     <a href={link('/')} class={isActive('/') && path === '' ? 'active' : ''}>the project</a>
     <a href={link('/artist-residency')} class={isActive('/artist-residency') ? 'active' : ''}>residency</a>
     <a href={link('/stay')} class={isActive('/stay') ? 'active' : ''}>stay</a>
+    <a href={link('/guide')} class={isActive('/guide') ? 'active' : ''}>guide</a>
   </div>
   <a href={link('/')} class="nav-logo">contorno</a>
   <div class="nav-right">
