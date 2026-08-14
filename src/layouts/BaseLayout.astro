@@ -6,11 +6,17 @@ import '../styles/global.css';
 interface Props {
   title?: string;
   description?: string;
+  /** 'full' (default) → site Nav. 'minimal' → just the centered wordmark. 'none' → no header. */
+  header?: 'full' | 'minimal' | 'none';
+  /** Set false to omit the site footer on this page. */
+  footer?: boolean;
 }
 
 const {
   title = 'contorno',
   description = 'Contorno — documenting the process of building in Puerto Escondido, México.',
+  header = 'full',
+  footer = true,
 } = Astro.props;
 ---
 
@@ -30,8 +36,26 @@ const {
     />
   </head>
   <body>
-    <Nav />
+    {header === 'full' && <Nav />}
+    {header === 'minimal' && (
+      <nav id="main-nav" class="nav-minimal">
+        <a href="/" class="nav-logo">contorno</a>
+      </nav>
+    )}
     <slot />
-    <Footer />
+    {footer && <Footer />}
   </body>
 </html>
+
+<style is:global>
+  /* Minimal header: centered wordmark on a cream bar so scrolling
+     content doesn't bleed through the otherwise-transparent nav. */
+  nav#main-nav.nav-minimal {
+    background: var(--cream);
+    justify-content: center;
+  }
+  nav#main-nav.nav-minimal .nav-logo {
+    position: static;
+    transform: none;
+  }
+</style>

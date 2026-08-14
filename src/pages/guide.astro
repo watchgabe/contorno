@@ -19,7 +19,6 @@ type Entry = {
 
 const entries = guide.entries as Entry[];
 
-// Derive unique districts + types for filter chips, preserving order of first appearance
 const uniq = <T,>(xs: T[]) => Array.from(new Set(xs));
 const districts = uniq(entries.map((e) => e.district)).sort();
 const types = uniq(entries.map((e) => e.type)).sort();
@@ -27,50 +26,63 @@ const mustGoCount = entries.filter((e) => e.mustGo).length;
 ---
 
 <BaseLayout
-  title="Guide — Puerto Escondido"
+  title="Your PXM Guide — Contorno"
   description="A living guide to the places we go in Puerto Escondido. Sortable by district and type."
+  header="minimal"
+  footer={false}
 >
   <header class="guide-header">
     <p class="guide-eyebrow">Puerto Escondido</p>
-    <h1 class="guide-title">Guide</h1>
+    <h1 class="guide-title">Your PXM Guide</h1>
     <p class="guide-lede">
       The places we go and what to order when you get there. Sortable by district and type.
     </p>
   </header>
 
-  <section class="guide-filters" aria-label="Filter places">
-    <div class="filter-row">
-      <span class="filter-label">District</span>
-      <div class="chip-group" data-group="district" role="group" aria-label="Filter by district">
-        <button type="button" class="chip is-active" data-value="all" aria-pressed="true">All</button>
-        {districts.map((d) => (
-          <button type="button" class="chip" data-value={d} aria-pressed="false">{d}</button>
-        ))}
+  <details class="filters-drawer" id="filters-drawer">
+    <summary class="filters-toggle">
+      <span class="filters-toggle-label">Filters</span>
+      <span class="filters-toggle-count" id="filters-active-count" hidden></span>
+      <span class="filters-toggle-chevron" aria-hidden="true">▾</span>
+    </summary>
+
+    <div class="filters-body">
+      <div class="filter-row">
+        <span class="filter-label">District</span>
+        <div class="chip-group" data-group="district" role="group" aria-label="Filter by district">
+          <button type="button" class="chip is-active" data-value="all" aria-pressed="true">All</button>
+          {districts.map((d) => (
+            <button type="button" class="chip" data-value={d} aria-pressed="false">{d}</button>
+          ))}
+        </div>
+      </div>
+
+      <div class="filter-row">
+        <span class="filter-label">Type</span>
+        <div class="chip-group" data-group="type" role="group" aria-label="Filter by type">
+          <button type="button" class="chip is-active" data-value="all" aria-pressed="true">All</button>
+          {types.map((t) => (
+            <button type="button" class="chip" data-value={t} aria-pressed="false">{t}</button>
+          ))}
+        </div>
+      </div>
+
+      <div class="filter-row">
+        <span class="filter-label">Priority</span>
+        <div class="chip-group" data-group="mustgo" role="group" aria-label="Filter by priority">
+          <button type="button" class="chip is-active" data-value="all" aria-pressed="true">All places</button>
+          <button type="button" class="chip chip-star" data-value="must" aria-pressed="false">
+            <span class="star" aria-hidden="true">★</span> Must go ({mustGoCount})
+          </button>
+        </div>
+      </div>
+
+      <div class="filters-actions">
+        <button type="button" class="filters-clear" id="filters-clear">Clear all</button>
+        <p class="guide-count"><span id="guide-count">{entries.length}</span> places</p>
       </div>
     </div>
-
-    <div class="filter-row">
-      <span class="filter-label">Type</span>
-      <div class="chip-group" data-group="type" role="group" aria-label="Filter by type">
-        <button type="button" class="chip is-active" data-value="all" aria-pressed="true">All</button>
-        {types.map((t) => (
-          <button type="button" class="chip" data-value={t} aria-pressed="false">{t}</button>
-        ))}
-      </div>
-    </div>
-
-    <div class="filter-row">
-      <span class="filter-label">Priority</span>
-      <div class="chip-group" data-group="mustgo" role="group" aria-label="Filter by priority">
-        <button type="button" class="chip is-active" data-value="all" aria-pressed="true">All places</button>
-        <button type="button" class="chip chip-star" data-value="must" aria-pressed="false">
-          <span class="star" aria-hidden="true">★</span> Must go ({mustGoCount})
-        </button>
-      </div>
-    </div>
-
-    <p class="guide-count"><span id="guide-count">{entries.length}</span> places</p>
-  </section>
+  </details>
 
   <section class="guide-grid" id="guide-grid" aria-live="polite">
     {entries.map((e) => (
@@ -125,7 +137,7 @@ const mustGoCount = entries.filter((e) => e.mustGo).length;
 <style>
   /* Header */
   .guide-header {
-    padding: calc(var(--nav-h) + 80px) 40px 40px;
+    padding: calc(var(--nav-h) + 80px) 40px 30px;
     max-width: 900px;
   }
   .guide-eyebrow {
@@ -155,12 +167,43 @@ const mustGoCount = entries.filter((e) => e.mustGo).length;
     max-width: 620px;
   }
 
-  /* Filters */
-  .guide-filters {
-    padding: 20px 40px 30px;
+  /* Filter drawer */
+  .filters-drawer {
+    margin: 20px 40px 30px;
     border-top: 1px solid rgba(42, 42, 42, 0.12);
     border-bottom: 1px solid rgba(42, 42, 42, 0.12);
-    margin: 30px 40px 40px;
+  }
+  .filters-toggle {
+    list-style: none;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    padding: 18px 4px;
+    font-family: var(--label);
+    font-size: 11px;
+    font-weight: 500;
+    letter-spacing: 0.22em;
+    text-transform: uppercase;
+    color: var(--ink);
+  }
+  .filters-toggle::-webkit-details-marker { display: none; }
+  .filters-toggle-count {
+    font-size: 10px;
+    color: var(--rust);
+    letter-spacing: 0.18em;
+  }
+  .filters-toggle-chevron {
+    margin-left: auto;
+    font-size: 14px;
+    color: var(--mid);
+    transition: transform 0.25s ease;
+  }
+  .filters-drawer[open] .filters-toggle-chevron { transform: rotate(180deg); }
+  .filters-drawer[open] .filters-toggle { border-bottom: 1px solid rgba(42, 42, 42, 0.08); }
+
+  .filters-body {
+    padding: 22px 4px 22px;
     display: grid;
     gap: 18px;
   }
@@ -209,14 +252,33 @@ const mustGoCount = entries.filter((e) => e.mustGo).length;
   }
   .chip-star.is-active .star { color: var(--cream); }
 
-  .guide-count {
-    grid-column: 1 / -1;
+  .filters-actions {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding-top: 6px;
+    border-top: 1px dashed rgba(42, 42, 42, 0.12);
+    margin-top: 4px;
+  }
+  .filters-clear {
+    background: transparent;
+    border: none;
     font-family: var(--label);
     font-size: 10px;
     letter-spacing: 0.22em;
     text-transform: uppercase;
     color: var(--mid);
-    margin-top: 4px;
+    cursor: pointer;
+    padding: 6px 0;
+    transition: color 0.2s;
+  }
+  .filters-clear:hover { color: var(--rust); }
+  .guide-count {
+    font-family: var(--label);
+    font-size: 10px;
+    letter-spacing: 0.22em;
+    text-transform: uppercase;
+    color: var(--mid);
   }
 
   /* Grid */
@@ -277,7 +339,7 @@ const mustGoCount = entries.filter((e) => e.mustGo).length;
     letter-spacing: -0.01em;
     line-height: 1.1;
     color: var(--ink);
-    padding-right: 24px; /* room for star */
+    padding-right: 24px;
   }
 
   .card-nickname {
@@ -365,11 +427,8 @@ const mustGoCount = entries.filter((e) => e.mustGo).length;
     .guide-grid { grid-template-columns: repeat(2, 1fr); }
   }
   @media (max-width: 768px) {
-    .guide-header { padding: calc(var(--nav-h) + 50px) 24px 30px; }
-    .guide-filters {
-      padding: 18px 24px 24px;
-      margin: 20px 24px 30px;
-    }
+    .guide-header { padding: calc(var(--nav-h) + 50px) 24px 26px; }
+    .filters-drawer { margin: 16px 24px 24px; }
     .filter-row {
       grid-template-columns: 1fr;
       gap: 10px;
@@ -377,6 +436,7 @@ const mustGoCount = entries.filter((e) => e.mustGo).length;
     }
     .guide-grid { grid-template-columns: 1fr; padding: 0 24px 80px; gap: 16px; }
     .card { padding: 22px 20px 24px; }
+    .filters-actions { flex-direction: row; }
   }
 </style>
 
@@ -387,9 +447,19 @@ const mustGoCount = entries.filter((e) => e.mustGo).length;
     var cards = Array.from(grid.querySelectorAll('.card'));
     var counter = document.getElementById('guide-count');
     var empty = document.getElementById('guide-empty');
+    var activeCountEl = document.getElementById('filters-active-count');
+    var clearBtn = document.getElementById('filters-clear');
     var groups = Array.from(document.querySelectorAll('.chip-group'));
 
     var state = { district: 'all', type: 'all', mustgo: 'all' };
+
+    function activeFilterCount() {
+      var n = 0;
+      if (state.district !== 'all') n++;
+      if (state.type !== 'all') n++;
+      if (state.mustgo !== 'all') n++;
+      return n;
+    }
 
     function apply() {
       var visible = 0;
@@ -406,6 +476,25 @@ const mustGoCount = entries.filter((e) => e.mustGo).length;
       });
       if (counter) counter.textContent = String(visible);
       if (empty) empty.hidden = visible !== 0;
+
+      var n = activeFilterCount();
+      if (activeCountEl) {
+        if (n > 0) {
+          activeCountEl.hidden = false;
+          activeCountEl.textContent = '· ' + n + ' active';
+        } else {
+          activeCountEl.hidden = true;
+          activeCountEl.textContent = '';
+        }
+      }
+    }
+
+    function setGroup(group, value) {
+      group.querySelectorAll('.chip').forEach(function (c) {
+        var active = c.getAttribute('data-value') === value;
+        c.classList.toggle('is-active', active);
+        c.setAttribute('aria-pressed', active ? 'true' : 'false');
+      });
     }
 
     groups.forEach(function (group) {
@@ -415,14 +504,18 @@ const mustGoCount = entries.filter((e) => e.mustGo).length;
         if (!btn || !group.contains(btn)) return;
         var value = btn.getAttribute('data-value');
         state[name] = value;
-        group.querySelectorAll('.chip').forEach(function (c) {
-          var active = c === btn;
-          c.classList.toggle('is-active', active);
-          c.setAttribute('aria-pressed', active ? 'true' : 'false');
-        });
+        setGroup(group, value);
         apply();
       });
     });
+
+    if (clearBtn) {
+      clearBtn.addEventListener('click', function () {
+        state = { district: 'all', type: 'all', mustgo: 'all' };
+        groups.forEach(function (group) { setGroup(group, 'all'); });
+        apply();
+      });
+    }
 
     apply();
   })();
