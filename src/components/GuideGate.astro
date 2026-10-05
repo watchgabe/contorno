@@ -1,0 +1,131 @@
+---
+// Email gate for the Puerto Guide. Any link to /guide opens this dialog until the
+// visitor has shared an email once. After that the link opens the guide in a new tab.
+---
+
+<dialog id="guide-gate" class="gg" aria-labelledby="gg-title">
+  <form id="gg-form" novalidate>
+    <button type="button" class="gg-x" id="gg-close" aria-label="Close">&times;</button>
+    <p class="gg-eyebrow">Puerto Guide</p>
+    <h2 id="gg-title">Enter your email to snag the guide.</h2>
+    <p class="gg-copy">We will also email you a copy so you can find it again.</p>
+    <input class="gg-hp" type="text" name="company" tabindex="-1" autocomplete="off" aria-hidden="true" />
+    <label class="gg-sr" for="gg-email">Email</label>
+    <input id="gg-email" type="email" name="email" placeholder="your email" required autocomplete="email" />
+    <button type="submit" id="gg-submit">get the guide &rarr;</button>
+    <p id="gg-msg" role="status" aria-live="polite"></p>
+  </form>
+</dialog>
+
+<style is:global>
+  dialog.gg {
+    border: 0; padding: 0; background: var(--cream, #EDE6D6); color: var(--ink, #2A2A2A);
+    width: min(440px, calc(100vw - 32px)); border-radius: 12px;
+    box-shadow: 0 30px 80px rgba(0, 0, 0, 0.28);
+    margin: auto;
+  }
+  dialog.gg::backdrop { background: rgba(30, 26, 22, 0.55); }
+  .gg form { position: relative; padding: 38px 32px 30px; display: flex; flex-direction: column; gap: 14px; }
+  .gg-x {
+    position: absolute; top: 10px; right: 12px; width: 36px; height: 36px; border: 0; background: transparent;
+    font-size: 26px; line-height: 1; cursor: pointer; color: var(--ink, #2A2A2A); opacity: 0.6;
+  }
+  .gg-x:hover { opacity: 1; }
+  .gg-eyebrow { font-family: var(--label, "DM Sans", sans-serif); font-size: 10px; letter-spacing: 0.22em; text-transform: uppercase; color: var(--rust, #C0583A); }
+  .gg h2 { font-family: var(--display, "Gabarito", sans-serif); font-weight: 500; font-size: clamp(26px, 6vw, 32px); line-height: 1.1; letter-spacing: -0.01em; }
+  .gg-copy { font-size: 14px; line-height: 1.55; color: rgba(42, 42, 42, 0.75); }
+  .gg input[type="email"] {
+    font: 400 16px var(--sans, "DM Sans", sans-serif); padding: 14px 16px; border: 1px solid rgba(42, 42, 42, 0.25);
+    background: var(--offwhite, #F5F0E8); color: var(--ink, #2A2A2A); border-radius: 2px; width: 100%;
+  }
+  .gg input[type="email"]:focus-visible { outline: 2px solid var(--rust, #C0583A); outline-offset: 2px; }
+  #gg-submit {
+    font-family: var(--label, "DM Sans", sans-serif); font-size: 11px; font-weight: 500; letter-spacing: 0.16em; text-transform: uppercase;
+    background: var(--ink, #2A2A2A); color: var(--cream, #EDE6D6); border: 0; padding: 16px 22px; border-radius: 2px; cursor: pointer;
+  }
+  #gg-submit:hover { background: #444; }
+  #gg-submit:disabled { opacity: 0.6; cursor: default; }
+  #gg-msg { min-height: 1.2em; font-size: 13px; color: var(--ink, #2A2A2A); }
+  #gg-msg.is-error { color: #a6361d; }
+  .gg-hp { position: absolute; left: -9999px; width: 1px; height: 1px; opacity: 0; }
+  .gg-sr { position: absolute; width: 1px; height: 1px; overflow: hidden; clip: rect(0 0 0 0); white-space: nowrap; }
+</style>
+
+<script is:inline>
+  (function () {
+    var KEY = 'contorno_guide';
+    var dlg = document.getElementById('guide-gate');
+    if (!dlg || typeof dlg.showModal !== 'function') return;
+    var form = document.getElementById('gg-form');
+    var input = document.getElementById('gg-email');
+    var btn = document.getElementById('gg-submit');
+    var msg = document.getElementById('gg-msg');
+
+    function known() {
+      try { if (localStorage.getItem(KEY) === '1') return true; } catch (e) {}
+      return document.cookie.indexOf(KEY + '=1') > -1;
+    }
+    function remember() {
+      document.cookie = KEY + '=1; Max-Age=31536000; Path=/; SameSite=Lax' + (location.protocol === 'https:' ? '; Secure' : '');
+      try { localStorage.setItem(KEY, '1'); } catch (e) {}
+    }
+
+    var links = document.querySelectorAll('a[href="/guide"], a[href="/guide/"]');
+    Array.prototype.forEach.call(links, function (a) {
+      a.target = '_blank';
+      a.rel = 'noopener';
+      a.addEventListener('click', function (e) {
+        if (known()) return; // already shared an email: open the guide in a new tab
+        e.preventDefault();
+        msg.textContent = '';
+        msg.className = '';
+        dlg.showModal();
+        input.focus();
+      });
+    });
+
+    document.getElementById('gg-close').addEventListener('click', function () { dlg.close(); });
+    dlg.addEventListener('click', function (e) { if (e.target === dlg) dlg.close(); });
+
+    form.addEventListener('submit', async function (e) {
+      e.preventDefault();
+      var email = (input.value || '').trim();
+      if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) {
+        msg.textContent = 'Please enter a valid email.';
+        msg.className = 'is-error';
+        return;
+      }
+      // Open the new tab now, inside the click, so browsers do not block it.
+      var tab = window.open('', '_blank');
+      btn.disabled = true;
+      var label = btn.textContent;
+      btn.textContent = 'sending…';
+      msg.textContent = '';
+      msg.className = '';
+      try {
+        var res = await fetch('/api/guide', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ email: email, company: form.elements.company.value })
+        });
+        var data = await res.json().catch(function () { return {}; });
+        if (res.ok && data.ok) {
+          remember();
+          dlg.close();
+          form.reset();
+          if (tab) { tab.location.href = '/guide'; } else { window.location.href = '/guide'; }
+        } else {
+          if (tab) tab.close();
+          msg.textContent = data.error || 'Something went wrong. Please try again.';
+          msg.className = 'is-error';
+        }
+      } catch (err) {
+        if (tab) tab.close();
+        msg.textContent = 'Network error. Please try again.';
+        msg.className = 'is-error';
+      }
+      btn.disabled = false;
+      btn.textContent = label;
+    });
+  })();
+</script>
