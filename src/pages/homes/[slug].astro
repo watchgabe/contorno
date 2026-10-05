@@ -1,0 +1,189 @@
+---
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import { homes } from '../../data/homes';
+import '../../styles/booking.css';
+
+export function getStaticPaths() {
+  return homes.map((home) => ({ params: { slug: home.slug }, props: { home } }));
+}
+
+const { home } = Astro.props;
+const src = (p: string) => encodeURI(p);
+const similar = homes.filter((h) => h.slug !== home.slug);
+
+const highlights = ['Pacific views [confirm]', 'Gym and shared amenities', 'Terrace [confirm]', 'Air conditioning [confirm]'];
+const essentials = ['Fully equipped kitchen', 'Coffee maker', 'Dining set', 'Fresh linens and towels', 'Hair dryer', 'Wifi', 'Filtered water', 'Fan or air conditioning', 'Iron and board'];
+const moreEssentials = ['Kettle', 'Blender', 'Drying rack', 'Beach towels', 'Safe'];
+---
+
+<BaseLayout title={`${home.name} | Contorno`} description={home.blurb} noindex>
+  <!-- Gallery -->
+  <section class="bu-gallery" aria-label={`Photos of ${home.name}`}>
+    <div class="bu-track" id="track" tabindex="0">
+      {home.photos.map((p, i) => (
+        <div class="bu-slide"><img src={src(p)} alt={`${home.name}, photo ${i + 1}`} loading={i === 0 ? 'eager' : 'lazy'} /></div>
+      ))}
+    </div>
+    <span class="bu-chip">{home.name}</span>
+    <span class="bu-count" id="count" aria-live="polite">1 / {home.photos.length}</span>
+    <button class="bu-arrow prev" id="prev" type="button" aria-label="Previous photo">&lsaquo;</button>
+    <button class="bu-arrow next" id="next" type="button" aria-label="Next photo">&rsaquo;</button>
+    <button class="bu-tour" type="button">Photo tour</button>
+  </section>
+
+  <div class="b-wrap bu-layout">
+    <div>
+      <!-- Title + stats -->
+      <h1 class="bu-title">{home.name}</h1>
+      <p class="b-caps bu-loc">{home.area}</p>
+      <div class="bu-stats ph">
+        <span><svg viewBox="0 0 24 24"><path d="M3 18v-6a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2v6M3 18h18M5 10V7a2 2 0 0 1 2-2h10a2 2 0 0 1 2 2v3M3 21v-3M21 21v-3"/></svg>{home.beds}</span>
+        <span><svg viewBox="0 0 24 24"><path d="M4 12h16v3a4 4 0 0 1-4 4H8a4 4 0 0 1-4-4v-3zM6 12V6a2 2 0 0 1 4 0M7 19l-1 2M17 19l1 2"/></svg>{home.baths}</span>
+        <span><svg viewBox="0 0 24 24"><rect x="4" y="4" width="16" height="16" rx="2"/><path d="M4 10h6v10"/></svg>{home.size}</span>
+        <span><svg viewBox="0 0 24 24"><path d="M12 3v3M4.5 7.5l2 2M19.5 7.5l-2 2M12 8a6 6 0 0 0-6 6h12a6 6 0 0 0-6-6zM5 14v6M19 14v6M3 20h18"/></svg>{home.terrace} terrace</span>
+      </div>
+
+      <!-- About -->
+      <div class="bu-block">
+        <h2>About this home</h2>
+        <p>{home.blurb} <span class="ph">[Placeholder: describe the layout, the light, and the view in two or three sentences.]</span></p>
+        <div class="bu-extra" id="about-more" hidden>
+          <p class="ph">[Placeholder: second paragraph. Who the home suits, what the first hour feels like, and what is provided.]</p>
+          <p class="ph">[Placeholder: minimum stay and any notes on noise, stairs, or access.]</p>
+        </div>
+        <button class="bu-more" type="button" id="about-btn" aria-expanded="false" aria-controls="about-more">Read more</button>
+      </div>
+
+      <!-- Highlights -->
+      <div class="bu-block">
+        <h2>Highlights</h2>
+        <ul class="bu-list hi">
+          {highlights.map((h) => <li>{h}</li>)}
+        </ul>
+      </div>
+
+      <!-- Essentials -->
+      <div class="bu-block">
+        <h2>Essentials</h2>
+        <ul class="bu-list">
+          {essentials.map((e) => <li>{e}</li>)}
+        </ul>
+        <ul class="bu-list bu-extra" id="ess-more" hidden style="margin-top:14px">
+          {moreEssentials.map((e) => <li>{e}</li>)}
+        </ul>
+        <button class="b-btn ghost bu-show" type="button" id="ess-btn" aria-expanded="false" aria-controls="ess-more">Show all</button>
+        <p class="note ph" style="margin-top:14px; font-size:12px">[Placeholder list. Confirm each item for this home.]</p>
+      </div>
+
+      <!-- Video -->
+      <div class="bu-block">
+        <h2>See it before you are in it</h2>
+        <button class="bu-video" type="button" aria-label={`Play video tour of ${home.name}`}>
+          <span class="bu-play"></span>
+        </button>
+        <p class="ph" style="margin-top:12px; font-size:13px">[Placeholder: video tour goes here.]</p>
+      </div>
+
+      <!-- Policies -->
+      <div class="bu-block">
+        <h2>Booking policies</h2>
+        <dl class="bu-kv ph">
+          <dt>Minimum stay</dt><dd>[# nights]</dd>
+          <dt>Check in and out</dt><dd>[time] / [time]</dd>
+          <dt>Home rules</dt><dd>[placeholder]</dd>
+          <dt>Pets</dt><dd>[placeholder]</dd>
+          <dt>Cancellation</dt><dd>[placeholder]</dd>
+        </dl>
+      </div>
+
+      <!-- Materials -->
+      <div class="bu-block">
+        <div class="bu-theme">
+          <div><p class="b-caps" style="margin-bottom:8px">Materials</p><h3>Concrete, steel, palm</h3></div>
+          <p>Polished concrete and jungle palms, not marble and gold. <span class="ph">[Placeholder: two sentences on how the materials show up in this home.]</span></p>
+        </div>
+      </div>
+
+      <!-- Neighborhood -->
+      <div class="bu-block">
+        <h2>Welcome to La Punta</h2>
+        <p>La Punta is the southern tip of Puerto Escondido, next to the beach clubs. Main Beach is where you watch the surfers. Punta Vida has the volleyball courts. Malagua and Jagura Negro are the morning coffee, Chicama and Lava are dinner, and Suave Studio is yoga.</p>
+        <p><a href="/guide" style="color:var(--ink)">Read the Puerto Guide</a></p>
+        <div class="bu-map"><div>Map goes here.<br /><a href="https://www.google.com/maps?q=15.8442,-97.0418" target="_blank" rel="noopener" style="color:var(--ink)">Show on map</a></div></div>
+      </div>
+    </div>
+
+    <!-- Booking card -->
+    <aside class="bu-side" aria-label="Booking">
+      <div class="bu-card">
+        <div class="bu-price">
+          <div><span class="b-caps">From</span><span class="big ph">{home.price} <small>/ night</small></span></div>
+          <div class="av"><span class="b-caps">Available</span><span class="ph">{home.available}</span></div>
+        </div>
+        <a class="b-btn full" href="/stay">Select dates</a>
+      </div>
+      <p class="bu-note">The final price depends on the length of stay. <span class="ph">[Placeholder: what is and is not included, such as cleaning, taxes, and deposit.]</span> Bookings are not open yet, so this button joins the waitlist.</p>
+    </aside>
+  </div>
+
+  <!-- Similar -->
+  <section class="b-section bu-similar">
+    <div class="b-wrap">
+      <div class="bh-head">
+        <h2 class="b-h2">Other homes</h2>
+        <a class="b-btn ghost" href="/homes">View all homes</a>
+      </div>
+      <div class="bh-cards" style="grid-template-columns:repeat(auto-fit,minmax(260px,1fr))">
+        {similar.map((h) => (
+          <a class="bh-card" href={`/homes/${h.slug}`} style="background:var(--cream)">
+            <div class="pic">
+              <img src={src(h.photos[0])} alt={`Home ${h.name}`} loading="lazy" />
+              <span class="tag">{h.name}</span>
+            </div>
+            <div class="body">
+              <h3>{h.name}</h3>
+              <span class="b-caps">{h.area}</span>
+              <span class="meta"><span class="ph">{h.beds} | {h.baths} | {h.size}</span></span>
+              <span class="price">From <b class="ph">{h.price}</b> / night</span>
+            </div>
+          </a>
+        ))}
+      </div>
+    </div>
+  </section>
+
+  <!-- Mobile booking bar -->
+  <div class="bu-bar">
+    <div><span class="b-caps" style="display:block">From</span><span class="big ph">{home.price} <small>/ night</small></span></div>
+    <a class="b-btn" href="/stay">Select dates</a>
+  </div>
+</BaseLayout>
+
+<script is:inline>
+  (function () {
+    var track = document.getElementById('track');
+    if (!track) return;
+    var slides = track.children.length;
+    var count = document.getElementById('count');
+    function idx() { return Math.round(track.scrollLeft / track.clientWidth); }
+    function go(i) { track.scrollTo({ left: Math.max(0, Math.min(slides - 1, i)) * track.clientWidth, behavior: 'smooth' }); }
+    document.getElementById('prev').addEventListener('click', function () { go(idx() - 1); });
+    document.getElementById('next').addEventListener('click', function () { go(idx() + 1); });
+    track.addEventListener('scroll', function () { count.textContent = (idx() + 1) + ' / ' + slides; }, { passive: true });
+    track.addEventListener('keydown', function (e) {
+      if (e.key === 'ArrowRight') { e.preventDefault(); go(idx() + 1); }
+      if (e.key === 'ArrowLeft') { e.preventDefault(); go(idx() - 1); }
+    });
+    function toggle(btnId, boxId, more, less) {
+      var b = document.getElementById(btnId), box = document.getElementById(boxId);
+      b.addEventListener('click', function () {
+        var open = box.hidden;
+        box.hidden = !open;
+        b.setAttribute('aria-expanded', String(open));
+        b.textContent = open ? less : more;
+      });
+    }
+    toggle('about-btn', 'about-more', 'Read more', 'Read less');
+    toggle('ess-btn', 'ess-more', 'Show all', 'Show fewer');
+  })();
+</script>

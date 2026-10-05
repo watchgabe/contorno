@@ -1,0 +1,149 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import { homes } from '../data/homes';
+import '../styles/booking.css';
+
+const src = (p: string) => encodeURI(p);
+const heroImg = '/Edited copy/F23BB294-0329-4D30-B2E5-DEF3B664A8DB.jpg';
+---
+
+<BaseLayout
+  title="Stay at Contorno"
+  description="Homes on La Punta in Puerto Escondido, booked direct."
+  noindex
+>
+  <!-- 1. Hero + search -->
+  <div class="bh-hero-wrap">
+  <section class="bh-hero">
+    <img src={src(heroImg)} alt="View from a Contorno home toward the Pacific" fetchpriority="high" />
+    <div>
+      <h1>Stay on La Punta.</h1>
+      <p>Concrete, steel, and palm above the Pacific. Book direct, with the people who run the place.</p>
+    </div>
+    <form class="bh-search" action="/homes" method="get">
+      <div class="bh-field">
+        <label for="where">Where to?</label>
+        <select id="where" name="where">
+          <option>La Punta, Puerto Escondido</option>
+        </select>
+      </div>
+      <div class="bh-field">
+        <label for="checkin">When?</label>
+        <div style="display:flex; gap:10px;">
+          <input id="checkin" name="checkin" type="date" aria-label="Check in" />
+          <input id="checkout" name="checkout" type="date" aria-label="Check out" />
+        </div>
+      </div>
+      <div class="bh-field">
+        <label for="guests">Guests</label>
+        <select id="guests" name="guests">
+          <option>1 guest</option><option selected>2 guests</option><option>3 guests</option><option>4 guests</option><option>5+ guests</option>
+        </select>
+      </div>
+      <button class="b-btn" type="submit">Find a home</button>
+    </form>
+  </section>
+  </div>
+
+  <!-- 2. The place -->
+  <section class="b-section">
+    <div class="b-wrap bh-split">
+      <img src={src('/Edited copy/IMG_3443.jpg')} alt="Concrete walls with deep window openings" loading="lazy" />
+      <div>
+        <p class="b-eyebrow">The place</p>
+        <h2 class="b-h2">Built slowly, on a hill above La Punta.</h2>
+        <p class="b-lede">Contorno is owned and developed by Nick Paloukos. <span class="ph">[Placeholder: two or three sentences about the homes, the light, and who they are for.]</span></p>
+        <p class="b-lede"><span class="ph">[Placeholder: one sentence on what is close by, the point, the beach, and the cafes.]</span></p>
+        <a class="b-btn ghost" href="/">Read the story of the build</a>
+      </div>
+    </div>
+  </section>
+
+  <!-- 3. Find a home -->
+  <section class="b-section" style="padding-top:0">
+    <div class="b-wrap">
+      <div class="bh-head">
+        <div>
+          <p class="b-eyebrow">Find a home</p>
+          <h2 class="b-h2" style="margin-top:12px">Choose where you wake up.</h2>
+        </div>
+        <a class="b-btn ghost" href="/homes">View all homes</a>
+      </div>
+      <div class="bh-cards">
+        {homes.map((h) => (
+          <a class="bh-card" href={`/homes/${h.slug}`}>
+            <div class="pic">
+              <img src={src(h.photos[0])} alt={`Home ${h.name}`} loading="lazy" />
+              <span class="tag">{h.name}</span>
+            </div>
+            <div class="body">
+              <h3>{h.name}</h3>
+              <span class="b-caps">{h.area}</span>
+              <span class="meta"><span class="ph">{h.beds} | {h.baths} | {h.size}</span></span>
+              <span class="price">From <b class="ph">{h.price}</b> / night</span>
+            </div>
+          </a>
+        ))}
+      </div>
+    </div>
+  </section>
+
+  <!-- 4. Materials -->
+  <section class="b-section" style="background:var(--b-panel)">
+    <div class="b-wrap">
+      <div class="bh-head">
+        <div>
+          <p class="b-eyebrow">The rooms</p>
+          <h2 class="b-h2" style="margin-top:12px">What the rooms are made of.</h2>
+        </div>
+      </div>
+      <div class="bh-feel">
+        <article>
+          <img src={src('/Edited copy/IMG_4880.jpg')} alt="Round window in a raw concrete wall" loading="lazy" />
+          <div class="in"><span class="b-caps">Material</span><h3>Concrete</h3><p class="ph">[Placeholder: one line on the finish and how it feels in the heat.]</p></div>
+        </article>
+        <article>
+          <img src={src('/Edited copy/60ea1757-64f8-4602-b9d1-d5aed4c759fb.jpg')} alt="Steel reinforcing bars" loading="lazy" />
+          <div class="in"><span class="b-caps">Material</span><h3>Steel</h3><p class="ph">[Placeholder: one line on the frames, railings, and details.]</p></div>
+        </article>
+        <article>
+          <img src={src('/Edited copy/EFFFDBD2-4900-48FD-A4D5-65BEB435209A.jpg')} alt="Round window framing the jungle" loading="lazy" />
+          <div class="in"><span class="b-caps">Material</span><h3>Palm</h3><p class="ph">[Placeholder: one line on the palapa roofs and the garden.]</p></div>
+        </article>
+      </div>
+    </div>
+  </section>
+
+  <!-- 5. Book direct -->
+  <section class="b-section">
+    <div class="b-wrap">
+      <p class="b-eyebrow">Book direct</p>
+      <h2 class="b-h2" style="margin:12px 0 40px; max-width:18ch">Three reasons to skip the middle.</h2>
+      <div class="bh-trio">
+        <div><h3>No booking-site fees</h3><p class="ph">[Placeholder: what the guest saves by booking here.]</p></div>
+        <div><h3>A direct line to us</h3><p class="ph">[Placeholder: how guests reach the team before and during a stay.]</p></div>
+        <div><h3>Local, by name</h3><p class="ph">[Placeholder: our own picks for coffee, dinner, and yoga, from the Puerto Guide.]</p></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- 6. Neighborhood -->
+  <section class="b-section" style="padding-top:0">
+    <div class="b-wrap bh-split">
+      <div>
+        <p class="b-eyebrow">The neighborhood</p>
+        <h2 class="b-h2">La Punta, on foot.</h2>
+        <p class="b-lede">The southern tip of Puerto Escondido. Watch the surfers from Main Beach, play volleyball at Punta Vida, and have coffee at Malagua before the line forms.</p>
+        <a class="b-btn ghost" href="/guide">Read the Puerto Guide</a>
+      </div>
+      <img src={src('/Edited copy/IMG_4879.jpg')} alt="A concrete walkway between curved walls" loading="lazy" />
+    </div>
+  </section>
+
+  <!-- 7. Close -->
+  <section class="bh-close">
+    <h2>Your next stay is waiting.</h2>
+    <p>Bookings are not open yet. Leave your email and we will write once when the doors open.</p>
+    <a class="b-btn" href="/stay">Join the waitlist</a>
+  </section>
+</BaseLayout>
