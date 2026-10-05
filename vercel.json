@@ -1,0 +1,7 @@
+{
+  "redirects": [
+    { "source": "/artist-residency", "destination": "/", "permanent": false },
+    { "source": "/arc.html", "destination": "/", "permanent": false },
+    { "source": "/arc", "destination": "/", "permanent": false }
+  ]
+}

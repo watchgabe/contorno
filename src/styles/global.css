@@ -191,7 +191,7 @@ nav {
 }
 
 .intro-headline em {
-  /* Headlines stay solid — no italic, no terracotta. */
+  /* Headlines stay solid, no italic, no terracotta. */
   font-family: inherit;
   font-style: normal;
   font-weight: inherit;
@@ -348,7 +348,7 @@ nav {
 }
 
 .about-headline em {
-  /* Headlines stay solid — no italic, no terracotta. */
+  /* Headlines stay solid, no italic, no terracotta. */
   font-family: inherit;
   font-style: normal;
   font-weight: inherit;
@@ -403,7 +403,7 @@ nav {
 }
 
 .page-title em {
-  /* Headlines stay solid — no italic, no terracotta. */
+  /* Headlines stay solid, no italic, no terracotta. */
   font-family: inherit;
   font-style: normal;
   font-weight: inherit;
