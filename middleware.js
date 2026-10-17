@@ -1,12 +1,12 @@
-// Password gate for the unit pages (/penthouse, /homes/*) and the demo checkout (/checkout).
-// Runs on Vercel before the static page is served, so the page content is not
-// sent to anyone without the password. Set GATE_PASSWORD in Vercel to change
-// the word; it defaults to "contorno".
+// Password gate for the whole site while it is in review.
+// Runs on Vercel before any page or file is served, so nothing is sent to anyone
+// without the password. Set GATE_PASSWORD in Vercel to change the word; it
+// defaults to "contorno2026". To open the site to everyone, delete this file.
 
-export const config = { matcher: ['/penthouse', '/penthouse/', '/homes', '/homes/:path*', '/checkout', '/checkout/'] };
+export const config = { matcher: ['/((?!favicon\\.ico).*)'] };
 
 const COOKIE = 'contorno_gate';
-const word = () => (process.env.GATE_PASSWORD || 'contorno').trim().toLowerCase();
+const word = () => (process.env.GATE_PASSWORD || 'contorno2026').trim().toLowerCase();
 
 async function token() {
   const data = new TextEncoder().encode(`contorno-gate:${word()}`);
@@ -36,8 +36,8 @@ function page(error) {
   .err{color:#C0583A;font-size:13px;margin:0 0 12px;opacity:1}
 </style></head><body><main>
 <h1>contorno</h1>
-<p>this page is private for now. enter the word to continue.</p>
-${error ? '<p class="err" role="alert">that is not the word. try again.</p>' : ''}
+<p>this site is private until launch. enter the password to continue.</p>
+${error ? '<p class="err" role="alert">that is not the password. try again.</p>' : ''}
 <form method="post"><input type="password" name="word" autocomplete="off" aria-label="password" autofocus required><button type="submit">enter</button></form>
 </main></body></html>`;
   return new Response(html, {

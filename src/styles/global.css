@@ -201,7 +201,7 @@ nav.nav-solid .nav-cta:hover { background: #fff !important; }
 }
 
 .intro-headline em {
-  /* Headlines stay solid — no italic, no terracotta. */
+  /* Headlines stay solid, no italic, no terracotta. */
   font-family: inherit;
   font-style: normal;
   font-weight: inherit;
@@ -358,7 +358,7 @@ nav.nav-solid .nav-cta:hover { background: #fff !important; }
 }
 
 .about-headline em {
-  /* Headlines stay solid — no italic, no terracotta. */
+  /* Headlines stay solid, no italic, no terracotta. */
   font-family: inherit;
   font-style: normal;
   font-weight: inherit;
@@ -413,7 +413,7 @@ nav.nav-solid .nav-cta:hover { background: #fff !important; }
 }
 
 .page-title em {
-  /* Headlines stay solid — no italic, no terracotta. */
+  /* Headlines stay solid, no italic, no terracotta. */
   font-family: inherit;
   font-style: normal;
   font-weight: inherit;

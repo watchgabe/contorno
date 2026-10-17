@@ -6,7 +6,7 @@
 //
 // Usage:  npm run sync-guide
 //
-// The sheet MUST be shared as "Anyone with the link — Viewer" for the
+// The sheet MUST be shared as "Anyone with the link, Viewer" for the
 // CSV export URL to work anonymously. It is today (usp=sharing).
 
 import { writeFileSync, mkdirSync } from 'node:fs';
@@ -47,7 +47,7 @@ function parseCsv(text) {
   return rows;
 }
 
-const clean = (v) => (v == null ? '' : String(v).replace(/\s+/g, ' ').trim());
+const clean = (v) => (v == null ? '' : String(v).replace(/\s*\u2014\s*/g, ', ').replace(/\s+/g, ' ').trim());
 const nullIfEmpty = (v) => { const s = clean(v); return s === '' || s === '-' ? null : s; };
 
 function normalizeDistrict(raw) {
@@ -78,7 +78,7 @@ async function main() {
   console.log(`Fetching sheet CSV: ${CSV_URL}`);
   const res = await fetch(CSV_URL, { redirect: 'follow' });
   if (!res.ok) {
-    console.error(`Failed to fetch CSV (${res.status} ${res.statusText}). Is the sheet set to "Anyone with the link — Viewer"?`);
+    console.error(`Failed to fetch CSV (${res.status} ${res.statusText}). Is the sheet set to "Anyone with the link, Viewer"?`);
     process.exit(1);
   }
   const csv = await res.text();

@@ -70,7 +70,7 @@ const ticker = ['la punta', 'built by hand', 'round windows', 'puerto escondido'
     <div class="cx-nav-l">
       <a href="#homes">the homes <span class="cx-count">4</span></a>
       <a href="/build">the build</a>
-      <a href="/guide">guide</a>
+      <a href="/guide" target="_blank" rel="noopener">guide</a>
     </div>
     <a href="/" class="cx-logo"><span class="cx-dot"></span>contorno</a>
     <div class="cx-nav-r">
@@ -168,7 +168,7 @@ const ticker = ['la punta', 'built by hand', 'round windows', 'puerto escondido'
       beaches and kitchens we use ourselves, and we credit the people behind each one.
     </p>
     {tiles.map((t) => (
-      <a class={`cx-pl cx-pl-${t.cls}`} href={t.href} data-reveal>
+      <a class={`cx-pl cx-pl-${t.cls}`} href={t.href} target={t.href === '/guide' ? '_blank' : undefined} rel={t.href === '/guide' ? 'noopener' : undefined} data-reveal>
         <img src={t.img} alt={t.alt} loading="lazy" />
         <span class="cx-label">{t.label}</span>
       </a>
@@ -191,7 +191,7 @@ const ticker = ['la punta', 'built by hand', 'round windows', 'puerto escondido'
       <div class="cx-foot-links">
         <a href="/build">THE BUILD</a>
         <a href="#homes">HOMES</a>
-        <a href="/guide">GUIDE</a>
+        <a href="/guide" target="_blank" rel="noopener">GUIDE</a>
       </div>
       <div class="cx-foot-social">
         <a href="https://instagram.com/contornocollective" target="_blank" rel="noopener">Instagram</a>
