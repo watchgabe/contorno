@@ -1,0 +1,8 @@
+---
+import { homes } from '../data/homes';
+import HomePage from './homes/[slug].astro';
+
+const home = homes.find((h) => h.slug === 'penthouse')!;
+---
+
+<HomePage home={home} />
