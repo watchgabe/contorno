@@ -1,0 +1,346 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+
+const CONTACT_EMAIL = 'hello@contornocollective.com';
+
+const homes = [
+  {
+    href: '/penthouse',
+    coords: '15.8442° N, 97.0418° W',
+    place: 'PUERTO ESCONDIDO, 2026',
+    name: 'the penthouse',
+    by: 'TOP FLOOR OF THE BUILDING',
+    text: 'two bedrooms and a private terrace over the bay, on the top floor of an eight apartment building.',
+    img: '/img/home/drone-2.jpg',
+    alt: 'Aerial view of the Contorno building with planted terraces',
+  },
+  {
+    href: '/homes/l5',
+    coords: '15.8442° N, 97.0418° W',
+    place: 'LA PUNTA, 2026',
+    name: 'L5',
+    by: 'ROUND WINDOWS AND CANOPY VIEWS',
+    text: 'quiet rooms with round windows and a view into the jungle canopy.',
+    img: '/img/home/ext-2.jpg',
+    alt: 'Curved concrete terrace with hanging vines and floor to ceiling curtains',
+  },
+  {
+    href: '/homes/l3',
+    coords: '15.8442° N, 97.0418° W',
+    place: 'PUERTO ESCONDIDO, 2026',
+    name: 'L3',
+    by: 'A LOFT FOR TWO',
+    text: 'a one bedroom loft with ocean views, a few minutes from La Punta.',
+    img: '/img/home/ext-3.jpg',
+    alt: 'Terrace edge with vines, steel rails and a curtained window wall',
+  },
+];
+
+const tiles = [
+  { label: 'THE BUILD', img: '/img/home/crew.jpg', alt: 'Crew pouring a slab with rebar and foam forms', href: '/' },
+  { label: 'THE GUIDE', img: '/img/home/deck.jpg', alt: 'Wooden deck curving over a lawn toward the coast', href: '/guide' },
+  { label: 'THE ROUND WINDOWS', img: '/img/home/round-window.jpg', alt: 'A circular window in a concrete wall framing green hillside', href: '/' },
+  { label: 'THE PLANS', img: '/img/home/plans.jpg', alt: 'Hands over printed floor plans on site', href: '/' },
+];
+---
+
+<BaseLayout
+  title="Contorno | Concept home"
+  description="Concept for the Contorno home page."
+  header="none"
+  footer={false}
+  noindex
+>
+  <header class="cx-nav">
+    <div class="cx-nav-l">
+      <a href="#homes">the homes <span class="cx-count">3</span></a>
+      <a href="#project">the project</a>
+      <a href="/guide">guide</a>
+    </div>
+    <a href="/concept" class="cx-logo"><span class="cx-dot"></span>contorno</a>
+    <div class="cx-nav-r">
+      <a href="https://instagram.com/contornocollective" aria-label="Instagram" rel="noopener" target="_blank">IG</a>
+      <a href="/penthouse" class="cx-btn">reserve <span aria-hidden="true">→</span></a>
+    </div>
+  </header>
+
+  <!-- 1. Hero -->
+  <section class="cx-hero">
+    <img src="/img/home/drone-1.jpg" alt="Aerial view of the Contorno building above La Punta at sunset" />
+    <p class="cx-hero-line">building homes and a collective<br />on la punta, puerto escondido</p>
+    <h1 class="cx-hero-word">contorno</h1>
+  </section>
+
+  <!-- 2. About -->
+  <section class="cx-about" id="project">
+    <div class="cx-about-l">
+      <h2>the project</h2>
+      <p>
+        contorno is a small property and a creative collective above La Punta, in Puerto Escondido, Oaxaca.
+        Nick Paloukos is building it in concrete, steel and palm, with a local crew, and we document each step as it goes up.
+      </p>
+      <div class="cx-about-meta">
+        <span>SINCE 2024</span>
+        <a href="/">read the build →</a>
+      </div>
+    </div>
+    <div class="cx-about-r">
+      <img src="/img/home/ext-1.jpg" alt="Entrance of the building with agave garden and curtained windows" />
+      <div class="cx-sign">
+        <span class="cx-dot"></span>
+        <p>contorno</p>
+        <p class="cx-sign-sub">CONCRETE. STEEL. PALM.</p>
+        <p class="cx-sign-sub">NICK PALOUKOS, OWNER AND DEVELOPER</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- 3. Marquee -->
+  <div class="cx-marquee" aria-hidden="true">
+    <div class="cx-marquee-track">
+      <span><i class="cx-dot"></i> la punta <i class="cx-dot"></i> built by hand <i class="cx-dot"></i> round windows <i class="cx-dot"></i> puerto escondido</span>
+      <span><i class="cx-dot"></i> la punta <i class="cx-dot"></i> built by hand <i class="cx-dot"></i> round windows <i class="cx-dot"></i> puerto escondido</span>
+      <span><i class="cx-dot"></i> la punta <i class="cx-dot"></i> built by hand <i class="cx-dot"></i> round windows <i class="cx-dot"></i> puerto escondido</span>
+    </div>
+  </div>
+
+  <!-- 4. Homes -->
+  <section class="cx-homes" id="homes">
+    <div class="cx-homes-head">
+      <h2>the homes</h2>
+      <div class="cx-homes-intro">
+        <span class="cx-dot"></span>
+        <p>
+          three apartments are open for stays. they share one building, with concrete walls,
+          steady light, and a window that looks at the Pacific or the canopy.
+        </p>
+        <p class="cx-label">BOOK DIRECT, CHECKOUT BY PRESTIGE</p>
+      </div>
+    </div>
+
+    {homes.map((h) => (
+      <a class="cx-home" href={h.href}>
+        <div class="cx-home-top">
+          <span>{h.coords}</span>
+          <span>{h.place}</span>
+        </div>
+        <h3>{h.name}</h3>
+        <div class="cx-home-meta">
+          <span>{h.by}</span>
+          <p>{h.text}</p>
+        </div>
+        <div class="cx-home-img"><img src={h.img} alt={h.alt} loading="lazy" /></div>
+      </a>
+    ))}
+
+    <p class="cx-more"><a href="/stay">see all stays →</a></p>
+  </section>
+
+  <!-- 5. Full-bleed drone -->
+  <section class="cx-bleed">
+    <img src="/img/home/drone-3.jpg" alt="Aerial view of the building with a thatched palapa roof and planted terraces" loading="lazy" />
+    <p>the garden grows over the terraces a little more each season.</p>
+  </section>
+
+  <!-- 6. The place -->
+  <section class="cx-place">
+    <div class="cx-place-head">
+      <h2>the place</h2>
+      <p>
+        a home on this hill comes with a neighborhood. we keep a guide to the cafes, studios,
+        beaches and kitchens we use ourselves, and we credit the people behind each one.
+      </p>
+    </div>
+    <div class="cx-tiles">
+      {tiles.map((t) => (
+        <a class="cx-tile" href={t.href}>
+          <img src={t.img} alt={t.alt} loading="lazy" />
+          <span class="cx-label">{t.label}</span>
+        </a>
+      ))}
+    </div>
+  </section>
+
+  <!-- 7. A note from us -->
+  <section class="cx-note">
+    <div>
+      <h2>a note from us</h2>
+      <p>updates from the site, new openings and the odd photo from the crew. sent when there is something to say.</p>
+    </div>
+    <form id="cx-form" novalidate>
+      <input type="email" name="email" placeholder="your email" autocomplete="email" required />
+      <button type="submit">join <span aria-hidden="true">→</span></button>
+      <p class="cx-form-msg" id="cx-msg" role="status"></p>
+    </form>
+  </section>
+
+  <!-- 8. Footer -->
+  <div class="cx-foot">
+    <div class="cx-foot-grid">
+      <div>
+        <p class="cx-foot-name">contorno</p>
+        <p class="cx-foot-sub">homes, a guide and a build record<br />on La Punta, Puerto Escondido</p>
+      </div>
+      <div>
+        <p class="cx-label">CONTORNO · PUERTO ESCONDIDO, OAXACA</p>
+        <p class="cx-label">15.8442° N, 97.0418° W</p>
+        <a class="cx-rust" href={`mailto:${CONTACT_EMAIL}`}>{CONTACT_EMAIL.toUpperCase()}</a>
+      </div>
+      <div class="cx-foot-links">
+        <a href="#project">THE PROJECT</a>
+        <a href="#homes">THE HOMES</a>
+        <a href="/guide">GUIDE</a>
+      </div>
+      <div class="cx-foot-links">
+        <a class="cx-rust" href="https://instagram.com/contornocollective" target="_blank" rel="noopener">Instagram</a>
+        <a class="cx-rust" href={`mailto:${CONTACT_EMAIL}`}>Email</a>
+      </div>
+    </div>
+    <div class="cx-bigword"><span class="cx-dot"></span>contorno</div>
+    <p class="cx-copy">© 2026 Contorno</p>
+  </div>
+
+  <script is:inline>
+    (function () {
+      var form = document.getElementById('cx-form');
+      if (!form) return;
+      var msg = document.getElementById('cx-msg');
+      form.addEventListener('submit', async function (e) {
+        e.preventDefault();
+        var email = (form.email.value || '').trim();
+        if (!/^[^@\s]+@[^@\s]+\.[^@\s]+$/.test(email)) { msg.textContent = 'please enter a valid email.'; return; }
+        msg.textContent = 'sending...';
+        try {
+          var res = await fetch('/api/waitlist', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({ email: email }),
+          });
+          if (!res.ok) throw new Error('bad');
+          form.reset();
+          msg.textContent = 'thank you. we will be in touch.';
+        } catch (err) {
+          msg.textContent = 'something went wrong. try again in a minute.';
+        }
+      });
+    })();
+  </script>
+</BaseLayout>
+
+<style is:global>
+  .cx-nav, .cx-hero, .cx-about, .cx-marquee, .cx-homes, .cx-bleed, .cx-place, .cx-note, .cx-foot { --cx-bg: #F5F0E8; --cx-ink: #2A2A2A; --cx-rust: #C0583A; --cx-dark: #1d1c1a; font-family: "DM Sans", sans-serif; }
+  body { background: #F5F0E8; }
+  .cx-dot { display: inline-block; width: .9em; height: .9em; border-radius: 50%; border: .14em solid currentColor; box-sizing: border-box; vertical-align: -0.05em; }
+  i.cx-dot { width: .6em; height: .6em; border-width: .1em; margin: 0 1.1em; }
+  .cx-label { font-size: 11px; letter-spacing: .14em; text-transform: uppercase; }
+  .cx-rust { color: var(--cx-rust); }
+
+  /* nav */
+  .cx-nav { position: fixed; inset: 0 0 auto 0; z-index: 50; height: 60px; display: grid; grid-template-columns: 1fr auto 1fr; align-items: center; padding: 0 22px; background: #1d1c1a; color: #F5F0E8; }
+  .cx-nav a { color: inherit; text-decoration: none; font-size: 11px; letter-spacing: .12em; text-transform: uppercase; }
+  .cx-nav-l { display: flex; gap: 26px; }
+  .cx-count { display: inline-block; background: #F5F0E8; color: #1d1c1a; border-radius: 999px; font-size: 10px; padding: 1px 6px; margin-left: 4px; }
+  .cx-logo { font-family: "Gabarito", sans-serif; font-size: 21px !important; letter-spacing: .01em !important; text-transform: lowercase !important; display: inline-flex; align-items: center; gap: 8px; }
+  .cx-logo .cx-dot { width: 18px; height: 18px; flex: none; }
+  .cx-nav-r { display: flex; justify-content: flex-end; align-items: center; gap: 20px; }
+  .cx-btn { border: 1px solid rgba(245,240,232,.5); padding: 9px 14px; }
+  .cx-btn:hover { background: #F5F0E8; color: #1d1c1a !important; }
+
+  /* hero */
+  .cx-hero { position: relative; height: 100svh; min-height: 620px; overflow: hidden; color: #F5F0E8; background: #1d1c1a; }
+  .cx-hero img { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; }
+  .cx-hero::after { content: ""; position: absolute; inset: 0; background: linear-gradient(to top, rgba(20,18,14,.75), rgba(20,18,14,.05) 55%, rgba(20,18,14,.35)); }
+  .cx-hero-line { position: absolute; z-index: 2; left: 22px; bottom: clamp(120px, 24vw, 330px); font-size: clamp(20px, 2.6vw, 34px); line-height: 1.15; font-weight: 300; }
+  .cx-hero-word { position: absolute; z-index: 2; left: 14px; bottom: -.1em; margin: 0; font-family: "Gabarito", sans-serif; font-weight: 500; font-size: clamp(90px, 25vw, 400px); line-height: .9; letter-spacing: -.03em; text-transform: lowercase; }
+
+  /* about */
+  .cx-about { display: grid; grid-template-columns: 1fr 1fr; min-height: 90vh; background: var(--cx-bg); }
+  .cx-about-l { padding: 90px 34px 40px 22px; display: flex; flex-direction: column; justify-content: space-between; gap: 40px; }
+  .cx-about h2 { font-family: "Gabarito", sans-serif; font-weight: 400; font-size: clamp(54px, 8vw, 120px); line-height: .95; letter-spacing: -.03em; margin: 0; }
+  .cx-about-l p { font-size: clamp(17px, 1.7vw, 24px); line-height: 1.3; max-width: 30em; margin: 0; font-weight: 400; }
+  .cx-about-meta { display: flex; justify-content: space-between; font-size: 11px; letter-spacing: .14em; border-top: 1px solid rgba(42,42,42,.15); padding-top: 14px; }
+  .cx-about-meta a { color: var(--cx-rust); text-decoration: none; }
+  .cx-about-r { position: relative; background: var(--cx-rust); overflow: hidden; }
+  .cx-about-r img { width: 100%; height: 100%; object-fit: cover; mix-blend-mode: multiply; opacity: .95; }
+  .cx-sign { position: absolute; left: 22px; bottom: 22px; color: #F5F0E8; font-size: 22px; font-family: "Gabarito", sans-serif; }
+  .cx-sign p { margin: 4px 0 0; }
+  .cx-sign-sub { font-family: "DM Sans", sans-serif; font-size: 11px; letter-spacing: .14em; }
+
+  /* marquee */
+  .cx-marquee { overflow: hidden; background: var(--cx-bg); border-top: 1px solid rgba(42,42,42,.12); border-bottom: 1px solid rgba(42,42,42,.12); padding: 22px 0; }
+  .cx-marquee-track { display: flex; width: max-content; animation: cx-slide 38s linear infinite; }
+  .cx-marquee-track span { white-space: nowrap; font-family: "Gabarito", sans-serif; font-size: clamp(34px, 6vw, 84px); letter-spacing: -.02em; padding-right: 1.1em; }
+  @keyframes cx-slide { to { transform: translateX(-33.333%); } }
+  @media (prefers-reduced-motion: reduce) { .cx-marquee-track { animation: none; } }
+
+  /* homes */
+  .cx-homes { background: var(--cx-bg); padding: 110px 22px 60px; }
+  .cx-homes-head { display: grid; grid-template-columns: 1fr 1fr; gap: 40px; margin-bottom: 90px; align-items: start; }
+  .cx-homes h2, .cx-place h2, .cx-note h2 { font-family: "Gabarito", sans-serif; font-weight: 400; font-size: clamp(54px, 8vw, 120px); line-height: .95; letter-spacing: -.03em; margin: 0; }
+  .cx-homes-intro { align-self: end; max-width: 30em; font-size: clamp(16px, 1.5vw, 21px); line-height: 1.3; }
+  .cx-homes-intro p { margin: 18px 0 0; }
+  .cx-homes-intro .cx-label { color: var(--cx-rust); margin-top: 50px; }
+  .cx-home { display: block; color: inherit; text-decoration: none; padding: 20px 0 60px; border-top: 1px solid rgba(42,42,42,.12); }
+  .cx-home-top { display: flex; justify-content: space-between; font-size: 11px; letter-spacing: .14em; margin-bottom: 22px; }
+  .cx-home h3 { font-family: "Gabarito", sans-serif; font-weight: 400; font-size: clamp(40px, 5vw, 76px); letter-spacing: -.03em; line-height: 1; margin: 0 0 22px; }
+  .cx-home-meta { display: grid; grid-template-columns: 1fr 1fr; gap: 40px; margin-bottom: 30px; font-size: 11px; letter-spacing: .14em; }
+  .cx-home-meta p { margin: 0; font-size: clamp(16px, 1.5vw, 21px); letter-spacing: 0; line-height: 1.3; }
+  .cx-home-img { overflow: hidden; border-radius: 2px; aspect-ratio: 16 / 8; background: #ddd; }
+  .cx-home-img img { width: 100%; height: 100%; object-fit: cover; transition: transform .9s ease; }
+  .cx-home:hover .cx-home-img img { transform: scale(1.025); }
+  .cx-more { margin: 10px 0 0; text-align: right; }
+  .cx-more a { color: var(--cx-rust); font-size: 11px; letter-spacing: .14em; text-transform: uppercase; text-decoration: none; }
+
+  /* full bleed */
+  .cx-bleed { position: relative; height: 90vh; min-height: 520px; overflow: hidden; color: #F5F0E8; }
+  .cx-bleed img { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; }
+  .cx-bleed::after { content: ""; position: absolute; inset: 0; background: linear-gradient(to top, rgba(20,18,14,.55), transparent 50%); }
+  .cx-bleed p { position: absolute; z-index: 2; left: 22px; bottom: 34px; max-width: 18em; margin: 0; font-family: "Gabarito", sans-serif; font-size: clamp(26px, 3.4vw, 48px); line-height: 1.08; letter-spacing: -.02em; }
+
+  /* place */
+  .cx-place { background: var(--cx-bg); padding: 110px 22px 90px; }
+  .cx-place-head { display: grid; grid-template-columns: 1fr 1fr; gap: 40px; margin-bottom: 70px; align-items: end; }
+  .cx-place-head p { margin: 0; max-width: 28em; font-size: clamp(16px, 1.5vw, 21px); line-height: 1.3; }
+  .cx-tiles { display: grid; grid-template-columns: repeat(4, 1fr); gap: 14px; align-items: start; }
+  .cx-tile { color: inherit; text-decoration: none; display: block; }
+  .cx-tile img { width: 100%; aspect-ratio: 4 / 5; object-fit: cover; display: block; margin-bottom: 12px; }
+  .cx-tile:nth-child(even) { margin-top: 70px; }
+  .cx-tile:hover .cx-label { color: var(--cx-rust); }
+
+  /* note */
+  .cx-note { background: #1d1c1a; color: #F5F0E8; padding: 90px 22px; display: grid; grid-template-columns: 1fr 1fr; gap: 40px; align-items: end; }
+  .cx-note h2 { font-size: clamp(44px, 6vw, 88px); }
+  .cx-note p { margin: 20px 0 0; max-width: 26em; font-size: 17px; line-height: 1.35; opacity: .85; }
+  #cx-form { display: flex; flex-wrap: wrap; gap: 10px; }
+  #cx-form input { flex: 1 1 240px; background: transparent; border: 0; border-bottom: 1px solid rgba(245,240,232,.5); color: inherit; font: inherit; font-size: 18px; padding: 12px 0; outline: none; }
+  #cx-form input::placeholder { color: rgba(245,240,232,.5); }
+  #cx-form button { background: #F5F0E8; color: #1d1c1a; border: 0; padding: 13px 22px; font: inherit; font-size: 11px; letter-spacing: .14em; text-transform: uppercase; cursor: pointer; }
+  .cx-form-msg { flex-basis: 100%; margin: 6px 0 0 !important; font-size: 13px !important; min-height: 1.2em; }
+
+  /* footer */
+  .cx-foot { background: var(--cx-bg); padding: 70px 22px 24px; overflow: hidden; }
+  .cx-foot-grid { display: grid; grid-template-columns: 1.2fr 1.4fr .8fr .6fr; gap: 30px; align-items: start; }
+  .cx-foot p { margin: 0 0 6px; }
+  .cx-foot-name { font-family: "Gabarito", sans-serif; font-size: 26px; }
+  .cx-foot-sub { font-size: 13px; color: #6d6a63; line-height: 1.35; }
+  .cx-foot a { display: block; text-decoration: none; color: inherit; font-size: 11px; letter-spacing: .14em; margin-bottom: 6px; }
+  .cx-foot a.cx-rust { color: var(--cx-rust); text-transform: none; font-size: 13px; letter-spacing: .04em; }
+  .cx-foot-grid a.cx-rust:first-child { text-transform: uppercase; font-size: 11px; letter-spacing: .14em; }
+  .cx-bigword { display: flex; align-items: center; gap: .08em; font-family: "Gabarito", sans-serif; font-weight: 500; font-size: clamp(80px, 23vw, 360px); line-height: 1; letter-spacing: -.04em; margin: 50px 0 10px; white-space: nowrap; }
+  .cx-bigword .cx-dot { width: .6em; height: .6em; flex: none; border-width: .07em; }
+  .cx-copy { font-size: 11px; color: #6d6a63; }
+
+  @media (max-width: 800px) {
+    .cx-nav { grid-template-columns: auto 1fr auto; padding: 0 14px; }
+    .cx-nav-l a:not(:first-child) { display: none; }
+    .cx-logo { justify-self: center; }
+    .cx-nav-r a:first-child { display: none; }
+    .cx-about, .cx-homes-head, .cx-place-head, .cx-note, .cx-home-meta { grid-template-columns: 1fr; }
+    .cx-about-r { min-height: 70vw; }
+    .cx-about-l { padding-top: 90px; }
+    .cx-tiles { grid-template-columns: 1fr 1fr; }
+    .cx-tile:nth-child(even) { margin-top: 30px; }
+    .cx-foot-grid { grid-template-columns: 1fr 1fr; }
+    .cx-home-img { aspect-ratio: 4 / 3; }
+  }
+</style>
