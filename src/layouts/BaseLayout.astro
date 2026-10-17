@@ -50,6 +50,15 @@ const {
     <slot />
     {footer && <Footer />}
     <GuideGate />
+    <script is:inline>
+      (function () {
+        var nav = document.getElementById('main-nav');
+        if (!nav) return;
+        function update() { nav.classList.toggle('nav-solid', window.scrollY > 24); }
+        update();
+        window.addEventListener('scroll', update, { passive: true });
+      })();
+    </script>
   </body>
 </html>
 

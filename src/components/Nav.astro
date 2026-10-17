@@ -22,12 +22,3 @@ const isActive = (p: string) => path === p || (p !== '/' && path.startsWith(p));
   </div>
 </nav>
 
-<script is:inline>
-  (function () {
-    var nav = document.getElementById('main-nav');
-    if (!nav) return;
-    function update() { nav.classList.toggle('nav-solid', window.scrollY > 24); }
-    update();
-    window.addEventListener('scroll', update, { passive: true });
-  })();
-</script>
