@@ -270,3 +270,15 @@
 .bu-maplink { display: flex; flex-wrap: wrap; gap: 6px 16px; align-items: baseline; margin-top: 12px; font-size: 13px; }
 .bu-maplink a { color: var(--ink); font-weight: 500; }
 .bu-maplink span { color: rgba(42,42,42,.7); font-size: 12.5px; }
+
+/* Sleeping, ratings, not included */
+.bu-sleep { display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap: 16px; }
+.bu-sleep figure { margin: 0; }
+.bu-sleep img { width: 100%; aspect-ratio: 3 / 2; object-fit: cover; border-radius: 4px; display: block; }
+.bu-sleep figcaption { display: flex; flex-direction: column; gap: 2px; padding-top: 10px; font-size: 14px; }
+.bu-sleep figcaption span { color: rgba(42,42,42,.72); }
+.bu-notinc { margin-top: 14px; font-size: 13px; color: rgba(42,42,42,.72); }
+.bu-rate { display: flex; align-items: baseline; gap: 10px; font-size: 14px; margin-bottom: 8px; }
+.bu-rate b { font-family: var(--display); font-size: 34px; font-weight: 500; }
+.bu-tags { display: flex; flex-wrap: wrap; gap: 8px; margin-top: 12px; }
+.bu-tags span { font-size: 12px; padding: 6px 12px; border-radius: 999px; background: var(--b-panel); }
