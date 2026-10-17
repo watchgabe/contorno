@@ -18,6 +18,8 @@ export interface Home {
   guests?: string;
   maxGuests?: number;
   alts?: string[];
+  /** Photo positions (0 based) for the preview mosaic. The first is the large tile. */
+  mosaic?: number[];
   sleeping?: { name: string; bed: string; photo?: string }[];
   /** Guest rating shown on the page and where it comes from. */
   rating?: { score: string; count: number; source: string; scores: string; mentions: string[] };
@@ -111,6 +113,8 @@ export const homes: Home[] = [
     lat: 15.8442,
     lng: -97.0418,
     // The eight photos on the Airbnb listing, in the order Airbnb shows them.
+    // The mosaic matches Airbnb's: living room, bedroom, terrace, stair, roof.
+    mosaic: [0, 2, 4, 3, 5],
     photos: [
       '/img/penthouse/airbnb-1.jpg',
       '/img/penthouse/airbnb-2.jpg',

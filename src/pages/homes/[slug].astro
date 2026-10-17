@@ -11,6 +11,11 @@ const { home } = Astro.props;
 const src = (p: string) => encodeURI(p);
 const similar: typeof homes = []; // Hidden until more units have real pages.
 const mapSrc = home.lat && home.lng ? `https://www.google.com/maps?q=${home.lat},${home.lng}&z=15&output=embed` : null;
+const mosaicIdx = home.mosaic ?? home.photos.map((_, i) => i);
+const mosaicAll = mosaicIdx.filter((i) => home.photos[i]);
+const shownCount = mosaicAll.length >= 5 ? 5 : mosaicAll.length >= 3 ? 3 : mosaicAll.length;
+const mosaic = mosaicAll.slice(0, shownCount);
+const altOf = (i: number) => home.alts?.[i] ?? `${home.name}, photo ${i + 1}`;
 const mapLink = home.lat && home.lng ? `https://www.google.com/maps?q=${home.lat},${home.lng}` : 'https://www.google.com/maps?q=15.8442,-97.0418';
 
 const highlights = home.highlights ?? ['Pacific views [confirm]', 'Gym and shared amenities', 'Terrace [confirm]', 'Air conditioning [confirm]'];
@@ -28,19 +33,35 @@ const policies = home.policies ?? [
 ---
 
 <BaseLayout title={`${home.name} | Contorno`} description={home.blurb} noindex>
-  <!-- Gallery -->
-  <section class="bu-gallery" aria-label={`Photos of ${home.name}`}>
-    <div class="bu-track" id="track" tabindex="0">
+  <!-- Photos: a small mosaic inside the page column, and a full gallery that opens from it -->
+  <div class="b-wrap bu-top">
+    <div class={`bu-mosaic n${shownCount}`} aria-label={`Photos of ${home.name}`}>
+      {mosaic.map((idx, k) => (
+        <button type="button" class="bu-tile" data-open={idx} aria-label={`Open photo ${idx + 1} of ${home.photos.length}`}>
+          <img src={src(home.photos[idx])} alt={altOf(idx)} loading={k === 0 ? 'eager' : 'lazy'} />
+        </button>
+      ))}
+      <button type="button" class="bu-showall" data-open="0">
+        <svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="6" cy="6" r="1.6"/><circle cx="12" cy="6" r="1.6"/><circle cx="18" cy="6" r="1.6"/><circle cx="6" cy="12" r="1.6"/><circle cx="12" cy="12" r="1.6"/><circle cx="18" cy="12" r="1.6"/><circle cx="6" cy="18" r="1.6"/><circle cx="12" cy="18" r="1.6"/><circle cx="18" cy="18" r="1.6"/></svg>
+        Show all photos
+      </button>
+    </div>
+  </div>
+
+  <dialog class="bu-gal" id="gallery" aria-label={`All photos of ${home.name}`}>
+    <div class="bu-gal-bar">
+      <button type="button" class="bu-gal-close" id="gal-close">Close</button>
+      <span>{home.photos.length} photos</span>
+    </div>
+    <div class="bu-gal-list">
       {home.photos.map((p, i) => (
-        <div class="bu-slide"><img src={src(p)} alt={home.alts?.[i] ?? `${home.name}, photo ${i + 1}`} loading={i === 0 ? 'eager' : 'lazy'} /></div>
+        <figure id={`gal-${i}`}>
+          <img src={src(p)} alt={altOf(i)} loading="lazy" />
+          <figcaption>{altOf(i)}</figcaption>
+        </figure>
       ))}
     </div>
-    <span class="bu-chip">{home.name}</span>
-    <span class="bu-count" id="count" aria-live="polite">1 / {home.photos.length}</span>
-    <button class="bu-arrow prev" id="prev" type="button" aria-label="Previous photo">&lsaquo;</button>
-    <button class="bu-arrow next" id="next" type="button" aria-label="Next photo">&rsaquo;</button>
-    {!real && <button class="bu-tour" type="button">Photo tour</button>}
-  </section>
+  </dialog>
 
   <div class="b-wrap bu-layout">
     <div>
@@ -257,19 +278,22 @@ const policies = home.policies ?? [
 
 <script is:inline>
   (function () {
-    var track = document.getElementById('track');
-    if (!track) return;
-    var slides = track.children.length;
-    var count = document.getElementById('count');
-    function idx() { return Math.round(track.scrollLeft / track.clientWidth); }
-    function go(i) { track.scrollTo({ left: Math.max(0, Math.min(slides - 1, i)) * track.clientWidth, behavior: 'smooth' }); }
-    document.getElementById('prev').addEventListener('click', function () { go(idx() - 1); });
-    document.getElementById('next').addEventListener('click', function () { go(idx() + 1); });
-    track.addEventListener('scroll', function () { count.textContent = (idx() + 1) + ' / ' + slides; }, { passive: true });
-    track.addEventListener('keydown', function (e) {
-      if (e.key === 'ArrowRight') { e.preventDefault(); go(idx() + 1); }
-      if (e.key === 'ArrowLeft') { e.preventDefault(); go(idx() - 1); }
-    });
+    var gal = document.getElementById('gallery');
+    if (gal) {
+      document.querySelectorAll('[data-open]').forEach(function (b) {
+        b.addEventListener('click', function () {
+          var i = b.getAttribute('data-open');
+          gal.showModal();
+          document.body.style.overflow = 'hidden';
+          var t = document.getElementById('gal-' + i);
+          if (t) t.scrollIntoView({ block: 'start' });
+        });
+      });
+      function closeGal() { gal.close(); }
+      document.getElementById('gal-close').addEventListener('click', closeGal);
+      gal.addEventListener('close', function () { document.body.style.overflow = ''; });
+      gal.addEventListener('click', function (e) { if (e.target === gal) closeGal(); });
+    }
     function toggle(btnId, boxId, more, less) {
       var b = document.getElementById(btnId), box = document.getElementById(boxId);
       b.addEventListener('click', function () {
