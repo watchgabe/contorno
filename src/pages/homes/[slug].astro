@@ -9,7 +9,9 @@ export function getStaticPaths() {
 
 const { home } = Astro.props;
 const src = (p: string) => encodeURI(p);
-const similar = homes.filter((h) => h.slug !== home.slug);
+const similar: typeof homes = []; // Hidden until more units have real pages.
+const mapSrc = home.lat && home.lng ? `https://www.google.com/maps?q=${home.lat},${home.lng}&z=15&output=embed` : null;
+const mapLink = home.lat && home.lng ? `https://www.google.com/maps?q=${home.lat},${home.lng}` : 'https://www.google.com/maps?q=15.8442,-97.0418';
 
 const highlights = home.highlights ?? ['Pacific views [confirm]', 'Gym and shared amenities', 'Terrace [confirm]', 'Air conditioning [confirm]'];
 const essentials = home.essentials ?? ['Fully equipped kitchen', 'Coffee maker', 'Dining set', 'Fresh linens and towels', 'Hair dryer', 'Wifi', 'Filtered water', 'Fan or air conditioning', 'Iron and board'];
@@ -30,14 +32,14 @@ const policies = home.policies ?? [
   <section class="bu-gallery" aria-label={`Photos of ${home.name}`}>
     <div class="bu-track" id="track" tabindex="0">
       {home.photos.map((p, i) => (
-        <div class="bu-slide"><img src={src(p)} alt={`${home.name}, photo ${i + 1}`} loading={i === 0 ? 'eager' : 'lazy'} /></div>
+        <div class="bu-slide"><img src={src(p)} alt={home.alts?.[i] ?? `${home.name}, photo ${i + 1}`} loading={i === 0 ? 'eager' : 'lazy'} /></div>
       ))}
     </div>
     <span class="bu-chip">{home.name}</span>
     <span class="bu-count" id="count" aria-live="polite">1 / {home.photos.length}</span>
     <button class="bu-arrow prev" id="prev" type="button" aria-label="Previous photo">&lsaquo;</button>
     <button class="bu-arrow next" id="next" type="button" aria-label="Next photo">&rsaquo;</button>
-    <button class="bu-tour" type="button">Photo tour</button>
+    {!real && <button class="bu-tour" type="button">Photo tour</button>}
   </section>
 
   <div class="b-wrap bu-layout">
@@ -97,7 +99,7 @@ const policies = home.policies ?? [
         {!real && <p class="note ph" style="margin-top:14px; font-size:12px">[Placeholder list. Confirm each item for this home.]</p>}
       </div>
 
-      <!-- Video -->
+      {!real && (
       <div class="bu-block">
         <h2>See it before you are in it</h2>
         <button class="bu-video" type="button" aria-label={`Play video tour of ${home.name}`}>
@@ -105,6 +107,8 @@ const policies = home.policies ?? [
         </button>
         <p class="ph" style="margin-top:12px; font-size:13px">[Placeholder: video tour goes here.]</p>
       </div>
+
+      )}
 
       <!-- Policies -->
       <div class="bu-block">
@@ -118,16 +122,25 @@ const policies = home.policies ?? [
       <div class="bu-block">
         <div class="bu-theme">
           <div><p class="b-caps" style="margin-bottom:8px">Materials</p><h3>Concrete, steel, palm</h3></div>
-          <p>Polished concrete and jungle palms, not marble and gold. <span class="ph">[Placeholder: two sentences on how the materials show up in this home.]</span></p>
+          <p>Polished concrete and jungle palms, not marble and gold.{real ? ' In the penthouse the concrete is curved and smooth, the steel is painted red, and the palms grow on the terraces below.' : <span class="ph"> [Placeholder: two sentences on how the materials show up in this home.]</span>}</p>
         </div>
       </div>
 
       <!-- Neighborhood -->
       <div class="bu-block">
-        <h2>Welcome to La Punta</h2>
+        <h2>{real ? 'Near La Punta' : 'Welcome to La Punta'}</h2>
         <p>La Punta is the southern tip of Puerto Escondido, next to the beach clubs. Main Beach is where you watch the surfers. Punta Vida has the volleyball courts. Malagua and Jagura Negro are the morning coffee, Chicama and Lava are dinner, and Suave Studio is yoga.</p>
         <p><a href="/guide" style="color:var(--ink)">Read the Puerto Guide</a></p>
-        <div class="bu-map"><div>Map goes here.<br /><a href="https://www.google.com/maps?q=15.8442,-97.0418" target="_blank" rel="noopener" style="color:var(--ink)">Show on map</a></div></div>
+        {mapSrc ? (
+          <>
+            <div class="bu-map live">
+              <iframe title={`Map showing the area around ${home.name}`} src={mapSrc} loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe>
+            </div>
+            <p class="bu-maplink"><a href={mapLink} target="_blank" rel="noopener">Open in Google Maps</a> <span>Approximate location. The exact address comes with your booking.</span></p>
+          </>
+        ) : (
+          <div class="bu-map"><div>Map goes here.<br /><a href={mapLink} target="_blank" rel="noopener" style="color:var(--ink)">Show on map</a></div></div>
+        )}
       </div>
     </div>
 
@@ -173,6 +186,7 @@ const policies = home.policies ?? [
     </aside>
   </div>
 
+  {similar.length > 0 && (
   <!-- Similar -->
   <section class="b-section bu-similar">
     <div class="b-wrap">
@@ -198,6 +212,8 @@ const policies = home.policies ?? [
       </div>
     </div>
   </section>
+
+  )}
 
   <!-- Mobile booking bar -->
   <div class="bu-bar">

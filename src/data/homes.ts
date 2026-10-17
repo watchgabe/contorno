@@ -17,6 +17,10 @@ export interface Home {
   /** Filled for homes with real details. Missing fields fall back to placeholders. */
   guests?: string;
   maxGuests?: number;
+  alts?: string[];
+  /** Approximate pin for the map. */
+  lat?: number;
+  lng?: number;
   about?: string[];
   highlights?: string[];
   essentials?: string[];
@@ -100,7 +104,39 @@ export const homes: Home[] = [
     guests: '4 guests',
     bookingPropertyId: '343502',
     maxGuests: 4,
-    photos: ['/img/ph-1.jpg', '/img/ph-2.jpg', '/img/ph-3.jpg'],
+    lat: 15.8442,
+    lng: -97.0418,
+    photos: [
+      '/img/penthouse/01-living-room-terrace.jpg',
+      '/img/penthouse/02-living-room-sofa.jpg',
+      '/img/penthouse/03-living-room-view.jpg',
+      '/img/penthouse/04-round-window.jpg',
+      '/img/penthouse/05-bedroom.jpg',
+      '/img/penthouse/06-round-windows.jpg',
+      '/img/penthouse/07-bathroom.jpg',
+      '/img/penthouse/08-terrace-roof.jpg',
+      '/img/penthouse/09-terrace-view.jpg',
+      '/img/penthouse/10-terrace-column.jpg',
+      '/img/penthouse/11-garden-from-above.jpg',
+      '/img/penthouse/12-building-garden.jpg',
+      '/img/penthouse/13-building-stairs.jpg',
+    ],
+    alts: [
+      'The penthouse living room with a curved blue sofa, a low wooden table, and a sliding glass wall open to the terrace',
+      'A wide view of the living room with a ceiling fan and the ocean-facing terrace behind the sofa',
+      'A low wooden coffee table and a woven rug in front of the open glass wall',
+      'A round window in the curved concrete wall beside the sofa and the terrace doors',
+      'A bedroom with a king bed, wooden wardrobes, air conditioning, and a glass wall to the terrace',
+      'Two round windows in the polished concrete wall, with soft light along the ceiling edge',
+      'The bathroom with a long wooden vanity, a round mirror, and a shower that opens to plants',
+      'The curved concrete roof of the terrace with the town and trees beyond',
+      'The terrace in daylight with a red steel column and a view over the rooftops',
+      'A red steel column and the underside of the terrace roof',
+      'The building garden seen from above, with a gravel path, lawn, and the town behind',
+      'The building seen from the garden, with vines over the concrete terraces',
+      'A stair between the concrete walls of the building, with vines hanging from the terraces',
+    ],
+
     about: [
       'The penthouse sits on the top floor of a building with eight apartments. It has two bedrooms, each with a king bed and air conditioning, and two bathrooms.',
       'The living area is bright and open, with a full kitchen beside it. A private terrace looks over the ocean and the whole of Zicatela Bay.',
