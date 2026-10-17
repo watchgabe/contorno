@@ -126,10 +126,10 @@ const heroImages = [
           <img src={h.img} alt={h.alt} />
           <span class="cx-card-shade"></span>
           <span class="cx-card-coords">{COORDS}</span>
-          <span class="cx-card-by"><i class="cx-dot"></i>{h.by}</span>
+          <span class={'cx-card-tag' + (h.soon ? ' soon' : '')}>{h.soon ? 'coming soon' : 'available now'}</span>
           <span class="cx-card-info">
             <h3 class={h.long ? 'long' : ''}>{h.name}</h3>
-            <p class="cx-card-line">{h.unit} | {h.meaning} ({h.soon ? 'coming soon' : 'available now'})</p>
+            <p class="cx-card-line">{h.unit} | {h.meaning}</p>
             <p class="cx-card-text">{h.text}</p>
           </span>
         </a>
@@ -183,7 +183,8 @@ const heroImages = [
           for (var i = 0; i < cards.length - 1; i++) {
             var cardH = cards[i].offsetHeight;
             var top = cards[i + 1].getBoundingClientRect().top;
-            var q = clamp((60 + cardH + 40 - top) / (cardH + 40), 0, 1);
+            var pin = parseFloat(getComputedStyle(cards[i]).top) || 0;
+            var q = clamp((pin + cardH + 40 - top) / (cardH + 40), 0, 1);
             cards[i].style.width = (100 - 14 * q) + '%';
             cards[i].style.opacity = String(1 - 0.65 * q);
             cards[i].style.visibility = q >= 0.999 ? 'hidden' : 'visible';
@@ -309,21 +310,29 @@ const heroImages = [
 </style>
 
 <style is:global>
-  /* Column mockup: about and the homes share one centered column, 85% wide. Cards are 7:5, a little taller than the photos, and never taller than the screen. */
+  /* Column mockup: about, the homes and the place share one centered column, 85% wide. Cards are about 25% taller than 7:5.
+     The pin position moves up on short screens so the bottom of a pinned card is always visible. */
   .cx-about { padding: 0 7.5vw; }
   .cx-about-l { padding-left: 0; }
+  section.cx-about .cx-about-l h2 { margin-top: auto; }
+  section.cx-about .cx-about-l p { margin-bottom: auto; }
+  section.cx-about .cx-about-meta { margin-top: 0; }
   .cx-res .cx-res-head { width: 85vw; margin: 0 auto; padding-left: 0; padding-right: 0; }
   .cx-stack { width: 85vw; margin: 0 auto; }
-  .cx-res .cx-res-head h2, .cx-about h2 { margin-left: -.04em; }
+  section.cx-place { padding-left: 7.5vw; padding-right: 7.5vw; }
+  .cx-res .cx-res-head h2, .cx-about h2, .cx-place h2 { margin-left: -.04em; }
   .cx-res .cx-res-text { justify-self: end; text-align: left; }
-  .cx-card { top: 60px; aspect-ratio: auto; height: min(calc(85vw / 1.4), calc(100svh - 72px)); }
+  .cx-card { --H: calc(85vw / 1.12); aspect-ratio: auto; height: var(--H); top: min(60px, calc(100svh - var(--H) - 16px)); }
   .cx-card h3 { font-size: calc(100cqw / 8.3); }
   .cx-card-info { left: 22px; right: 22px; }
   .cx-card-text, .cx-card-line { max-width: none; }
+  .cx-card-tag { position: absolute; top: 22px; right: 22px; z-index: 3; padding: 7px 11px 6px; background: var(--cx-rust); color: #fff; font-family: var(--cx-mono); font-size: 11px; letter-spacing: .1em; text-transform: uppercase; line-height: 1; }
+  .cx-card-tag.soon { background: rgba(120, 118, 114, .85); }
   @media (max-width: 760px) {
     .cx-about { padding: 0 22px; }
+    section.cx-place { padding-left: 22px; padding-right: 22px; }
     .cx-res-head, .cx-stack { width: calc(100% - 44px); }
-    .cx-card { height: min(calc((100vw - 44px) * 4 / 3), calc(100svh - 72px)); }
+    .cx-card { --H: min(calc((100vw - 44px) * 4 / 3), calc(100svh - 72px)); }
     .cx-card h3 { font-size: calc((100cqw - 44px) / 5.2); }
   }
 </style>
