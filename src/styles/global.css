@@ -79,6 +79,16 @@ nav {
 
 .nav-cta:hover { background: #444 !important; }
 
+.nav-right { align-items: center; }
+.nav-ig { display: inline-flex; align-items: center; }
+
+/* Once the page scrolls, the nav turns dark so it never overlaps content. */
+nav { transition: background-color 0.3s ease, color 0.3s ease; }
+nav.nav-solid { background: #1d1c1a; color: #F5F0E8; }
+nav.nav-solid .nav-cta { background: var(--cream); color: #1d1c1a !important; }
+nav.nav-solid .nav-cta:hover { background: #fff !important; }
+@media (prefers-reduced-motion: reduce) { nav { transition: none; } }
+
 /* ─── HERO WRAPPER ────────────────────────────────── */
 .hero-wrapper {
   padding: var(--nav-h) var(--frame) var(--frame);

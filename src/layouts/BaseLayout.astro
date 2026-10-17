@@ -50,6 +50,15 @@ const {
     <slot />
     {footer && <Footer />}
     <GuideGate />
+    <script is:inline>
+      (function () {
+        var nav = document.getElementById('main-nav');
+        if (!nav) return;
+        function update() { nav.classList.toggle('nav-solid', window.scrollY > 24); }
+        update();
+        window.addEventListener('scroll', update, { passive: true });
+      })();
+    </script>
   </body>
 </html>
 
@@ -60,6 +69,7 @@ const {
     background: var(--cream);
     justify-content: center;
   }
+  nav#main-nav.nav-minimal.nav-solid { background: #1d1c1a; }
   nav#main-nav.nav-minimal .nav-logo {
     position: static;
     transform: none;
