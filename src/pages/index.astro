@@ -125,10 +125,10 @@ const heroImages = [
           <img src={h.img} alt={h.alt} />
           <span class="cx-card-shade"></span>
           <span class="cx-card-coords">{COORDS}</span>
-          <span class="cx-card-by"><i class="cx-dot"></i>{h.by}</span>
+          <span class={'cx-card-tag' + (h.soon ? ' soon' : '')}>{h.soon ? 'coming soon' : 'available now'}</span>
           <span class="cx-card-info">
             <h3 class={h.long ? 'long' : ''}>{h.name}</h3>
-            <p class="cx-card-line">{h.unit} | {h.meaning} ({h.soon ? 'coming soon' : 'available now'})</p>
+            <p class="cx-card-line">{h.unit} | {h.meaning}</p>
             <p class="cx-card-text">{h.text}</p>
           </span>
         </a>
@@ -168,11 +168,11 @@ const heroImages = [
       function frame() {
         queued = false;
         var y = window.scrollY, H = window.innerHeight;
-        // Hero shrinks to half size and fades out over the first stretch of scroll.
-        var p = clamp(y / (H * 0.38), 0, 1);
+        // Hero shrinks and fades slowly, over about one screen of scroll, while about slides up over it.
+        var p = clamp(y / (H * 0.95), 0, 1);
         if (!reduce) {
-          hero.style.transform = 'scale(' + (1 - 0.5 * p) + ')';
-          hero.style.opacity = String(clamp(1 - 1.25 * p, 0, 1));
+          hero.style.transform = 'scale(' + (1 - 0.3 * p) + ')';
+          hero.style.opacity = String(clamp(1 - 0.9 * p, 0, 1));
         }
         // Nav is cream on the framed hero, dark while scrolling through about, cream again from the homes on.
         nav.classList.toggle('is-dark', y > 24 && homesSection.getBoundingClientRect().top >= 60);
@@ -182,7 +182,8 @@ const heroImages = [
           for (var i = 0; i < cards.length - 1; i++) {
             var cardH = cards[i].offsetHeight;
             var top = cards[i + 1].getBoundingClientRect().top;
-            var q = clamp((76 + cardH + 40 - top) / (cardH + 40), 0, 1);
+            var pin = parseFloat(getComputedStyle(cards[i]).top) || 0;
+            var q = clamp((pin + cardH + 40 - top) / (cardH + 40), 0, 1);
             cards[i].style.width = (100 - 14 * q) + '%';
             cards[i].style.opacity = String(1 - 0.65 * q);
             cards[i].style.visibility = q >= 0.999 ? 'hidden' : 'visible';
@@ -304,5 +305,35 @@ const heroImages = [
     .cx-place-head { grid-template-columns: 1fr; gap: 20px; margin-bottom: 40px; }
     .cx-tiles { grid-template-columns: 1fr 1fr; }
     .cx-tile:nth-child(even) { margin-top: 30px; }
+  }
+</style>
+
+<style is:global>
+  /* Column mockup: about, the homes and the place share one centered column, 85% wide. Card height is 43% of the column width.
+     The pin position moves up on short screens so the bottom of a pinned card is always visible. */
+  html .cx-about { padding: 0 7.5vw; }
+  html .cx-about-l { padding-left: 0; }
+  html section.cx-about .cx-about-l h2 { margin-top: auto; }
+  html section.cx-about .cx-about-l p { margin-bottom: auto; }
+  html section.cx-about .cx-about-meta { margin-top: 0; }
+  html .cx-res .cx-res-head { width: 85vw; margin: 0 auto; padding-left: 0; padding-right: 0; }
+  html .cx-stack { width: 85vw; margin: 0 auto; }
+  html section.cx-place { padding-left: 7.5vw; padding-right: 7.5vw; }
+  html .cx-res .cx-res-head h2,html .cx-about h2,html .cx-place h2 { margin-left: -.04em; }
+  html .cx-res .cx-res-text { justify-self: end; text-align: left; }
+  html .cx-card { border-radius: 12px; --H: calc(85vw * 0.43); aspect-ratio: auto; height: var(--H); top: min(60px, calc(100svh - var(--H) - 16px)); }
+  html .cx-about-r { border-radius: 12px; }
+  html .cx-tile img { border-radius: 12px; }
+  html .cx-card h3 { font-size: calc(100cqw / 8.3); }
+  html .cx-card-info { left: 22px; right: 22px; }
+  html .cx-card-text,html .cx-card-line { max-width: none; }
+  html .cx-card-tag { position: absolute; top: 22px; right: 22px; z-index: 3; padding: 7px 11px 6px; background: var(--cx-rust); color: #fff; font-family: var(--cx-mono); font-size: 11px; letter-spacing: .1em; text-transform: uppercase; line-height: 1; }
+  html .cx-card-tag.soon { background: rgba(120, 118, 114, .85); }
+  @media (max-width: 760px) {
+    html .cx-about { padding: 0 22px; }
+    html section.cx-place { padding-left: 22px; padding-right: 22px; }
+    html .cx-res-head,html .cx-stack { width: calc(100% - 44px); }
+    html .cx-card { --H: min(calc((100vw - 44px) * 4 / 3), calc(100svh - 72px)); }
+    html .cx-card h3 { font-size: calc((100cqw - 44px) / 5.2); }
   }
 </style>
