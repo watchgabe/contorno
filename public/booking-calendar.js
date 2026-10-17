@@ -79,7 +79,7 @@
     var u = function (s) { var d = parse(s); return d.getUTCFullYear() + '-' + (d.getUTCMonth() + 1) + '-' + d.getUTCDate(); };
     return 'https://book.prestigebookingchannel.com/booking.php?propid=' + encodeURIComponent(prop) + '&page=book3' +
       '&checkin_hide=' + u(start) + '&checkout_hide=' + u(end) + '&numnight=' + nights +
-      '&numadult=' + encodeURIComponent(adults.value) + '&br1-' + encodeURIComponent(room) + '=Reservar';
+      '&numadult=' + encodeURIComponent(adults.value) + '&lang=en&br1-' + encodeURIComponent(room) + '=Reservar';
   }
   var big = document.querySelector('.bu-price .big');
   function quote() {
@@ -102,7 +102,7 @@
   }
   form.addEventListener('submit', function (e) {
     e.preventDefault();
-    if (go.dataset.href && !go.disabled) window.location.href = go.dataset.href;
+    if (go.dataset.href && !go.disabled) window.open(go.dataset.href, '_blank', 'noopener');
   });
 
   // Load blocked nights.
