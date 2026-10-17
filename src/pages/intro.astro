@@ -300,14 +300,13 @@ const ticker = ['la punta', 'built by hand', 'round windows', 'puerto escondido'
   .cx-card-shade { position: absolute; inset: 0; background: linear-gradient(to bottom, rgba(0,0,0,.28), rgba(0,0,0,.05) 40%, rgba(0,0,0,.35)); }
   .cx-card > span { position: absolute; }
   .cx-card-coords { left: 22px; top: 22px; font-family: var(--cx-mono); font-size: 11.5px; letter-spacing: .06em; line-height: 1.5; max-width: 9em; }
-  .cx-card-by { left: 22px; bottom: 22px; display: inline-flex; align-items: center; gap: 10px; font-family: var(--cx-mono); font-size: 11px; letter-spacing: .06em; max-width: 14em; line-height: 1.4; }
+  .cx-card-by { right: 22px; bottom: 22px; text-align: right; display: inline-flex; align-items: center; gap: 10px; font-family: var(--cx-mono); font-size: 11px; letter-spacing: .06em; max-width: 14em; line-height: 1.4; }
   .cx-card-by .cx-dot { width: 26px; height: 26px; border-width: 2px; opacity: .85; }
-  .cx-card-info { left: 62%; right: 22px; bottom: 22px; display: block; }
-  /* The title is sized to span 85% of the description width. --r is the title's width in em (measured), the description is 38% of the card minus 22px. */
+  .cx-card-info { left: 22px; right: 22px; bottom: 22px; display: block; }
+  /* Same size for every title, left aligned. The size comes from the penthouse: 4.28em is the width of "penthouse" and it should take about two thirds of the card. */
   .cx-card { container-type: inline-size; }
-  .cx-card h3 { --r: 2.04; margin: 0 0 14px; font-family: "Gabarito", sans-serif; font-weight: 500; font-size: calc(0.85 * (38cqw - 22px) / var(--r)); line-height: .92; letter-spacing: -.04em; text-transform: lowercase; white-space: nowrap; }
-  .cx-card h3.long { --r: 4.28; }
-  .cx-card-text { margin: 0; font-size: clamp(14px, 1.45vw, 20px); line-height: 1.2; font-family: "DM Sans", sans-serif; }
+  .cx-card h3 { margin: 0 0 14px; font-family: "Gabarito", sans-serif; font-weight: 500; font-size: calc(0.85 * (38cqw - 22px) / 2.04); line-height: .92; letter-spacing: -.04em; text-transform: lowercase; white-space: nowrap; }
+  .cx-card-text { max-width: 38cqw; margin: 0; font-size: clamp(14px, 1.45vw, 20px); line-height: 1.2; font-family: "DM Sans", sans-serif; }
 
   /* the place: three columns of boxes in different sizes, like the Ardene heritage section */
   .cx-place { position: relative; z-index: 2; background: var(--cx-bg); padding: 90px 20px 110px; display: grid; grid-template-columns: repeat(3, 1fr); column-gap: 20px; row-gap: 30px; align-items: start; }
@@ -351,7 +350,9 @@ const ticker = ['la punta', 'built by hand', 'round windows', 'puerto escondido'
     .cx-res-head { grid-template-columns: 1fr; min-height: 0; gap: 28px; }
     .cx-card-coords { display: none; }
     .cx-card-info { left: 22px; right: 22px; bottom: 64px; }
-    .cx-card h3 { font-size: calc(0.85 * (100cqw - 44px) / var(--r)); }
+    .cx-card h3 { font-size: calc((100cqw - 44px) / 4.5); }
+    .cx-card-text { max-width: none; }
+    .cx-card-by { right: auto; left: 22px; text-align: left; }
     .cx-place { grid-template-columns: 1fr 1fr; }
     .cx-place-text { grid-column: 1 / -1; grid-row: auto; }
     .cx-pl-a, .cx-pl-b, .cx-pl-c, .cx-pl-d { grid-column: auto; grid-row: auto; margin-top: 0; }
