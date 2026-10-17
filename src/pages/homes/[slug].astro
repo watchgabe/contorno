@@ -147,10 +147,9 @@ const policies = home.policies ?? [
               <label>Check out<input type="date" name="checkout" min={today} required /></label>
               <label>Guests
                 <select name="numadult">
-                  <option value="1">1 guest</option>
-                  <option value="2" selected>2 guests</option>
-                  <option value="3">3 guests</option>
-                  <option value="4">4 guests</option>
+                  {Array.from({ length: home.maxGuests ?? 2 }, (_, i) => i + 1).map((n) => (
+                    <option value={String(n)} selected={n === Math.min(2, home.maxGuests ?? 2)}>{n} {n === 1 ? 'guest' : 'guests'}</option>
+                  ))}
                 </select>
               </label>
               <button class="b-btn full" type="submit">Check availability</button>

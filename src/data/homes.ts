@@ -16,6 +16,7 @@ export interface Home {
   photos: string[];
   /** Filled for homes with real details. Missing fields fall back to placeholders. */
   guests?: string;
+  maxGuests?: number;
   about?: string[];
   highlights?: string[];
   essentials?: string[];
@@ -31,20 +32,39 @@ export const homes: Home[] = [
   {
     slug: 'l3',
     name: 'L3',
-    area: 'La Punta | Puerto Escondido',
-    blurb: 'A concrete and glass home with the Pacific at the far end of the room.',
-    beds: '[#] bedrooms',
-    baths: '[#] bathrooms',
+    area: 'Puerto Escondido | Oaxaca',
+    blurb: 'A loft with ocean views, a few minutes from La Punta.',
+    beds: '1 bedroom',
+    baths: '1 bathroom',
     size: '[##] m²',
     terrace: '[##] m²',
-    price: '$[rate]',
-    available: '[date]',
-    photos: [
-      P('6AB49683-4759-4689-BC6E-898BF49E223C.jpg'),
-      P('EFFFDBD2-4900-48FD-A4D5-65BEB435209A.jpg'),
-      P('F23BB294-0329-4D30-B2E5-DEF3B664A8DB.jpg'),
-      P('708E6A2B-32C8-4639-9E63-F7E3D8DCA9C7.jpg'),
-      P('CA700DEA-BF8E-4A70-A51E-01A4D8FFF542.jpg'),
+    price: 'Select dates',
+    available: 'Check dates',
+    guests: '2 guests',
+    maxGuests: 2,
+    bookingPropertyId: '343502',
+    // Stand-in photos until the L3 photography is added.
+    photos: ['/img/ph-1.jpg', '/img/ph-2.jpg', '/img/ph-3.jpg'],
+    about: [
+      'L3 is a loft with a king bed, one bathroom, and a view of the ocean. The design is contemporary and made for quiet.',
+      'It is a few minutes from La Punta and close to the Zicatela Market, so the cafes, surf, and sunsets are an easy walk or ride away.',
+      'The building has a shared pool. The loft has a kitchen, wifi, and a desk for working.',
+      'The Airbnb listing for L3 is new and still short. [Add detail on the light, the layout, and what is included once L3 photography is ready.]',
+    ],
+    highlights: [
+      'Ocean views',
+      'King bed for two guests',
+      'Shared pool in the building',
+      'A desk and fast wifi for working',
+    ],
+    essentials: ['Kitchen', 'Wifi', 'Desk', 'Free street parking', 'Pool', 'Air conditioning', 'Living room', 'Dining area', 'Coffee maker'],
+    moreEssentials: ['Refrigerator and freezer', 'Oven', 'Kettle', 'Dishes and utensils', 'TV', '[Confirm the rest of the 32 amenities from the Airbnb listing]'],
+    policies: [
+      { label: 'Minimum stay', value: 'None set' },
+      { label: 'Check in and out', value: '4 pm to midnight / by 10 am' },
+      { label: 'Home rules', value: '[confirm]' },
+      { label: 'Pets', value: '[confirm]' },
+      { label: 'Cancellation', value: '[confirm with Juliette]' },
     ],
   },
   {
@@ -79,13 +99,8 @@ export const homes: Home[] = [
     available: 'Check dates',
     guests: '4 guests',
     bookingPropertyId: '343502',
-    photos: [
-      '/img/placeholder-1.svg',
-      '/img/placeholder-2.svg',
-      '/img/placeholder-3.svg',
-      '/img/placeholder-4.svg',
-      '/img/placeholder-5.svg',
-    ],
+    maxGuests: 4,
+    photos: ['/img/ph-1.jpg', '/img/ph-2.jpg', '/img/ph-3.jpg'],
     about: [
       'The penthouse sits on the top floor of a building with eight apartments. It has two bedrooms, each with a king bed and air conditioning, and two bathrooms.',
       'The living area is bright and open, with a full kitchen beside it. A private terrace looks over the ocean and the whole of Zicatela Bay.',
