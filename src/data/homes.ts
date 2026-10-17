@@ -42,10 +42,10 @@ const P = (f: string) => `/Edited copy/${f}`;
 
 export const homes: Home[] = [
   {
-    slug: 'l3',
-    name: 'L3',
-    area: 'Puerto Escondido | Oaxaca',
-    blurb: 'A loft with ocean views, a few minutes from La Punta.',
+    slug: 'bad-bunny',
+    name: 'Bad Bunny',
+    area: 'La Punta | Puerto Escondido',
+    blurb: 'Quiet rooms, round windows, and a view of the jungle canopy.',
     beds: '1 bedroom',
     baths: '1 bathroom',
     size: '[##] m²',
@@ -55,42 +55,7 @@ export const homes: Home[] = [
     guests: '2 guests',
     maxGuests: 2,
     bookingPropertyId: '343502',
-    bookingRoomId: '709439',
-    // Stand-in photos until the L3 photography is added.
-    photos: ['/img/ph-1.jpg', '/img/ph-2.jpg', '/img/ph-3.jpg'],
-    about: [
-      'L3 is a loft with a king bed, one bathroom, and a view of the ocean. The design is contemporary and made for quiet.',
-      'It is a few minutes from La Punta and close to the Zicatela Market, so the cafes, surf, and sunsets are an easy walk or ride away.',
-      'The building has a shared pool. The loft has a kitchen, wifi, and a desk for working.',
-      'The Airbnb listing for L3 is new and still short. [Add detail on the light, the layout, and what is included once L3 photography is ready.]',
-    ],
-    highlights: [
-      'Ocean views',
-      'King bed for two guests',
-      'Shared pool in the building',
-      'A desk and fast wifi for working',
-    ],
-    essentials: ['Kitchen', 'Wifi', 'Desk', 'Free street parking', 'Pool', 'Air conditioning', 'Living room', 'Dining area', 'Coffee maker'],
-    moreEssentials: ['Refrigerator and freezer', 'Oven', 'Kettle', 'Dishes and utensils', 'TV', '[Confirm the rest of the 32 amenities from the Airbnb listing]'],
-    policies: [
-      { label: 'Minimum stay', value: 'None set' },
-      { label: 'Check in and out', value: '4 pm to midnight / by 10 am' },
-      { label: 'Home rules', value: '[confirm]' },
-      { label: 'Pets', value: '[confirm]' },
-      { label: 'Cancellation', value: '[confirm with Juliette]' },
-    ],
-  },
-  {
-    slug: 'l5',
-    name: 'L5',
-    area: 'La Punta | Puerto Escondido',
-    blurb: 'Quiet rooms, round windows, and a view of the jungle canopy.',
-    beds: '[#] bedrooms',
-    baths: '[#] bathrooms',
-    size: '[##] m²',
-    terrace: '[##] m²',
-    price: '$[rate]',
-    available: '[date]',
+    bookingRoomId: '709441', // L5 in the booking system
     photos: [
       P('a1a1d030-8473-40b5-a0c6-028603930528.jpg'),
       P('IMG_4884.jpg'),
@@ -98,6 +63,42 @@ export const homes: Home[] = [
       P('IMG_4880.jpg'),
       P('b3eb0122-9858-41f8-85c2-bd84ade72e70.jpg'),
     ],
+  },
+  {
+    slug: 'bowie',
+    name: 'Bowie',
+    area: 'Puerto Escondido | Oaxaca',
+    blurb: 'Details coming soon.',
+    beds: '[#] bedrooms',
+    baths: '[#] bathrooms',
+    size: '[##] m²',
+    terrace: '[##] m²',
+    price: 'Select dates',
+    available: 'Check dates',
+    guests: '[#] guests',
+    maxGuests: 2,
+    bookingPropertyId: '343502',
+    bookingRoomId: '709372', // L1 in the booking system
+    // Stand-in photos until the real photography is added.
+    photos: ['/img/home/ext-1.jpg', '/img/home/ext-2.jpg', '/img/home/drone-3.jpg'],
+  },
+  {
+    slug: 'warhol',
+    name: 'Warhol',
+    area: 'Puerto Escondido | Oaxaca',
+    blurb: 'Details coming soon.',
+    beds: '[#] bedrooms',
+    baths: '[#] bathrooms',
+    size: '[##] m²',
+    terrace: '[##] m²',
+    price: 'Select dates',
+    available: 'Check dates',
+    guests: '[#] guests',
+    maxGuests: 2,
+    bookingPropertyId: '343502',
+    bookingRoomId: '709442', // L6 in the booking system
+    // Stand-in photos until the real photography is added.
+    photos: ['/img/home/ext-3.jpg', '/img/home/drone-2.jpg', '/img/home/drone-1.jpg'],
   },
   {
     slug: 'penthouse',

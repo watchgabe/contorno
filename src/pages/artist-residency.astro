@@ -1,75 +1,37 @@
 ---
 import BaseLayout from '../layouts/BaseLayout.astro';
 
-const BASE = import.meta.env.BASE_URL.replace(/\/$/, '');
-const img = (file: string) => `${BASE}/Edited copy/${file}`;
-
 const TYPEFORM_URL = 'https://453f8jrwcv1.typeform.com/to/QAik2KWu';
 ---
 
 <BaseLayout
-  title="Artist Residency — Contorno"
-  description="The Contorno Artist Residency — a place to make work in Puerto Escondido, Oaxaca."
+  title="Artist Residency Program | Contorno"
+  description="Inviting artists to live and work on site at Contorno in Puerto Escondido, Oaxaca."
 >
-  <header class="page-header">
-    <p class="page-eyebrow">artist residency</p>
-    <h1 class="page-title">
-      a place to <em>make</em><br />
-      something here.
-    </h1>
-    <p class="page-lede">
-      The Contorno residency invites artists to live and work on site in
-      Puerto Escondido — to make in the same place we are building.
-    </p>
-  </header>
+  <main class="rs">
+    <p class="rs-eyebrow">Artist Residency Program</p>
+    <h1 class="rs-title">Inviting artists to live and work on site</h1>
 
-  <div class="divider"></div>
-
-  <section class="suite">
-    <div class="suite-image">
-      <img
-        src={img('I like this one.jpg')}
-        alt="The residency space at Contorno"
+    <div class="rs-panel">
+      <iframe
+        class="rs-frame"
+        src={TYPEFORM_URL}
+        title="Contorno Artist Residency Application"
         loading="lazy"
-        decoding="async"
-      />
-      <span class="label">The Residency</span>
+        allow="camera; microphone; autoplay; encrypted-media; fullscreen"
+      ></iframe>
     </div>
-    <div class="suite-body">
-      <h2 class="suite-heading">A month on site. One artist at a time.</h2>
-      <div class="suite-copy">
-        <p>
-          A short residency for artists, photographers, writers, and makers
-          whose practice is shaped by place. Residents are hosted on site
-          during active construction — surrounded by the materials, the
-          landscape, and the people building Contorno.
-        </p>
-        <p>
-          We're keeping it small and intentional. You arrive, you make,
-          you leave one piece behind that lives at Contorno.
-        </p>
-      </div>
-      <ul class="suite-features">
-        <li><span class="name">Location</span><span class="desc">Puerto Escondido, Oaxaca</span><span class="dot"></span></li>
-        <li><span class="name">Duration</span><span class="desc">One month</span><span class="dot"></span></li>
-        <li><span class="name">Includes</span><span class="desc">Private unit, meals, studio &amp; grounds</span><span class="dot"></span></li>
-        <li><span class="name">For</span><span class="desc">Any medium — work shaped by place</span><span class="dot"></span></li>
-        <li><span class="name">Cohort</span><span class="desc">First residencies open 2026</span><span class="dot"></span></li>
-      </ul>
-    </div>
-  </section>
 
-  <div class="divider"></div>
-
-  <section class="apply-wrap">
-    <p class="apply-eyebrow">apply</p>
-    <h2 class="apply-heading">Takes about ten minutes. We read every one.</h2>
-    <iframe
-      class="apply-frame"
-      src={TYPEFORM_URL}
-      title="Contorno Artist Residency Application"
-      loading="lazy"
-      allow="camera; microphone; autoplay; encrypted-media; fullscreen"
-    ></iframe>
-  </section>
+    <p class="rs-line">1 month on site, 1 hour at a time</p>
+  </main>
 </BaseLayout>
+
+<style is:global>
+  .rs { max-width: 920px; margin: 0 auto; padding: calc(var(--nav-h) + 64px) 24px 110px; text-align: center; }
+  .rs-eyebrow { font-family: var(--label); font-size: 11px; letter-spacing: .18em; text-transform: uppercase; margin: 0 0 18px; opacity: .75; }
+  .rs-title { font-family: var(--display); font-weight: 500; font-size: clamp(36px, 5.6vw, 72px); line-height: 1.02; letter-spacing: -.035em; margin: 0 auto 44px; max-width: 14em; }
+  .rs-panel { background: var(--offwhite); border: 1px solid rgba(42, 42, 42, .12); border-radius: 12px; overflow: hidden; }
+  .rs-frame { display: block; width: 100%; height: 640px; border: 0; }
+  .rs-line { font-family: var(--label); font-size: 12px; letter-spacing: .16em; text-transform: uppercase; margin: 30px 0 0; opacity: .8; }
+  @media (max-width: 700px) { .rs-frame { height: 720px; } }
+</style>

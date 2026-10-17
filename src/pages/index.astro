@@ -1,177 +1,367 @@
 ---
 import BaseLayout from '../layouts/BaseLayout.astro';
 
-const BASE = import.meta.env.BASE_URL.replace(/\/$/, '');
-const img = (file: string) => `${BASE}/Edited copy/${file}`;
+const CONTACT_EMAIL = 'hello@contornocollective.com';
+const COORDS = '15.8442° N, 97.0418° W';
 
-const galleryImages = [
-  'I like this one.jpg',
-  'Nick Paxifico.jpg',
-  'Nick.jpg',
-  'IMG_1497.jpg',
-  'IMG_3439.jpg',
-  'IMG_3443.jpg',
-  'IMG_4879.jpg',
-  'IMG_4880.jpg',
-  'IMG_4884.jpg',
-  'IMG_6056.jpg',
-  'IMG_6451.jpg',
-  'IMG_8782.jpg',
-  '061B543D-2A1D-4640-9212-1D3C525CD685.jpg',
-  '0C72A8CF-5C5B-4080-AE14-FBB5DC86421E.jpg',
-  '0D0C42A5-9B72-45EB-9BC0-6F7CD26323DE_4_5005_c.jpg',
-  '0f5d83fc-455c-431e-8229-d2c02022d94c.jpg',
-  '10E79F69-5E13-429D-BFA8-DBB08C41F68B.jpg',
-  '129B802E-3162-4454-8E88-36166BFA4F09_4_5005_c.jpg',
-  '142f74f3-5cc2-4ae3-beac-53ee80d2511d.jpg',
-  '1afe7fa7-5127-4c2a-bc61-f2b5e8a75b8b.jpg',
-  '26092148-4169-45bc-a3e4-d71902936c86.jpg',
-  '2E5B2BF8-EEE1-455A-A31C-1C443E4C336D.jpg',
-  '2F210712-D308-4564-BE5C-BFF936830051.jpg',
-  '2cd74614-5797-41bd-812a-745a948c3036.jpg',
-  '39a1b44c-0226-4b3d-9791-fa55ea5a3766.jpg',
-  '3BB35790-898D-4E4F-B565-9BCEA535CCD0.jpg',
-  '3df1bec0-27d3-48e0-ad44-a31562519dde.jpg',
-  '40A518B5-3109-49AF-B9CE-8905C473F30E.jpg',
-  '41F2A86E-0F0E-4D26-9325-F0583E5FE1B4.jpg',
-  '44D3F4B4-6857-4272-A030-825017C8C047.jpg',
-  '4EDC02ED-6A47-4F18-A124-4581FDC741E8.jpg',
-  '4F873E33-391A-4C71-BC88-6682CDCC53C0.jpg',
-  '60ea1757-64f8-4602-b9d1-d5aed4c759fb.jpg',
-  '62847044-8C12-4E7D-8DDA-1C73EF6C4D97.jpg',
-  '708E6A2B-32C8-4639-9E63-F7E3D8DCA9C7.jpg',
-  '7DFD94FB-B88F-4AD7-97FD-D2517D580B19.jpg',
-  '93E39AC2-D4D6-48E7-BEAF-9D9D5AA7BF0B.jpg',
-  '98BF8017-CF4D-44F8-B2CE-4BE9AD708884_4_5005_c.jpg',
-  '99b1750d-7639-4b1d-882d-5c8403bd247c.jpg',
-  'A2F5DC44-8A10-436C-BF75-30C5BA66C6B0_4_5005_c.jpg',
-  'A4AE3944-80BF-4196-9DAA-8D4706603AF2.jpg',
-  'A98D8E12-0CCF-4B9A-8D55-BD1C79818F59.jpg',
-  'CA700DEA-BF8E-4A70-A51E-01A4D8FFF542.jpg',
-  'D76D8897-7219-44A4-A29B-C2DA582E84EE.poster.jpg',
-  'E1D36EF6-D0F4-4BEF-9CAA-415763C225C1.jpg',
-  'E48B6D29-4FB4-497A-9898-C8AC388AD993.jpg',
-  'EFFFDBD2-4900-48FD-A4D5-65BEB435209A.jpg',
-  'F23BB294-0329-4D30-B2E5-DEF3B664A8DB.jpg',
-  'FF6A11D8-185B-4DC9-952F-E8B65ACDA305.jpg',
-  'a1a1d030-8473-40b5-a0c6-028603930528.jpg',
-  'b3656b2e-c1e9-4a43-9907-5f992a507908.jpg',
-  'b3eb0122-9858-41f8-85c2-bd84ade72e70.jpg',
-  'c2ce60db-eda6-4a8a-8597-a05f93f39547.jpg',
-  'cc6f3c10-f2b0-4e42-9206-787c0d3d9a1e.jpg',
-  'cf2945b9-16c7-4cc1-bcbe-979290bdcd8a.jpg',
-  'dfcf983f-6291-4d88-88a0-8f953dfddc4e.jpg',
-  'e71435a3-89ea-451d-9c4f-d48e2fbe0904.jpg',
+const homes = [
+  {
+    href: '/penthouse',
+    name: 'penthouse',
+    by: 'BUILT BY NICK PALOUKOS',
+    text: 'two bedrooms and a private terrace over the bay, on the top floor of an eight apartment building.',
+    img: '/img/home/drone-2.jpg',
+    alt: 'Aerial view of the Contorno building with planted terraces',
+  },
+  {
+    href: '/homes/bad-bunny',
+    name: 'bad bunny',
+    by: 'BUILT BY NICK PALOUKOS',
+    text: 'quiet rooms with round windows and a view into the jungle canopy.',
+    img: '/img/home/ext-2.jpg',
+    alt: 'Curved concrete terrace with hanging vines and floor to ceiling curtains',
+  },
+  {
+    href: '/homes/bowie',
+    name: 'bowie',
+    by: 'BUILT BY NICK PALOUKOS',
+    text: 'details coming soon.',
+    img: '/img/home/ext-1.jpg',
+    alt: 'Entrance of the building with agave garden and curtained windows',
+  },
+  {
+    href: '/homes/warhol',
+    name: 'warhol',
+    by: 'BUILT BY NICK PALOUKOS',
+    text: 'details coming soon.',
+    img: '/img/home/ext-3.jpg',
+    alt: 'Terrace edge with vines, steel rails and a curtained window wall',
+  },
 ];
+
+const tiles = [
+  { cls: 'a', label: 'THE BUILD', img: '/img/home/crew.jpg', alt: 'Crew working on a slab with rebar and foam forms', href: '/' },
+  { cls: 'b', label: 'THE GUIDE', img: '/img/home/deck.jpg', alt: 'Wooden deck curving over a lawn toward the coast', href: '/guide' },
+  { cls: 'c', label: 'THE ROUND WINDOWS', img: '/img/home/round-window.jpg', alt: 'A circular window in a concrete wall framing green hillside', href: '/' },
+  { cls: 'd', label: 'THE PLANS', img: '/img/home/plans.jpg', alt: 'Hands over printed floor plans on site', href: '/' },
+];
+
+const ticker = ['la punta', 'built by hand', 'round windows', 'puerto escondido'];
 ---
 
-<BaseLayout>
-  <div class="hero-wrapper">
-    <section class="hero">
-      <img class="hero-img" src={img('L3 Construction.jpg')} alt="Contorno — building in Puerto Escondido" fetchpriority="high" decoding="async" />
-      <div class="hero-overlay"></div>
+<BaseLayout
+  title="Contorno"
+  description="Homes, a guide and a build record on La Punta, Puerto Escondido, Oaxaca."
+  header="none"
+  footer={false}
+>
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=DM+Mono:wght@400&display=swap" />
 
-      <div class="hero-coords">
-        15.8442° N<br />
-        97.0418° W
-      </div>
-
-      <div class="hero-label">Puerto Escondido · 2026</div>
-
-      <div class="hero-content">
-        <h1 class="hero-title">The Project</h1>
-        <p class="hero-desc">the process of building — documented from the ground up.</p>
-      </div>
-    </section>
-  </div>
-
-  <section class="suite">
-    <div class="suite-image">
-      <img
-        src={`${BASE}/img/project-stair.jpg`}
-        alt="Contorno — concrete stair, Puerto Escondido"
-        fetchpriority="high"
-        decoding="async"
-      />
-      <span class="label">The Project</span>
+  <header class="cx-nav" id="cx-nav">
+    <div class="cx-nav-l">
+      <a href="#homes">the homes <span class="cx-count">4</span></a>
+      <a href="/build">the build</a>
+      <a href="/guide">guide</a>
     </div>
-    <div class="suite-body">
-      <h2 class="suite-heading">A record of construction in progress.</h2>
-      <div class="suite-copy">
-        <p>
-          Contorno documents the way a building takes shape — the decisions made on site,
-          the materials handled by hand, the moments between the plans and the pour.
-        </p>
-        <p>
-          Contorno is owned and developed by Nick Paloukos. Based in Puerto Escondido, the
-          project follows the arc of building: from raw land to finished structure, told in
-          photographs and in real time.
-        </p>
-      </div>
-      <ul class="suite-features">
-        <li><span class="name">Location</span><span class="desc">Puerto Escondido, Oaxaca</span><span class="dot"></span></li>
-        <li><span class="name">Year</span><span class="desc">2024 — ongoing</span><span class="dot"></span></li>
-        <li><span class="name">Owner and developer</span><span class="desc">Nick Paloukos</span><span class="dot"></span></li>
-        <li><span class="name">Materials</span><span class="desc">Concrete, steel, palm</span><span class="dot"></span></li>
-        <li><span class="name">Volume</span><span class="desc">Vol. 01 — Foundations</span><span class="dot"></span></li>
-      </ul>
+    <a href="/" class="cx-logo"><span class="cx-dot"></span>contorno</a>
+    <div class="cx-nav-r">
+      <a href="https://instagram.com/contornocollective" aria-label="Instagram" rel="noopener" target="_blank">
+        <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true"><rect x="3" y="3" width="18" height="18" rx="5"/><circle cx="12" cy="12" r="4.2"/><circle cx="17.3" cy="6.7" r="1" fill="currentColor" stroke="none"/></svg>
+      </a>
+      <a href="/penthouse" class="cx-btn">reserve <span aria-hidden="true">→</span></a>
+    </div>
+  </header>
+
+  <!-- Hero: shrinks and fades as the page scrolls -->
+  <section class="cx-hero">
+    <div class="cx-hero-in" id="cx-hero">
+      <img src="/img/home/drone-1.jpg" alt="Aerial view of the Contorno building above La Punta at sunset" />
+      <span class="cx-hero-coords">15.8442° N<br />97.0418° W</span>
+      <span class="cx-hero-tag">PUERTO ESCONDIDO · 2026</span>
+      <h1 class="cx-hero-word">contorno</h1>
     </div>
   </section>
 
-  <div class="divider"></div>
-
-  <section id="work">
-    <div class="section-header">
-      <h2 class="section-title">the build</h2>
-      <span class="section-tag">Puerto Escondido · 2026</span>
+  <!-- About: scrolls up over the hero -->
+  <section class="cx-about" id="project">
+    <div class="cx-about-l">
+      <h2>about</h2>
+      <p>
+        contorno is a small property and a creative collective above La Punta, in Puerto Escondido, Oaxaca.
+        Nick Paloukos is building it in concrete, steel and palm, with a local crew, and we document each step as it goes up.
+      </p>
+      <div class="cx-about-meta">
+        <span>SINCE 2024</span>
+        <a href="/build">THE BUILD</a>
+      </div>
     </div>
+    <div class="cx-about-r">
+      <img src="/img/home/ext-1.jpg" alt="Entrance of the building with agave garden and curtained windows" />
+      <div class="cx-sign">
+        <span class="cx-dot"></span>
+        <p>contorno</p>
+        <p class="cx-sign-sub">CONCRETE. STEEL. PALM.</p>
+        <p class="cx-sign-sub">NICK PALOUKOS, OWNER AND DEVELOPER</p>
+      </div>
+    </div>
+  </section>
 
-    <div class="gallery">
-      {galleryImages.map((file) => (
-        <figure><img src={img(file)} alt="" loading="lazy" decoding="async" fetchpriority="low" /></figure>
+  <!-- Ticker over a photo band -->
+  <section class="cx-ticker" id="cx-ticker" aria-hidden="true">
+    <img src="/img/home/deck.jpg" alt="" />
+    <div class="cx-ticker-track">
+      {[0, 1, 2].map(() => (
+        <span>{ticker.map((t) => (<><i class="cx-dot"></i>{t}</>))}</span>
       ))}
     </div>
   </section>
 
-  <div class="divider"></div>
+  <!-- Homes -->
+  <section class="cx-res">
+    <div class="cx-res-head">
+      <h2 data-reveal>the homes</h2>
+      <div class="cx-res-meta">
+        <span class="cx-dot"></span>
+        <p class="cx-label">COLLECTION I · LA PUNTA</p>
+      </div>
+      <p class="cx-res-text" data-reveal>
+        each home sits inside the same building, with concrete walls, steady light, and a window that looks at the Pacific or the canopy. book direct, with checkout by Prestige.
+      </p>
+    </div>
 
-  <section class="feature">
-    <img src={img('Nick Ladder.jpg')} alt="Nick Paloukos on site" loading="lazy" decoding="async" />
-    <div class="feature-overlay"></div>
-    <div class="feature-caption">
-      <span class="feature-caption-label">on site</span>
-      <span class="feature-caption-label">Puerto Escondido, Oaxaca</span>
+    <div class="cx-stack" id="cx-stack">
+      <span id="homes" class="cx-anchor"></span>
+      {homes.map((h) => (
+        <a class="cx-card" href={h.href}>
+          <img src={h.img} alt={h.alt} />
+          <span class="cx-card-shade"></span>
+          <span class="cx-card-coords">{COORDS}</span>
+          <span class="cx-card-by"><i class="cx-dot"></i>{h.by}</span>
+          <span class="cx-card-info">
+            <h3 class={h.long ? 'long' : ''}>{h.name}</h3>
+            <p class="cx-card-text">{h.text}</p>
+          </span>
+        </a>
+      ))}
     </div>
   </section>
 
-  <section class="about" id="about">
-    <div class="about-image">
-      <img src={img('Black & White.jpg')} alt="Contorno — construction detail" loading="lazy" decoding="async" />
-    </div>
-    <div class="about-text">
-      <p class="about-eyebrow">the people</p>
-      <h2 class="about-headline">
-        building<br />
-        something <em>real</em>.
-      </h2>
-      <div class="about-body">
-        <p>
-          Nick Paloukos owns Contorno and developed it. He decided to build
-          something real, in a place he loves.
-        </p>
-        <p>
-          The project lives in Puerto Escondido, Oaxaca. The photographs
-          document what happens between the idea and the thing: the concrete
-          poured, the steel bent, the decisions made in daylight on a
-          half-finished floor.
-        </p>
-        <p>
-          Contorno is the outline of a building taking shape.
-        </p>
-      </div>
-      <div class="about-names">
-        <span class="about-name">Nick Paloukos</span>
-      </div>
-    </div>
+  <!-- The place -->
+  <section class="cx-place">
+    <h2 class="cx-place-title" data-reveal>the place</h2>
+    <p class="cx-place-text" data-reveal>
+      a home on this hill comes with a neighborhood. we keep a guide to the cafes, studios,
+      beaches and kitchens we use ourselves, and we credit the people behind each one.
+    </p>
+    {tiles.map((t) => (
+      <a class={`cx-pl cx-pl-${t.cls}`} href={t.href} data-reveal>
+        <img src={t.img} alt={t.alt} loading="lazy" />
+        <span class="cx-label">{t.label}</span>
+      </a>
+    ))}
+    <p class="cx-place-mark" data-reveal><span class="cx-dot"></span><span class="cx-label">CONTORNO</span></p>
   </section>
+
+  <!-- Footer -->
+  <div class="cx-foot">
+    <div class="cx-foot-grid">
+      <div>
+        <p class="cx-foot-name">contorno</p>
+        <p class="cx-foot-sub">homes, a guide and a build record<br />on La Punta, Puerto Escondido</p>
+      </div>
+      <div>
+        <p class="cx-foot-mono">CONTORNO · PUERTO ESCONDIDO, OAXACA</p>
+        <p class="cx-foot-mono">{COORDS}</p>
+        <a class="cx-foot-mail" href={`mailto:${CONTACT_EMAIL}`}>{CONTACT_EMAIL.toUpperCase()}</a>
+      </div>
+      <div class="cx-foot-links">
+        <a href="/build">THE BUILD</a>
+        <a href="#homes">HOMES</a>
+        <a href="/guide">GUIDE</a>
+      </div>
+      <div class="cx-foot-social">
+        <a href="https://instagram.com/contornocollective" target="_blank" rel="noopener">Instagram</a>
+        <a href={`mailto:${CONTACT_EMAIL}`}>Email</a>
+      </div>
+    </div>
+  </div>
+
+  <script is:inline>
+    (function () {
+      var nav = document.getElementById('cx-nav');
+      var hero = document.getElementById('cx-hero');
+      var ticker = document.getElementById('cx-ticker');
+      var cards = [].slice.call(document.querySelectorAll('.cx-card'));
+      var reduce = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+      var queued = false;
+      function clamp(v, a, b) { return Math.min(b, Math.max(a, v)); }
+
+      function frame() {
+        queued = false;
+        var y = window.scrollY, H = window.innerHeight;
+        // Hero shrinks to half size and fades out over the first stretch of scroll.
+        var p = clamp(y / (H * 0.38), 0, 1);
+        if (!reduce) {
+          hero.style.transform = 'scale(' + (1 - 0.5 * p) + ')';
+          hero.style.opacity = String(clamp(1 - 1.25 * p, 0, 1));
+        }
+        // Nav is cream on the framed hero, dark while scrolling through about, cream again after the ticker.
+        nav.classList.toggle('is-dark', y > 24 && ticker.getBoundingClientRect().top >= 60);
+        // Each pinned card insets and fades while the next card slides over it.
+        if (!reduce) {
+          for (var i = 0; i < cards.length - 1; i++) {
+            var top = cards[i + 1].getBoundingClientRect().top;
+            var q = clamp((H - top) / (H - 76), 0, 1);
+            cards[i].style.width = (100 - 14 * q) + '%';
+            cards[i].style.opacity = String(1 - 0.65 * q);
+          }
+        }
+      }
+      function onScroll() { if (!queued) { queued = true; requestAnimationFrame(frame); } }
+      window.addEventListener('scroll', onScroll, { passive: true });
+      window.addEventListener('resize', onScroll);
+      frame();
+
+      // Fade up as things enter the screen.
+      var items = [].slice.call(document.querySelectorAll('[data-reveal]'));
+      if (!('IntersectionObserver' in window) || reduce) { items.forEach(function (e) { e.classList.add('in'); }); return; }
+      var io = new IntersectionObserver(function (entries) {
+        entries.forEach(function (en) { if (en.isIntersecting) { en.target.classList.add('in'); io.unobserve(en.target); } });
+      }, { threshold: 0.12 });
+      items.forEach(function (e, k) { e.style.transitionDelay = ((k % 4) * 70) + 'ms'; io.observe(e); });
+    })();
+  </script>
 </BaseLayout>
+
+<style is:global>
+  :root { --cx-bg: #F5F0E8; --cx-ink: #2A2A2A; --cx-rust: #C0583A; --cx-dark: #1d1c1a; --cx-mono: "DM Mono", ui-monospace, Menlo, monospace; }
+  html { scroll-behavior: smooth; }
+  body { background: var(--cx-bg); }
+  .cx-dot { display: inline-block; width: .9em; height: .9em; border-radius: 50%; border: .14em solid currentColor; box-sizing: border-box; vertical-align: -0.05em; flex: none; }
+  .cx-label { font-family: var(--cx-mono); font-size: 11px; letter-spacing: .08em; text-transform: uppercase; margin: 0; }
+  .cx-rust { color: var(--cx-rust); }
+  [data-reveal] { opacity: 0; transform: translateY(30px); transition: opacity .8s ease, transform .8s ease; }
+  [data-reveal].in { opacity: 1; transform: none; }
+
+  /* nav: dark over the hero, cream after the ticker */
+  .cx-nav { position: fixed; inset: 0 0 auto 0; z-index: 50; height: 60px; display: grid; grid-template-columns: 1fr auto 1fr; align-items: center; padding: 0 22px; background: var(--cx-bg); color: var(--cx-ink); transition: background-color .35s ease, color .35s ease; font-family: var(--cx-mono); }
+  .cx-nav.is-dark { background: var(--cx-dark); color: #F5F0E8; }
+  .cx-nav a { color: inherit; text-decoration: none; font-size: 11.5px; letter-spacing: .06em; text-transform: uppercase; }
+  .cx-nav-l { display: flex; gap: 26px; align-items: center; }
+  .cx-count { display: inline-block; background: var(--cx-dark); color: var(--cx-bg); border-radius: 999px; font-size: 10px; padding: 1px 6px; margin-left: 4px; transition: background-color .35s, color .35s; }
+  .cx-nav.is-dark .cx-count { background: #F5F0E8; color: var(--cx-dark); }
+  .cx-logo { font-family: "Gabarito", sans-serif; font-size: 22px !important; letter-spacing: -.01em !important; text-transform: lowercase !important; display: inline-flex; align-items: center; gap: 8px; }
+  .cx-logo .cx-dot { width: 18px; height: 18px; }
+  .cx-nav-r { display: flex; justify-content: flex-end; align-items: center; gap: 20px; }
+  .cx-btn { border: 1px solid var(--cx-dark); background: var(--cx-dark); color: var(--cx-bg) !important; padding: 8px 14px; }
+  .cx-nav.is-dark .cx-btn { background: transparent; color: #F5F0E8 !important; border-color: rgba(245,240,232,.6); }
+  .cx-nav.is-dark .cx-btn:hover { background: #F5F0E8; color: var(--cx-dark) !important; }
+
+  /* hero: framed photo with a cream border, like the current home page */
+  .cx-hero { height: 100svh; min-height: 620px; padding: 60px 14px 14px; background: var(--cx-bg); }
+  .cx-hero-in { position: relative; height: 100%; border-radius: 12px; overflow: hidden; color: #F5F0E8; background: var(--cx-dark); transform-origin: 50% 50%; will-change: transform, opacity; }
+  .cx-hero-in img { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; }
+  .cx-hero-in::after { content: ""; position: absolute; inset: 0; background: linear-gradient(to top, rgba(20,18,14,.55), rgba(20,18,14,0) 45%, rgba(20,18,14,.25)); }
+  .cx-hero-coords, .cx-hero-tag { position: absolute; z-index: 2; top: 28px; font-family: "DM Sans", sans-serif; font-size: 11px; letter-spacing: .14em; line-height: 1.6; opacity: .85; }
+  .cx-hero-coords { left: 34px; }
+  .cx-hero-tag { right: 34px; }
+  .cx-hero-word { position: absolute; z-index: 2; left: 34px; bottom: 30px; margin: 0; font-family: "Gabarito", sans-serif; font-weight: 400; font-size: clamp(64px, 12vw, 210px); line-height: .9; letter-spacing: -.035em; text-transform: lowercase; }
+
+  /* about */
+  .cx-about { position: relative; z-index: 2; display: grid; grid-template-columns: 1fr 1fr; min-height: 100svh; background: var(--cx-bg); }
+  .cx-about-l { padding: 120px 34px 28px 22px; display: flex; flex-direction: column; justify-content: space-between; gap: 40px; }
+  .cx-about h2, .cx-res h2, .cx-place h2 { font-family: "Gabarito", sans-serif; font-weight: 400; font-size: clamp(54px, 8vw, 120px); line-height: .95; letter-spacing: -.04em; margin: 0; }
+  .cx-about-l p { font-size: clamp(17px, 1.7vw, 24px); line-height: 1.28; max-width: 28em; margin: 0; font-family: "DM Sans", sans-serif; }
+  .cx-about-meta { display: flex; justify-content: space-between; font-family: var(--cx-mono); font-size: 11px; letter-spacing: .08em; }
+  .cx-about-meta a { color: inherit; text-decoration: underline; text-underline-offset: 4px; }
+  .cx-about-r { position: relative; background: var(--cx-rust); overflow: hidden; }
+  .cx-about-r img { width: 100%; height: 100%; object-fit: cover; mix-blend-mode: multiply; opacity: .95; position: absolute; inset: 0; }
+  .cx-sign { position: absolute; left: 22px; bottom: 22px; color: #F5F0E8; font-size: 22px; font-family: "Gabarito", sans-serif; }
+  .cx-sign p { margin: 4px 0 0; }
+  .cx-sign-sub { font-family: var(--cx-mono); font-size: 11px; letter-spacing: .08em; }
+
+  /* ticker over a photo */
+  .cx-ticker { position: relative; z-index: 2; overflow: hidden; height: clamp(220px, 34vw, 380px); display: flex; align-items: center; background: var(--cx-dark); }
+  .cx-ticker img { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; }
+  .cx-ticker-track { position: relative; display: flex; width: max-content; animation: cx-slide 40s linear infinite; color: var(--cx-dark); }
+  .cx-ticker-track span { white-space: nowrap; font-family: "Gabarito", sans-serif; font-weight: 400; font-size: clamp(120px, 24vw, 340px); letter-spacing: -.05em; line-height: 1; padding-right: .5em; }
+  .cx-ticker-track i.cx-dot { width: .5em; height: .5em; margin: 0 .35em; border-width: .06em; }
+  @keyframes cx-slide { to { transform: translateX(-33.333%); } }
+  @media (prefers-reduced-motion: reduce) { .cx-ticker-track { animation: none; } }
+
+  /* homes: cards pin and the next one slides over */
+  .cx-res { position: relative; z-index: 2; background: var(--cx-bg); padding: 100px 0 0; }
+  .cx-res-head { display: grid; grid-template-columns: 1fr 1fr; padding: 0 22px 60px; gap: 24px; min-height: 52vh; align-content: space-between; }
+  .cx-res-head h2 { grid-column: 1 / -1; }
+  .cx-res-meta { display: flex; align-items: flex-end; gap: 12px; font-size: 20px; }
+  .cx-res-text { margin: 0; font-size: clamp(16px, 1.5vw, 21px); line-height: 1.3; max-width: 28em; justify-self: start; font-family: "DM Sans", sans-serif; }
+  .cx-stack { position: relative; padding-bottom: 0; }
+  .cx-anchor { position: absolute; top: -80px; }
+  .cx-card { position: sticky; top: 76px; display: block; width: 100%; margin: 0 auto 40px; height: min(640px, calc(100svh - 96px)); overflow: hidden; color: #F5F0E8; text-decoration: none; background: var(--cx-dark); }
+  .cx-card:last-child { margin-bottom: 0; }
+  .cx-card img { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; }
+  .cx-card-shade { position: absolute; inset: 0; background: linear-gradient(to bottom, rgba(0,0,0,.28), rgba(0,0,0,.05) 40%, rgba(0,0,0,.35)); }
+  .cx-card > span { position: absolute; }
+  .cx-card-coords { left: 22px; top: 22px; font-family: var(--cx-mono); font-size: 11.5px; letter-spacing: .06em; line-height: 1.5; max-width: 9em; }
+  .cx-card-by { right: 22px; bottom: 22px; text-align: left; display: inline-flex; align-items: center; gap: 10px; font-family: var(--cx-mono); font-size: 11px; letter-spacing: .06em; max-width: 14em; line-height: 1.4; }
+  .cx-card-by .cx-dot { width: 26px; height: 26px; border-width: 2px; opacity: .85; }
+  .cx-card-info { left: 22px; right: 22px; bottom: 22px; display: block; }
+  /* Same size for every title, left aligned. The size comes from the penthouse: 4.28em is the width of "penthouse" and it should take about two thirds of the card. */
+  .cx-card { container-type: inline-size; }
+  .cx-card h3 { margin: 0 0 14px; font-family: "Gabarito", sans-serif; font-weight: 500; font-size: calc(0.85 * (38cqw - 22px) / 2.04); line-height: .92; letter-spacing: -.04em; text-transform: lowercase; white-space: nowrap; }
+  .cx-card-text { max-width: 38cqw; margin: 0; font-size: clamp(14px, 1.45vw, 20px); line-height: 1.2; font-family: "DM Sans", sans-serif; }
+
+  /* the place: three columns of boxes in different sizes, like the Ardene heritage section */
+  .cx-place { position: relative; z-index: 2; background: var(--cx-bg); padding: 90px 20px 110px; display: grid; grid-template-columns: repeat(3, 1fr); column-gap: 20px; row-gap: 30px; align-items: start; }
+  .cx-place-title { grid-column: 1 / -1; font-family: "Gabarito", sans-serif; font-weight: 400; font-size: clamp(64px, 10.6vw, 190px); line-height: .95; letter-spacing: -.045em; margin: 0 0 20px; }
+  .cx-place-text { grid-column: 1; grid-row: 2; margin: 0; font-size: clamp(18px, 2.1vw, 32px); line-height: 1.05; letter-spacing: -.02em; font-family: "DM Sans", sans-serif; }
+  .cx-pl { display: block; color: inherit; text-decoration: none; }
+  .cx-pl img { display: block; width: 100%; object-fit: cover; margin-bottom: 12px; }
+  .cx-pl-a { grid-column: 2; grid-row: 2; }
+  .cx-pl-a img { width: 92%; aspect-ratio: 333 / 500; }
+  .cx-pl-b { grid-column: 3; grid-row: 2; margin-top: 90px; }
+  .cx-pl-b img { width: 83%; aspect-ratio: 1; }
+  .cx-pl-c { grid-column: 1; grid-row: 3; margin-top: 10px; }
+  .cx-pl-c img { width: 55%; aspect-ratio: 1; }
+  .cx-pl-d { grid-column: 3; grid-row: 3; margin-top: 10px; }
+  .cx-pl-d img { width: 100%; aspect-ratio: 4 / 3; }
+  .cx-pl:hover .cx-label { color: var(--cx-rust); }
+  .cx-place-mark { grid-column: 1; grid-row: 4; display: flex; flex-direction: column; gap: 10px; margin: 10px 0 0; font-size: 22px; }
+  .cx-place .cx-label { font-size: 15px; }
+
+  /* footer, modeled on the Ardene footer */
+  .cx-foot { position: relative; z-index: 2; background: var(--cx-bg); padding: 34px 20px 70px; }
+  .cx-foot-grid { display: grid; grid-template-columns: 1.3fr 1.3fr 1fr auto; gap: 30px; align-items: start; }
+  .cx-foot p { margin: 0; }
+  .cx-foot-name { font-family: "Gabarito", sans-serif; font-weight: 400; font-size: 26px; letter-spacing: -.02em; line-height: 1.1; }
+  .cx-foot-sub { margin-top: 12px !important; font-size: 16px; line-height: 1.25; color: #7b776f; font-family: "DM Sans", sans-serif; }
+  .cx-foot-mono { font-family: var(--cx-mono); font-size: 14px; line-height: 1.5; letter-spacing: .02em; }
+  .cx-foot-mail { display: block; margin-top: 18px; color: var(--cx-rust); font-family: var(--cx-mono); font-size: 14px; letter-spacing: .02em; text-decoration: none; }
+  .cx-foot-links { display: flex; flex-direction: column; gap: 14px; align-items: flex-start; }
+  .cx-foot-links a { color: inherit; font-family: var(--cx-mono); font-size: 14px; letter-spacing: .02em; text-decoration: underline dotted; text-underline-offset: 4px; }
+  .cx-foot-social { display: flex; flex-direction: column; gap: 10px; align-items: flex-start; }
+  .cx-foot-social a { color: var(--cx-rust); text-decoration: none; font-family: "DM Sans", sans-serif; font-size: 20px; line-height: 1.1; }
+
+  @media (max-width: 800px) {
+    .cx-nav { grid-template-columns: auto 1fr auto; padding: 0 14px; }
+    .cx-nav-l a:not(:first-child) { display: none; }
+    .cx-logo { justify-self: center; }
+    .cx-nav-r a:first-child { display: none; }
+    .cx-about { grid-template-columns: 1fr; }
+    .cx-about-r { min-height: 70vw; }
+    .cx-about-l { padding-top: 90px; }
+    .cx-res-head { grid-template-columns: 1fr; min-height: 0; gap: 28px; }
+    .cx-card-coords { display: none; }
+    .cx-card-info { left: 22px; right: 22px; bottom: 64px; }
+    .cx-card h3 { font-size: calc((100cqw - 44px) / 5.2); }
+    .cx-card-text { max-width: none; }
+    .cx-card-by { right: auto; left: 22px; text-align: left; }
+    .cx-place { grid-template-columns: 1fr 1fr; }
+    .cx-place-text { grid-column: 1 / -1; grid-row: auto; }
+    .cx-pl-a, .cx-pl-b, .cx-pl-c, .cx-pl-d { grid-column: auto; grid-row: auto; margin-top: 0; }
+    .cx-pl-a img, .cx-pl-b img, .cx-pl-c img, .cx-pl-d img { width: 100%; }
+    .cx-place-mark { grid-column: 1 / -1; grid-row: auto; }
+    .cx-foot-grid { grid-template-columns: 1fr 1fr; }
+    .cx-foot { padding-bottom: 40px; }
+  }
+</style>
