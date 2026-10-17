@@ -303,8 +303,10 @@ const ticker = ['la punta', 'built by hand', 'round windows', 'puerto escondido'
   .cx-card-by { left: 22px; bottom: 22px; display: inline-flex; align-items: center; gap: 10px; font-family: var(--cx-mono); font-size: 11px; letter-spacing: .06em; max-width: 14em; line-height: 1.4; }
   .cx-card-by .cx-dot { width: 26px; height: 26px; border-width: 2px; opacity: .85; }
   .cx-card-info { left: 62%; right: 22px; bottom: 22px; display: block; }
-  .cx-card h3 { margin: 0 0 14px; font-family: "Gabarito", sans-serif; font-weight: 700; font-size: 8.2vw; line-height: .92; letter-spacing: -.04em; text-transform: lowercase; }
-  .cx-card h3.long { font-size: 5.7vw; }
+  /* The title is sized to span 85% of the description width. --r is the title's width in em (measured), the description is 38% of the card minus 22px. */
+  .cx-card { container-type: inline-size; }
+  .cx-card h3 { --r: 2.04; margin: 0 0 14px; font-family: "Gabarito", sans-serif; font-weight: 500; font-size: calc(0.85 * (38cqw - 22px) / var(--r)); line-height: .92; letter-spacing: -.04em; text-transform: lowercase; white-space: nowrap; }
+  .cx-card h3.long { --r: 4.28; }
   .cx-card-text { margin: 0; font-size: clamp(14px, 1.45vw, 20px); line-height: 1.2; font-family: "DM Sans", sans-serif; }
 
   /* the place: three columns of boxes in different sizes, like the Ardene heritage section */
@@ -349,8 +351,7 @@ const ticker = ['la punta', 'built by hand', 'round windows', 'puerto escondido'
     .cx-res-head { grid-template-columns: 1fr; min-height: 0; gap: 28px; }
     .cx-card-coords { display: none; }
     .cx-card-info { left: 22px; right: 22px; bottom: 64px; }
-    .cx-card h3 { font-size: 22vw; }
-    .cx-card h3.long { font-size: 15vw; }
+    .cx-card h3 { font-size: calc(0.85 * (100cqw - 44px) / var(--r)); }
     .cx-place { grid-template-columns: 1fr 1fr; }
     .cx-place-text { grid-column: 1 / -1; grid-row: auto; }
     .cx-pl-a, .cx-pl-b, .cx-pl-c, .cx-pl-d { grid-column: auto; grid-row: auto; margin-top: 0; }
