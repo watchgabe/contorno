@@ -40,10 +40,10 @@ const homes = [
 ];
 
 const tiles = [
-  { cls: 'a', label: 'THE BUILD', img: '/img/home/crew.jpg', alt: 'Crew working on a slab with rebar and foam forms', href: '/' },
-  { cls: 'b', label: 'THE GUIDE', img: '/img/home/deck.jpg', alt: 'Wooden deck curving over a lawn toward the coast', href: '/guide' },
-  { cls: 'c', label: 'THE ROUND WINDOWS', img: '/img/home/round-window.jpg', alt: 'A circular window in a concrete wall framing green hillside', href: '/' },
-  { cls: 'd', label: 'THE PLANS', img: '/img/home/plans.jpg', alt: 'Hands over printed floor plans on site', href: '/' },
+  { label: 'THE BUILD', img: '/img/home/crew.jpg', alt: 'Crew working on a slab with rebar and foam forms', href: '/build' },
+  { label: 'RESIDENCY', img: '/img/home/plans.jpg', alt: 'Hands over printed floor plans on site', href: '/artist-residency' },
+  { label: 'GUIDE', img: '/img/home/deck.jpg', alt: 'Wooden deck curving over a lawn toward the coast', href: '/guide' },
+  { label: 'INSPIRATION', img: '/img/home/round-window.jpg', alt: 'A circular window in a concrete wall framing green hillside', href: '/inspiration' },
 ];
 
 const heroImages = [
@@ -55,7 +55,6 @@ const heroImages = [
   { src: '/img/home/ext-3.jpg', alt: '' },
 ];
 
-const ticker = ['la punta', 'built by hand', 'round windows', 'puerto escondido'];
 ---
 
 <BaseLayout
@@ -103,31 +102,16 @@ const ticker = ['la punta', 'built by hand', 'round windows', 'puerto escondido'
     </div>
   </section>
 
-  <!-- Ticker over a photo band -->
-  <section class="cx-ticker" id="cx-ticker" aria-hidden="true">
-    <img src="/img/home/deck.jpg" alt="" />
-    <div class="cx-ticker-track">
-      {[0, 1, 2].map(() => (
-        <span>{ticker.map((t) => (<><i class="cx-dot"></i>{t}</>))}</span>
-      ))}
-    </div>
-  </section>
-
   <!-- Homes -->
   <section class="cx-res">
-    <div class="cx-res-head">
+    <div class="cx-res-head" id="homes">
       <h2 data-reveal>the homes</h2>
-      <div class="cx-res-meta">
-        <span class="cx-dot"></span>
-        <p class="cx-label">COLLECTION I · LA PUNTA</p>
-      </div>
       <p class="cx-res-text" data-reveal>
         each home sits inside the same building, with concrete walls, steady light, and a window that looks at the Pacific or the canopy. book direct, with checkout by Prestige.
       </p>
     </div>
 
     <div class="cx-stack" id="cx-stack">
-      <span id="homes" class="cx-anchor"></span>
       {homes.map((h) => (
         <a class="cx-card" href={h.href}>
           <img src={h.img} alt={h.alt} />
@@ -145,26 +129,28 @@ const ticker = ['la punta', 'built by hand', 'round windows', 'puerto escondido'
 
   <!-- The place -->
   <section class="cx-place">
-    <h2 class="cx-place-title" data-reveal>the place</h2>
-    <p class="cx-place-text" data-reveal>
-      a home on this hill comes with a neighborhood. we keep a guide to the cafes, studios,
-      beaches and kitchens we use ourselves, and we credit the people behind each one.
-    </p>
-    {tiles.map((t) => (
-      <a class={`cx-pl cx-pl-${t.cls}`} href={t.href} target={t.href === '/guide' ? '_blank' : undefined} rel={t.href === '/guide' ? 'noopener' : undefined} data-reveal>
-        <img src={t.img} alt={t.alt} loading="lazy" />
-        <span class="cx-label">{t.label}</span>
-      </a>
-    ))}
-    <p class="cx-place-mark" data-reveal><span class="cx-dot"></span><span class="cx-label">CONTORNO</span></p>
+    <div class="cx-place-head">
+      <h2 data-reveal>the place</h2>
+      <p data-reveal>
+        a home on this hill comes with a neighborhood. we keep a guide to the cafes, studios,
+        beaches and kitchens we use ourselves, and we credit the people behind each one.
+      </p>
+    </div>
+    <div class="cx-tiles">
+      {tiles.map((t) => (
+        <a class="cx-tile" href={t.href} data-reveal>
+          <img src={t.img} alt={t.alt} loading="lazy" />
+          <span class="cx-label">{t.label}</span>
+        </a>
+      ))}
+    </div>
   </section>
 
-  <!-- Footer -->
-  <script is:inline>
+    <script is:inline>
     (function () {
       var nav = document.getElementById('cx-nav');
       var hero = document.getElementById('cx-hero');
-      var ticker = document.getElementById('cx-ticker');
+      var homesSection = document.querySelector('.cx-res');
       var cards = [].slice.call(document.querySelectorAll('.cx-card'));
       var reduce = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
       var queued = false;
@@ -179,8 +165,8 @@ const ticker = ['la punta', 'built by hand', 'round windows', 'puerto escondido'
           hero.style.transform = 'scale(' + (1 - 0.5 * p) + ')';
           hero.style.opacity = String(clamp(1 - 1.25 * p, 0, 1));
         }
-        // Nav is cream on the framed hero, dark while scrolling through about, cream again after the ticker.
-        nav.classList.toggle('is-dark', y > 24 && ticker.getBoundingClientRect().top >= 60);
+        // Nav is cream on the framed hero, dark while scrolling through about, cream again from the homes on.
+        nav.classList.toggle('is-dark', y > 24 && homesSection.getBoundingClientRect().top >= 60);
         // Each pinned card insets and fades while the next card slides over it.
         if (!reduce) {
           for (var i = 0; i < cards.length - 1; i++) {
@@ -247,8 +233,9 @@ const ticker = ['la punta', 'built by hand', 'round windows', 'puerto escondido'
   .cx-hero-word { position: absolute; z-index: 2; left: 34px; bottom: 30px; margin: 0; font-family: "Gabarito", sans-serif; font-weight: 400; font-size: clamp(64px, 12vw, 210px); line-height: .9; letter-spacing: -.035em; text-transform: lowercase; }
 
   /* about */
-  .cx-about { position: relative; z-index: 2; display: grid; grid-template-columns: 1fr 1fr; min-height: 100svh; background: var(--cx-bg); }
-  .cx-about-l { padding: 120px 34px 28px 22px; display: flex; flex-direction: column; justify-content: space-between; gap: 40px; }
+  .cx-about { position: relative; z-index: 2; display: grid; grid-template-columns: 1fr 1fr; min-height: 88svh; background: var(--cx-bg); }
+  .cx-about-l { padding: 120px 34px 28px 22px; display: flex; flex-direction: column; justify-content: flex-start; gap: 26px; }
+  .cx-about-meta { margin-top: auto; }
   .cx-about h2, .cx-res h2, .cx-place h2 { font-family: "Gabarito", sans-serif; font-weight: 400; font-size: clamp(54px, 8vw, 120px); line-height: .95; letter-spacing: -.04em; margin: 0; }
   .cx-about-l p { font-size: clamp(17px, 1.7vw, 24px); line-height: 1.28; max-width: 28em; margin: 0; font-family: "DM Sans", sans-serif; }
   .cx-about-meta { display: flex; justify-content: space-between; font-family: var(--cx-mono); font-size: 11px; letter-spacing: .08em; }
@@ -259,21 +246,10 @@ const ticker = ['la punta', 'built by hand', 'round windows', 'puerto escondido'
   .cx-sign p { margin: 4px 0 0; }
   .cx-sign-sub { font-family: var(--cx-mono); font-size: 11px; letter-spacing: .08em; }
 
-  /* ticker over a photo */
-  .cx-ticker { position: relative; z-index: 2; overflow: hidden; height: clamp(220px, 34vw, 380px); display: flex; align-items: center; background: var(--cx-dark); }
-  .cx-ticker img { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; }
-  .cx-ticker-track { position: relative; display: flex; width: max-content; animation: cx-slide 40s linear infinite; color: var(--cx-dark); }
-  .cx-ticker-track span { white-space: nowrap; font-family: "Gabarito", sans-serif; font-weight: 400; font-size: clamp(120px, 24vw, 340px); letter-spacing: -.05em; line-height: 1; padding-right: .5em; }
-  .cx-ticker-track i.cx-dot { width: .5em; height: .5em; margin: 0 .35em; border-width: .06em; }
-  @keyframes cx-slide { to { transform: translateX(-33.333%); } }
-  @media (prefers-reduced-motion: reduce) { .cx-ticker-track { animation: none; } }
-
   /* homes: cards pin and the next one slides over */
-  .cx-res { position: relative; z-index: 2; background: var(--cx-bg); padding: 100px 0 0; }
-  .cx-res-head { display: grid; grid-template-columns: 1fr 1fr; padding: 0 22px 60px; gap: 24px; min-height: 52vh; align-content: space-between; }
-  .cx-res-head h2 { grid-column: 1 / -1; }
-  .cx-res-meta { display: flex; align-items: flex-end; gap: 12px; font-size: 20px; }
-  .cx-res-text { margin: 0; font-size: clamp(16px, 1.5vw, 21px); line-height: 1.3; max-width: 28em; justify-self: start; font-family: "DM Sans", sans-serif; }
+  .cx-res { position: relative; z-index: 2; background: var(--cx-bg); padding: 56px 0 0; }
+  .cx-res-head { display: grid; grid-template-columns: 1fr 1fr; padding: 0 22px 26px; gap: 24px; align-items: end; scroll-margin-top: 70px; }
+  .cx-res-text { margin: 0 0 6px; font-size: clamp(16px, 1.5vw, 21px); line-height: 1.3; max-width: 28em; justify-self: start; font-family: "DM Sans", sans-serif; }
   .cx-stack { position: relative; padding-bottom: 0; }
   .cx-anchor { position: absolute; top: -80px; }
   .cx-card { position: sticky; top: 76px; display: block; width: 100%; margin: 0 auto 40px; height: min(640px, calc(100svh - 96px)); overflow: hidden; color: #F5F0E8; text-decoration: none; background: var(--cx-dark); }
@@ -290,38 +266,29 @@ const ticker = ['la punta', 'built by hand', 'round windows', 'puerto escondido'
   .cx-card h3 { margin: 0 0 14px; font-family: "Gabarito", sans-serif; font-weight: 500; font-size: clamp(64px, 12vw, 210px); line-height: .92; letter-spacing: -.04em; text-transform: lowercase; white-space: nowrap; }
   .cx-card-text { max-width: 38cqw; margin: 0; font-size: clamp(14px, 1.45vw, 20px); line-height: 1.2; font-family: "DM Sans", sans-serif; }
 
-  /* the place: three columns of boxes in different sizes, like the Ardene heritage section */
-  .cx-place { position: relative; z-index: 2; background: var(--cx-bg); padding: 90px 20px 110px; display: grid; grid-template-columns: repeat(3, 1fr); column-gap: 20px; row-gap: 30px; align-items: start; }
-  .cx-place-title { grid-column: 1 / -1; font-family: "Gabarito", sans-serif; font-weight: 400; font-size: clamp(64px, 10.6vw, 190px); line-height: .95; letter-spacing: -.045em; margin: 0 0 20px; }
-  .cx-place-text { grid-column: 1; grid-row: 2; margin: 0; font-size: clamp(18px, 2.1vw, 32px); line-height: 1.05; letter-spacing: -.02em; font-family: "DM Sans", sans-serif; }
-  .cx-pl { display: block; color: inherit; text-decoration: none; }
-  .cx-pl img { display: block; width: 100%; object-fit: cover; margin-bottom: 12px; }
-  .cx-pl-a { grid-column: 2; grid-row: 2; }
-  .cx-pl-a img { width: 92%; aspect-ratio: 333 / 500; }
-  .cx-pl-b { grid-column: 3; grid-row: 2; margin-top: 90px; }
-  .cx-pl-b img { width: 83%; aspect-ratio: 1; }
-  .cx-pl-c { grid-column: 1; grid-row: 3; margin-top: 10px; }
-  .cx-pl-c img { width: 55%; aspect-ratio: 1; }
-  .cx-pl-d { grid-column: 3; grid-row: 3; margin-top: 10px; }
-  .cx-pl-d img { width: 100%; aspect-ratio: 4 / 3; }
-  .cx-pl:hover .cx-label { color: var(--cx-rust); }
-  .cx-place-mark { grid-column: 1; grid-row: 4; display: flex; flex-direction: column; gap: 10px; margin: 10px 0 0; font-size: 22px; }
-  .cx-place .cx-label { font-size: 15px; }
+  /* the place: four staggered tiles */
+  .cx-place { position: relative; z-index: 2; background: var(--cx-bg); padding: 110px 22px 100px; }
+  .cx-place-head { display: grid; grid-template-columns: 1fr 1fr; gap: 40px; margin-bottom: 80px; align-items: end; }
+  .cx-place-head p { margin: 0; max-width: 28em; font-size: clamp(16px, 1.5vw, 21px); line-height: 1.3; font-family: "DM Sans", sans-serif; }
+  .cx-tiles { display: grid; grid-template-columns: repeat(4, 1fr); gap: 14px; align-items: start; }
+  .cx-tile { color: inherit; text-decoration: none; display: block; }
+  .cx-tile img { width: 100%; aspect-ratio: 4 / 5; object-fit: cover; display: block; margin-bottom: 12px; }
+  .cx-tile:nth-child(even) { margin-top: 70px; }
+  .cx-tile:hover .cx-label { color: var(--cx-rust); }
+  .cx-label { font-family: var(--cx-mono); font-size: 11px; letter-spacing: .08em; text-transform: uppercase; margin: 0; }
 
   @media (max-width: 800px) {
     .cx-about { grid-template-columns: 1fr; }
     .cx-about-r { min-height: 70vw; }
     .cx-about-l { padding-top: 90px; }
-    .cx-res-head { grid-template-columns: 1fr; min-height: 0; gap: 28px; }
+    .cx-res-head { grid-template-columns: 1fr; gap: 18px; }
     .cx-card-coords { display: none; }
     .cx-card-info { left: 22px; right: 22px; bottom: 64px; }
     .cx-card h3 { font-size: calc((100cqw - 44px) / 5.2); }
     .cx-card-text { max-width: none; }
     .cx-card-by { right: auto; left: 22px; text-align: left; }
-    .cx-place { grid-template-columns: 1fr 1fr; }
-    .cx-place-text { grid-column: 1 / -1; grid-row: auto; }
-    .cx-pl-a, .cx-pl-b, .cx-pl-c, .cx-pl-d { grid-column: auto; grid-row: auto; margin-top: 0; }
-    .cx-pl-a img, .cx-pl-b img, .cx-pl-c img, .cx-pl-d img { width: 100%; }
-    .cx-place-mark { grid-column: 1 / -1; grid-row: auto; }
+    .cx-place-head { grid-template-columns: 1fr; gap: 20px; margin-bottom: 40px; }
+    .cx-tiles { grid-template-columns: 1fr 1fr; }
+    .cx-tile:nth-child(even) { margin-top: 30px; }
   }
 </style>

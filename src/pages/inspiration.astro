@@ -1,0 +1,59 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+
+// Placeholder images until the real inspiration images arrive.
+// To replace: change src and alt, and add a credit if you want one to show under the image.
+const images = [
+  { src: '/img/home/drone-1.jpg', alt: 'Placeholder: aerial view of the building above La Punta', credit: '' },
+  { src: '/img/home/round-window.jpg', alt: 'Placeholder: a circular window in a concrete wall', credit: '' },
+  { src: '/img/home/ext-1.jpg', alt: 'Placeholder: building entrance with an agave garden', credit: '' },
+  { src: '/img/home/deck.jpg', alt: 'Placeholder: wooden deck curving over a lawn', credit: '' },
+  { src: '/img/home/crew.jpg', alt: 'Placeholder: crew working on a concrete slab', credit: '' },
+  { src: '/img/home/ext-2.jpg', alt: 'Placeholder: curved terrace with hanging vines', credit: '' },
+];
+---
+
+<BaseLayout
+  title="Inspiration | Contorno"
+  description="The places, buildings, art and people behind what we are making at Contorno."
+>
+  <main class="in">
+    <p class="in-eyebrow">What moves us</p>
+    <h1 class="in-title">Inspiration</h1>
+    <p class="in-line">The places, buildings, art and people behind what we are making.</p>
+
+    <div class="in-col">
+      {images.map((img) => (
+        <figure class="in-fig" data-reveal>
+          <img src={img.src} alt={img.alt} loading="lazy" />
+          {img.credit && <figcaption>{img.credit}</figcaption>}
+        </figure>
+      ))}
+    </div>
+  </main>
+
+  <script is:inline>
+    (function () {
+      var items = [].slice.call(document.querySelectorAll('[data-reveal]'));
+      var reduce = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+      if (!('IntersectionObserver' in window) || reduce) { items.forEach(function (e) { e.classList.add('in-on'); }); return; }
+      var io = new IntersectionObserver(function (entries) {
+        entries.forEach(function (en) { if (en.isIntersecting) { en.target.classList.add('in-on'); io.unobserve(en.target); } });
+      }, { threshold: 0.1 });
+      items.forEach(function (e) { io.observe(e); });
+    })();
+  </script>
+</BaseLayout>
+
+<style is:global>
+  .in { max-width: 920px; margin: 0 auto; padding: calc(var(--nav-h) + 64px) 24px 110px; text-align: center; }
+  .in-eyebrow { font-family: var(--label); font-size: 11px; letter-spacing: .18em; text-transform: uppercase; margin: 0 0 18px; opacity: .75; }
+  .in-title { font-family: var(--display); font-weight: 500; font-size: clamp(44px, 7vw, 92px); line-height: 1; letter-spacing: -.04em; margin: 0 0 18px; }
+  .in-line { font-size: clamp(16px, 1.6vw, 20px); line-height: 1.45; max-width: 30em; margin: 0 auto 64px; opacity: .8; }
+  .in-col { display: grid; gap: 28px; }
+  .in-fig { margin: 0; opacity: 0; transform: translateY(26px); transition: opacity .8s ease, transform .8s ease; }
+  .in-fig.in-on { opacity: 1; transform: none; }
+  .in-fig img { display: block; width: 100%; height: auto; border-radius: 4px; }
+  .in-fig figcaption { margin-top: 10px; text-align: left; font-family: var(--cx-mono); font-size: 11px; letter-spacing: .08em; text-transform: uppercase; opacity: .7; }
+  @media (prefers-reduced-motion: reduce) { .in-fig { opacity: 1; transform: none; transition: none; } }
+</style>
