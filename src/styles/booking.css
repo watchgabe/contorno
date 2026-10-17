@@ -252,3 +252,14 @@
   .bu-tour { bottom: 14px; left: var(--b-pad); right: auto; }
 }
 @media (prefers-reduced-motion: reduce) { .bh-card { transition: none; } html { scroll-behavior: auto; } }
+
+/* Booking form in the unit card (dates go to the booking page) */
+.bu-form { display: grid; gap: 12px; }
+.bu-form label { display: grid; gap: 6px; font-family: var(--label); font-size: 10px; letter-spacing: .16em; text-transform: uppercase; color: rgba(42,42,42,.75); }
+.bu-form input, .bu-form select {
+  font: inherit; font-family: var(--sans); font-size: 15px; letter-spacing: 0; text-transform: none; color: var(--ink);
+  background: var(--cream); border: 1px solid var(--b-line); border-radius: 4px; padding: 12px 12px; width: 100%;
+}
+.bu-form input:focus-visible, .bu-form select:focus-visible { outline: 2px solid var(--ink); outline-offset: 2px; }
+.bu-form .b-btn { margin-top: 4px; border: 0; cursor: pointer; }
+.bu-bar .big { font-size: 18px; }

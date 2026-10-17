@@ -14,6 +14,15 @@ export interface Home {
   price: string;
   available: string;
   photos: string[];
+  /** Filled for homes with real details. Missing fields fall back to placeholders. */
+  guests?: string;
+  about?: string[];
+  highlights?: string[];
+  essentials?: string[];
+  moreEssentials?: string[];
+  policies?: { label: string; value: string }[];
+  /** Prestige Booking Channel property id. When set, the booking card sends dates to the booking page. */
+  bookingPropertyId?: string;
 }
 
 const P = (f: string) => `/Edited copy/${f}`;
@@ -60,20 +69,53 @@ export const homes: Home[] = [
   {
     slug: 'penthouse',
     name: 'Penthouse',
-    area: 'La Punta | Puerto Escondido',
-    blurb: 'The top of the building, with the widest view of the point.',
-    beds: '[#] bedrooms',
-    baths: '[#] bathrooms',
+    area: 'Puerto Escondido | Oaxaca',
+    blurb: 'The top floor of an eight-apartment building, with a private terrace over Zicatela Bay.',
+    beds: '2 bedrooms',
+    baths: '2 bathrooms',
     size: '[##] m²',
     terrace: '[##] m²',
-    price: '$[rate]',
-    available: '[date]',
+    price: 'Select dates',
+    available: 'Check dates',
+    guests: '4 guests',
+    bookingPropertyId: '343502',
     photos: [
-      P('L3 Construction.jpg'),
-      P('E1D36EF6-D0F4-4BEF-9CAA-415763C225C1.jpg'),
-      P('44D3F4B4-6857-4272-A030-825017C8C047.jpg'),
-      P('A4AE3944-80BF-4196-9DAA-8D4706603AF2.jpg'),
-      P('E48B6D29-4FB4-497A-9898-C8AC388AD993.jpg'),
+      '/img/placeholder-1.svg',
+      '/img/placeholder-2.svg',
+      '/img/placeholder-3.svg',
+      '/img/placeholder-4.svg',
+      '/img/placeholder-5.svg',
+    ],
+    about: [
+      'The penthouse sits on the top floor of a building with eight apartments. It has two bedrooms, each with a king bed and air conditioning, and two bathrooms.',
+      'The living area is bright and open, with a full kitchen beside it. A private terrace looks over the ocean and the whole of Zicatela Bay.',
+      'Guests share a pool on the ground floor and a gym on the second floor. The apartment has Starlink internet, hot water, and a backup battery for power outages.',
+      'The restaurants and beaches of La Punta are close. The street is quiet and the view across the bay is clear. [Confirm the neighborhood name. The Airbnb listing says Brisas de Zicatela.]',
+    ],
+    highlights: [
+      'Private terrace with ocean views',
+      'Two bedrooms with king beds and air conditioning',
+      'Shared pool and gym in the building',
+      'Starlink wifi and a backup battery',
+    ],
+    essentials: [
+      'Fully equipped kitchen',
+      'Coffee maker',
+      'Dining area',
+      'Wifi (Starlink)',
+      'Air conditioning',
+      'Hot water',
+      'Living room',
+      'Desk',
+      'Free street parking',
+    ],
+    moreEssentials: ['Refrigerator and freezer', 'Oven', 'Kettle', 'Dishes and utensils', 'TV', '[Confirm the rest of the 24 amenities from the Airbnb listing]'],
+    policies: [
+      { label: 'Minimum stay', value: 'None set' },
+      { label: 'Check in and out', value: '4 pm to midnight / by 10 am' },
+      { label: 'Home rules', value: '[confirm]' },
+      { label: 'Pets', value: '[confirm]' },
+      { label: 'Cancellation', value: '[confirm with Juliette]' },
     ],
   },
 ];
