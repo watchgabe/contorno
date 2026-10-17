@@ -34,6 +34,8 @@ export interface Home {
   policies?: { label: string; value: string }[];
   /** Prestige Booking Channel property id. When set, the booking card sends dates to the booking page. */
   bookingPropertyId?: string;
+  /** Room id in the booking system. When set, the page shows a live availability calendar. */
+  bookingRoomId?: string;
 }
 
 const P = (f: string) => `/Edited copy/${f}`;
@@ -53,6 +55,7 @@ export const homes: Home[] = [
     guests: '2 guests',
     maxGuests: 2,
     bookingPropertyId: '343502',
+    bookingRoomId: '709439',
     // Stand-in photos until the L3 photography is added.
     photos: ['/img/ph-1.jpg', '/img/ph-2.jpg', '/img/ph-3.jpg'],
     about: [
@@ -110,6 +113,7 @@ export const homes: Home[] = [
     guests: '4 guests',
     maxGuests: 4,
     bookingPropertyId: '343502',
+    bookingRoomId: '709444',
     lat: 15.8442,
     lng: -97.0418,
     // The eight photos on the Airbnb listing, in the order Airbnb shows them.

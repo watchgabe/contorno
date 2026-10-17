@@ -15,6 +15,19 @@ const isActive = (p: string) => path === p || (p !== '/' && path.startsWith(p));
   </div>
   <a href={link('/')} class="nav-logo">contorno</a>
   <div class="nav-right">
+    <a href="https://instagram.com/contornocollective" class="nav-ig" aria-label="Contorno on Instagram" target="_blank" rel="noopener">
+      <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true"><rect x="3" y="3" width="18" height="18" rx="5"/><circle cx="12" cy="12" r="4.2"/><circle cx="17.3" cy="6.7" r="1" fill="currentColor" stroke="none"/></svg>
+    </a>
     <a href={`mailto:${CONTACT_EMAIL}`} class="nav-cta">contact →</a>
   </div>
 </nav>
+
+<script is:inline>
+  (function () {
+    var nav = document.getElementById('main-nav');
+    if (!nav) return;
+    function update() { nav.classList.toggle('nav-solid', window.scrollY > 24); }
+    update();
+    window.addEventListener('scroll', update, { passive: true });
+  })();
+</script>
