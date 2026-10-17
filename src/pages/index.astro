@@ -7,35 +7,39 @@ const COORDS = '15.8442° N, 97.0418° W';
 const homes = [
   {
     href: '/penthouse',
-    name: 'penthouse',
+    name: 'la escultura',
     by: 'BUILT BY NICK PALOUKOS',
-    text: 'two bedrooms and a private terrace over the bay, on the top floor of an eight apartment building.',
+    text: 'the penthouse. two bedrooms and a private terrace over the bay, on the top floor of an eight apartment building.',
     img: '/img/home/drone-2.jpg',
     alt: 'Aerial view of the Contorno building with planted terraces',
+    soon: false,
   },
   {
-    href: '/homes/bad-bunny',
-    name: 'bad bunny',
+    href: '/homes/la-valquiria',
+    name: 'la valquiria',
     by: 'BUILT BY NICK PALOUKOS',
-    text: 'quiet rooms with round windows and a view into the jungle canopy.',
-    img: '/img/home/ext-2.jpg',
-    alt: 'Curved concrete terrace with hanging vines and floor to ceiling curtains',
+    text: 'loft 5. a one bedroom loft with a round window, a glass block wall behind the bed, and a deck over the trees.',
+    img: '/img/la-valquiria/4.jpg',
+    alt: 'The wooden deck outside the loft with two chairs and a view over the trees',
+    soon: false,
   },
   {
-    href: '/homes/bowie',
-    name: 'bowie',
+    href: '/homes/la-artista',
+    name: 'la artista',
     by: 'BUILT BY NICK PALOUKOS',
-    text: 'details coming soon.',
-    img: '/img/home/ext-1.jpg',
-    alt: 'Entrance of the building with agave garden and curtained windows',
+    text: 'loft 1. a one bedroom loft on a planted courtyard, with a double height living room.',
+    img: '/img/la-artista/1.jpg',
+    alt: 'The entrance of the loft behind a red steel frame, with plants outside',
+    soon: true,
   },
   {
-    href: '/homes/warhol',
-    name: 'warhol',
+    href: '/homes/la-poeta',
+    name: 'la poeta',
     by: 'BUILT BY NICK PALOUKOS',
-    text: 'details coming soon.',
-    img: '/img/home/ext-3.jpg',
-    alt: 'Terrace edge with vines, steel rails and a curtained window wall',
+    text: 'loft 6. a one bedroom loft with an orange sofa and glass doors to a deck.',
+    img: '/img/la-poeta/1.jpg',
+    alt: 'The living room with an orange sofa and a round window in the concrete wall',
+    soon: true,
   },
 ];
 
@@ -118,6 +122,7 @@ const heroImages = [
           <span class="cx-card-shade"></span>
           <span class="cx-card-coords">{COORDS}</span>
           <span class="cx-card-by"><i class="cx-dot"></i>{h.by}</span>
+          {h.soon && <span class="cx-card-soon">COMING SOON</span>}
           <span class="cx-card-info">
             <h3 class={h.long ? 'long' : ''}>{h.name}</h3>
             <p class="cx-card-text">{h.text}</p>
@@ -262,6 +267,7 @@ const heroImages = [
   .cx-card > span { position: absolute; }
   .cx-card-coords { left: 22px; top: 22px; font-family: var(--cx-mono); font-size: 11.5px; letter-spacing: .06em; line-height: 1.5; max-width: 9em; }
   .cx-card-by { right: 22px; bottom: 22px; text-align: left; display: inline-flex; align-items: center; gap: 10px; font-family: var(--cx-mono); font-size: 11px; letter-spacing: .06em; max-width: 14em; line-height: 1.4; }
+  .cx-card-soon { right: 22px; top: 22px; font-family: var(--cx-mono); font-size: 11px; letter-spacing: .08em; border: 1px solid currentColor; padding: 6px 10px; border-radius: 999px; }
   .cx-card-by .cx-dot { width: 26px; height: 26px; border-width: 2px; opacity: .85; }
   .cx-card-info { left: 22px; right: 22px; bottom: 22px; display: block; }
   /* Same size for every title, left aligned, and the same size as the contorno wordmark on the hero. */

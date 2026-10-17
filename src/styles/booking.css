@@ -342,3 +342,6 @@
 .bu-sum { margin: 2px 0 0; font-size: 13px; line-height: 1.4; color: rgba(42,42,42,.8); min-height: 2.8em; }
 .b-btn:disabled { opacity: .45; cursor: not-allowed; }
 @media (min-width: 900px) { .bu-months-wrap, #bk-months { display: block; } }
+
+/* Homes that are not open for booking yet */
+.b-btn.soon { opacity: .4; cursor: not-allowed; pointer-events: none; }

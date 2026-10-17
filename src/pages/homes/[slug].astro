@@ -167,7 +167,7 @@ const policies = home.policies ?? [
       <div class="bu-block">
         <div class="bu-theme">
           <div><p class="b-caps" style="margin-bottom:8px">Materials</p><h3>Concrete, steel, palm</h3></div>
-          <p>Polished concrete and jungle palms, not marble and gold.{real ? ' In the penthouse the concrete is curved and smooth, and the steel is painted red.' : <span class="ph"> [Placeholder: two sentences on how the materials show up in this home.]</span>}</p>
+          <p>Polished concrete and jungle palms, not marble and gold.{home.materials ? ' ' + home.materials : <span class="ph"> [Placeholder: two sentences on how the materials show up in this home.]</span>}</p>
         </div>
       </div>
 
@@ -192,7 +192,15 @@ const policies = home.policies ?? [
     <!-- Booking card -->
     <aside class="bu-side" id="booking" aria-label="Booking">
       <div class="bu-card">
-        {home.bookingPropertyId ? (
+        {home.comingSoon ? (
+          <>
+            <div class="bu-price">
+              <div><span class="b-caps">Status</span><span class="big">Coming soon</span></div>
+              <div class="av"><span class="b-caps">Sleeps</span><span>{home.guests}</span></div>
+            </div>
+            <button class="b-btn full soon" type="button" disabled aria-disabled="true">Coming soon</button>
+          </>
+        ) : home.bookingPropertyId ? (
           <>
             <div class="bu-price">
               <div><span class="b-caps">Price</span><span class="big">{home.price}</span></div>
@@ -254,7 +262,9 @@ const policies = home.policies ?? [
           </>
         )}
       </div>
-      {home.bookingPropertyId ? (
+      {home.comingSoon ? (
+        <p class="bu-note">Booking for this home opens soon. Write to hello@contornocollective.com and we will tell you first.</p>
+      ) : home.bookingPropertyId ? (
         <p class="bu-note">Pick your dates here and finish the booking on our secure booking page. The final price depends on the length of stay. <span class="ph">[Placeholder: what is and is not included, such as cleaning, taxes, and deposit.]</span></p>
       ) : (
         <p class="bu-note">The final price depends on the length of stay. <span class="ph">[Placeholder: what is and is not included, such as cleaning, taxes, and deposit.]</span> Bookings are not open yet, so this button joins the waitlist.</p>
