@@ -61,25 +61,8 @@ const ticker = ['la punta', 'built by hand', 'round windows', 'puerto escondido'
 <BaseLayout
   title="Contorno"
   description="Homes, a guide and a build record on La Punta, Puerto Escondido, Oaxaca."
-  header="none"
-  footer={false}
+  navAuto={false}
 >
-  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=DM+Mono:wght@400&display=swap" />
-
-  <header class="cx-nav" id="cx-nav">
-    <div class="cx-nav-l">
-      <a href="#homes">the homes <span class="cx-count">4</span></a>
-      <a href="/build">the build</a>
-      <a href="/guide" target="_blank" rel="noopener">guide</a>
-    </div>
-    <a href="/" class="cx-logo"><span class="cx-dot"></span>contorno</a>
-    <div class="cx-nav-r">
-      <a href="https://instagram.com/contornocollective" aria-label="Instagram" rel="noopener" target="_blank">
-        <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true"><rect x="3" y="3" width="18" height="18" rx="5"/><circle cx="12" cy="12" r="4.2"/><circle cx="17.3" cy="6.7" r="1" fill="currentColor" stroke="none"/></svg>
-      </a>
-      <a href="/penthouse" class="cx-btn">reserve <span aria-hidden="true">→</span></a>
-    </div>
-  </header>
 
   <!-- Hero: shrinks and fades as the page scrolls -->
   <section class="cx-hero">
@@ -177,29 +160,6 @@ const ticker = ['la punta', 'built by hand', 'round windows', 'puerto escondido'
   </section>
 
   <!-- Footer -->
-  <div class="cx-foot">
-    <div class="cx-foot-grid">
-      <div>
-        <p class="cx-foot-name">contorno</p>
-        <p class="cx-foot-sub">homes, a guide and a build record<br />on La Punta, Puerto Escondido</p>
-      </div>
-      <div>
-        <p class="cx-foot-mono">CONTORNO · PUERTO ESCONDIDO, OAXACA</p>
-        <p class="cx-foot-mono">{COORDS}</p>
-        <a class="cx-foot-mail" href={`mailto:${CONTACT_EMAIL}`}>{CONTACT_EMAIL.toUpperCase()}</a>
-      </div>
-      <div class="cx-foot-links">
-        <a href="/build">THE BUILD</a>
-        <a href="#homes">HOMES</a>
-        <a href="/guide" target="_blank" rel="noopener">GUIDE</a>
-      </div>
-      <div class="cx-foot-social">
-        <a href="https://instagram.com/contornocollective" target="_blank" rel="noopener">Instagram</a>
-        <a href={`mailto:${CONTACT_EMAIL}`}>Email</a>
-      </div>
-    </div>
-  </div>
-
   <script is:inline>
     (function () {
       var nav = document.getElementById('cx-nav');
@@ -270,20 +230,6 @@ const ticker = ['la punta', 'built by hand', 'round windows', 'puerto escondido'
   .cx-rust { color: var(--cx-rust); }
   [data-reveal] { opacity: 0; transform: translateY(30px); transition: opacity .8s ease, transform .8s ease; }
   [data-reveal].in { opacity: 1; transform: none; }
-
-  /* nav: dark over the hero, cream after the ticker */
-  .cx-nav { position: fixed; inset: 0 0 auto 0; z-index: 50; height: 60px; display: grid; grid-template-columns: 1fr auto 1fr; align-items: center; padding: 0 22px; background: var(--cx-bg); color: var(--cx-ink); transition: background-color .35s ease, color .35s ease; font-family: var(--cx-mono); }
-  .cx-nav.is-dark { background: var(--cx-dark); color: #F5F0E8; }
-  .cx-nav a { color: inherit; text-decoration: none; font-size: 11.5px; letter-spacing: .06em; text-transform: uppercase; }
-  .cx-nav-l { display: flex; gap: 26px; align-items: center; }
-  .cx-count { display: inline-block; background: var(--cx-dark); color: var(--cx-bg); border-radius: 999px; font-size: 10px; padding: 1px 6px; margin-left: 4px; transition: background-color .35s, color .35s; }
-  .cx-nav.is-dark .cx-count { background: #F5F0E8; color: var(--cx-dark); }
-  .cx-logo { font-family: "Gabarito", sans-serif; font-size: 22px !important; letter-spacing: -.01em !important; text-transform: lowercase !important; display: inline-flex; align-items: center; gap: 8px; }
-  .cx-logo .cx-dot { width: 18px; height: 18px; }
-  .cx-nav-r { display: flex; justify-content: flex-end; align-items: center; gap: 20px; }
-  .cx-btn { border: 1px solid var(--cx-dark); background: var(--cx-dark); color: var(--cx-bg) !important; padding: 8px 14px; }
-  .cx-nav.is-dark .cx-btn { background: transparent; color: #F5F0E8 !important; border-color: rgba(245,240,232,.6); }
-  .cx-nav.is-dark .cx-btn:hover { background: #F5F0E8; color: var(--cx-dark) !important; }
 
   /* hero: framed photo with a cream border, like the current home page */
   .cx-hero { height: 100svh; min-height: 620px; padding: 60px 14px 14px; background: var(--cx-bg); }
@@ -362,24 +308,7 @@ const ticker = ['la punta', 'built by hand', 'round windows', 'puerto escondido'
   .cx-place-mark { grid-column: 1; grid-row: 4; display: flex; flex-direction: column; gap: 10px; margin: 10px 0 0; font-size: 22px; }
   .cx-place .cx-label { font-size: 15px; }
 
-  /* footer, modeled on the Ardene footer */
-  .cx-foot { position: relative; z-index: 2; background: var(--cx-bg); padding: 34px 20px 70px; }
-  .cx-foot-grid { display: grid; grid-template-columns: 1.3fr 1.3fr 1fr auto; gap: 30px; align-items: start; }
-  .cx-foot p { margin: 0; }
-  .cx-foot-name { font-family: "Gabarito", sans-serif; font-weight: 400; font-size: 26px; letter-spacing: -.02em; line-height: 1.1; }
-  .cx-foot-sub { margin-top: 12px !important; font-size: 16px; line-height: 1.25; color: #7b776f; font-family: "DM Sans", sans-serif; }
-  .cx-foot-mono { font-family: var(--cx-mono); font-size: 14px; line-height: 1.5; letter-spacing: .02em; }
-  .cx-foot-mail { display: block; margin-top: 18px; color: var(--cx-rust); font-family: var(--cx-mono); font-size: 14px; letter-spacing: .02em; text-decoration: none; }
-  .cx-foot-links { display: flex; flex-direction: column; gap: 14px; align-items: flex-start; }
-  .cx-foot-links a { color: inherit; font-family: var(--cx-mono); font-size: 14px; letter-spacing: .02em; text-decoration: underline dotted; text-underline-offset: 4px; }
-  .cx-foot-social { display: flex; flex-direction: column; gap: 10px; align-items: flex-start; }
-  .cx-foot-social a { color: var(--cx-rust); text-decoration: none; font-family: "DM Sans", sans-serif; font-size: 20px; line-height: 1.1; }
-
   @media (max-width: 800px) {
-    .cx-nav { grid-template-columns: auto 1fr auto; padding: 0 14px; }
-    .cx-nav-l a:not(:first-child) { display: none; }
-    .cx-logo { justify-self: center; }
-    .cx-nav-r a:first-child { display: none; }
     .cx-about { grid-template-columns: 1fr; }
     .cx-about-r { min-height: 70vw; }
     .cx-about-l { padding-top: 90px; }
@@ -394,7 +323,5 @@ const ticker = ['la punta', 'built by hand', 'round windows', 'puerto escondido'
     .cx-pl-a, .cx-pl-b, .cx-pl-c, .cx-pl-d { grid-column: auto; grid-row: auto; margin-top: 0; }
     .cx-pl-a img, .cx-pl-b img, .cx-pl-c img, .cx-pl-d img { width: 100%; }
     .cx-place-mark { grid-column: 1 / -1; grid-row: auto; }
-    .cx-foot-grid { grid-template-columns: 1fr 1fr; }
-    .cx-foot { padding-bottom: 40px; }
   }
 </style>

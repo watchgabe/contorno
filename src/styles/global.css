@@ -1,8 +1,8 @@
 *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
 
 :root {
-  --cream:    #EDE6D6;
-  --offwhite: #F5F0E8;
+  --cream:    #F5F0E8;
+  --offwhite: #FBF9F4;
   --ink:      #2A2A2A;
   --rust:     #C0583A;
   --mid:      #888;
@@ -11,6 +11,7 @@
   --display:  "Gabarito", sans-serif;
   --sans:     "DM Sans", sans-serif;
   --nav-h:    68px;
+  --cx-bg: #F5F0E8; --cx-ink: #2A2A2A; --cx-rust: #C0583A; --cx-dark: #1d1c1a; --cx-mono: "DM Mono", ui-monospace, Menlo, monospace;
   --frame:    14px;
 }
 
@@ -156,10 +157,11 @@ nav.nav-solid .nav-cta:hover { background: #fff !important; }
 
 .hero-title {
   font-family: var(--display);
-  font-size: clamp(72px, 12vw, 160px);
-  font-weight: 500;
+  font-size: clamp(64px, 12vw, 210px);
+  font-weight: 400;
+  text-transform: lowercase;
   line-height: 0.92;
-  letter-spacing: -0.02em;
+  letter-spacing: -0.035em;
   color: #fff;
   margin-bottom: 20px;
 }
@@ -765,3 +767,6 @@ footer {
   .apply-frame { height: 600px; }
   .coming { padding: calc(var(--nav-h) + 60px) 24px 80px; }
 }
+
+/* Shared circle mark used in the logo and on cards. */
+.cx-dot { display: inline-block; width: .9em; height: .9em; border-radius: 50%; border: .14em solid currentColor; box-sizing: border-box; vertical-align: -0.05em; flex: none; }

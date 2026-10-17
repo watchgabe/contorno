@@ -25,14 +25,14 @@ function page(error) {
 <meta name="robots" content="noindex, nofollow"><title>contorno</title>
 <style>
   *{box-sizing:border-box}
-  body{margin:0;min-height:100svh;display:grid;place-items:center;background:#EDE6D6;color:#2A2A2A;font-family:"DM Sans",system-ui,sans-serif}
+  body{margin:0;min-height:100svh;display:grid;place-items:center;background:#F5F0E8;color:#2A2A2A;font-family:"DM Sans",system-ui,sans-serif}
   main{width:min(360px,86vw);text-align:center}
   h1{font-weight:500;font-size:22px;letter-spacing:.18em;text-transform:uppercase;margin:0 0 10px}
   p{margin:0 0 26px;font-size:14px;line-height:1.5;opacity:.75}
   form{display:grid;gap:12px}
-  input{font:inherit;font-size:16px;padding:13px 14px;border:1px solid rgba(42,42,42,.25);border-radius:4px;background:#F5F0E8;color:inherit;text-align:center}
+  input{font:inherit;font-size:16px;padding:13px 14px;border:1px solid rgba(42,42,42,.25);border-radius:4px;background:#fff;color:inherit;text-align:center}
   input:focus-visible{outline:2px solid #2A2A2A;outline-offset:2px}
-  button{font:inherit;font-size:11px;letter-spacing:.14em;text-transform:uppercase;padding:14px;border:0;border-radius:4px;background:#2A2A2A;color:#EDE6D6;cursor:pointer}
+  button{font:inherit;font-size:11px;letter-spacing:.14em;text-transform:uppercase;padding:14px;border:0;border-radius:4px;background:#2A2A2A;color:#F5F0E8;cursor:pointer}
   .err{color:#C0583A;font-size:13px;margin:0 0 12px;opacity:1}
 </style></head><body><main>
 <h1>contorno</h1>

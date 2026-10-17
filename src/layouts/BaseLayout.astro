@@ -1,7 +1,6 @@
 ---
 import Nav from '../components/Nav.astro';
 import Footer from '../components/Footer.astro';
-import GuideGate from '../components/GuideGate.astro';
 import '../styles/global.css';
 
 interface Props {
@@ -9,6 +8,8 @@ interface Props {
   description?: string;
   /** 'full' (default) → site Nav. 'minimal' → just the centered wordmark. 'none' → no header. */
   header?: 'full' | 'minimal' | 'none';
+  /** Let the menu turn dark on scroll. The home page controls this itself. */
+  navAuto?: boolean;
   /** Set false to omit the site footer on this page. */
   footer?: boolean;
   /** Keep a page out of search results (mockups, drafts). */
@@ -20,6 +21,7 @@ const {
   description = 'Contorno, documenting the process of building in Puerto Escondido, México.',
   header = 'full',
   footer = true,
+  navAuto = true,
   noindex = false,
 } = Astro.props;
 ---
@@ -36,12 +38,12 @@ const {
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
     <link
-      href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;1,300;1,400&family=DM+Sans:wght@300;400;500;700&family=Gabarito:wght@400;500;600;700&display=swap"
+      href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;1,300;1,400&family=DM+Sans:wght@300;400;500;700&family=Gabarito:wght@400;500;600;700&family=DM+Mono:wght@400&display=swap"
       rel="stylesheet"
     />
   </head>
   <body>
-    {header === 'full' && <Nav />}
+    {header === 'full' && <Nav autoDark={navAuto} />}
     {header === 'minimal' && (
       <nav id="main-nav" class="nav-minimal">
         <a href="/" class="nav-logo">contorno</a>
@@ -49,16 +51,6 @@ const {
     )}
     <slot />
     {footer && <Footer />}
-    <GuideGate />
-    <script is:inline>
-      (function () {
-        var nav = document.getElementById('main-nav');
-        if (!nav) return;
-        function update() { nav.classList.toggle('nav-solid', window.scrollY > 24); }
-        update();
-        window.addEventListener('scroll', update, { passive: true });
-      })();
-    </script>
   </body>
 </html>
 
