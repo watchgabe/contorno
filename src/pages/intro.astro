@@ -46,8 +46,8 @@ const ticker = ['la punta', 'built by hand', 'round windows', 'puerto escondido'
 ---
 
 <BaseLayout
-  title="Contorno | Concept home"
-  description="Concept for the Contorno home page."
+  title="Contorno | Intro"
+  description="A first look at the new Contorno home page."
   header="none"
   footer={false}
   noindex
@@ -60,7 +60,7 @@ const ticker = ['la punta', 'built by hand', 'round windows', 'puerto escondido'
       <a href="#project">the project</a>
       <a href="/guide">guide</a>
     </div>
-    <a href="/concept" class="cx-logo"><span class="cx-dot"></span>contorno</a>
+    <a href="/intro" class="cx-logo"><span class="cx-dot"></span>contorno</a>
     <div class="cx-nav-r">
       <a href="https://instagram.com/contornocollective" aria-label="Instagram" rel="noopener" target="_blank">
         <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true"><rect x="3" y="3" width="18" height="18" rx="5"/><circle cx="12" cy="12" r="4.2"/><circle cx="17.3" cy="6.7" r="1" fill="currentColor" stroke="none"/></svg>
@@ -161,28 +161,26 @@ const ticker = ['la punta', 'built by hand', 'round windows', 'puerto escondido'
 
   <!-- Footer -->
   <footer class="cx-foot">
-    <div class="cx-foot-grid" data-reveal>
+    <div class="cx-foot-grid">
       <div>
         <p class="cx-foot-name">contorno</p>
         <p class="cx-foot-sub">homes, a guide and a build record<br />on La Punta, Puerto Escondido</p>
       </div>
       <div>
-        <p class="cx-label">CONTORNO · PUERTO ESCONDIDO, OAXACA</p>
-        <p class="cx-label">{COORDS}</p>
-        <a class="cx-rust" href={`mailto:${CONTACT_EMAIL}`}>{CONTACT_EMAIL.toUpperCase()}</a>
+        <p class="cx-foot-mono">CONTORNO · PUERTO ESCONDIDO, OAXACA</p>
+        <p class="cx-foot-mono">{COORDS}</p>
+        <a class="cx-foot-mail" href={`mailto:${CONTACT_EMAIL}`}>{CONTACT_EMAIL.toUpperCase()}</a>
       </div>
       <div class="cx-foot-links">
         <a href="#project">ABOUT</a>
         <a href="#homes">HOMES</a>
         <a href="/guide">GUIDE</a>
       </div>
-      <div class="cx-foot-links">
-        <a class="cx-rust" href="https://instagram.com/contornocollective" target="_blank" rel="noopener">Instagram</a>
-        <a class="cx-rust" href={`mailto:${CONTACT_EMAIL}`}>Email</a>
+      <div class="cx-foot-social">
+        <a href="https://instagram.com/contornocollective" target="_blank" rel="noopener">Instagram</a>
+        <a href={`mailto:${CONTACT_EMAIL}`}>Email</a>
       </div>
     </div>
-    <div class="cx-bigword" data-reveal><span class="cx-dot"></span>contorno</div>
-    <p class="cx-copy">© 2026 Contorno</p>
   </footer>
 
   <script is:inline>
@@ -327,17 +325,18 @@ const ticker = ['la punta', 'built by hand', 'round windows', 'puerto escondido'
   .cx-place-mark { grid-column: 1; grid-row: 4; display: flex; flex-direction: column; gap: 10px; margin: 10px 0 0; font-size: 22px; }
   .cx-place .cx-label { font-size: 15px; }
 
-  /* footer */
-  .cx-foot { position: relative; z-index: 2; background: var(--cx-bg); padding: 40px 22px 24px; overflow: hidden; }
-  .cx-foot-grid { display: grid; grid-template-columns: 1.2fr 1.4fr .8fr .6fr; gap: 30px; align-items: start; }
-  .cx-foot p { margin: 0 0 6px; }
-  .cx-foot-name { font-family: "Gabarito", sans-serif; font-size: 26px; }
-  .cx-foot-sub { font-size: 13px; color: #6d6a63; line-height: 1.35; font-family: "DM Sans", sans-serif; }
-  .cx-foot a { display: block; text-decoration: none; color: inherit; font-family: var(--cx-mono); font-size: 11px; letter-spacing: .08em; margin-bottom: 6px; }
-  .cx-foot a.cx-rust { color: var(--cx-rust); }
-  .cx-bigword { display: flex; align-items: center; gap: .08em; font-family: "Gabarito", sans-serif; font-weight: 500; font-size: clamp(80px, 23vw, 360px); line-height: 1; letter-spacing: -.04em; margin: 50px 0 10px; white-space: nowrap; }
-  .cx-bigword .cx-dot { width: .6em; height: .6em; border-width: .07em; }
-  .cx-copy { font-family: var(--cx-mono); font-size: 11px; color: #6d6a63; margin: 0; }
+  /* footer, modeled on the Ardene footer */
+  .cx-foot { position: relative; z-index: 2; background: var(--cx-bg); padding: 34px 20px 70px; }
+  .cx-foot-grid { display: grid; grid-template-columns: 1.3fr 1.3fr 1fr auto; gap: 30px; align-items: start; }
+  .cx-foot p { margin: 0; }
+  .cx-foot-name { font-family: "Gabarito", sans-serif; font-weight: 400; font-size: 26px; letter-spacing: -.02em; line-height: 1.1; }
+  .cx-foot-sub { margin-top: 12px !important; font-size: 16px; line-height: 1.25; color: #7b776f; font-family: "DM Sans", sans-serif; }
+  .cx-foot-mono { font-family: var(--cx-mono); font-size: 14px; line-height: 1.5; letter-spacing: .02em; }
+  .cx-foot-mail { display: block; margin-top: 18px; color: var(--cx-rust); font-family: var(--cx-mono); font-size: 14px; letter-spacing: .02em; text-decoration: none; }
+  .cx-foot-links { display: flex; flex-direction: column; gap: 14px; align-items: flex-start; }
+  .cx-foot-links a { color: inherit; font-family: var(--cx-mono); font-size: 14px; letter-spacing: .02em; text-decoration: underline dotted; text-underline-offset: 4px; }
+  .cx-foot-social { display: flex; flex-direction: column; gap: 10px; align-items: flex-start; }
+  .cx-foot-social a { color: var(--cx-rust); text-decoration: none; font-family: "DM Sans", sans-serif; font-size: 20px; line-height: 1.1; }
 
   @media (max-width: 800px) {
     .cx-nav { grid-template-columns: auto 1fr auto; padding: 0 14px; }
@@ -358,5 +357,6 @@ const ticker = ['la punta', 'built by hand', 'round windows', 'puerto escondido'
     .cx-pl-a img, .cx-pl-b img, .cx-pl-c img, .cx-pl-d img { width: 100%; }
     .cx-place-mark { grid-column: 1 / -1; grid-row: auto; }
     .cx-foot-grid { grid-template-columns: 1fr 1fr; }
+    .cx-foot { padding-bottom: 40px; }
   }
 </style>
