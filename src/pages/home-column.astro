@@ -183,7 +183,7 @@ const heroImages = [
           for (var i = 0; i < cards.length - 1; i++) {
             var cardH = cards[i].offsetHeight;
             var top = cards[i + 1].getBoundingClientRect().top;
-            var q = clamp((76 + cardH + 40 - top) / (cardH + 40), 0, 1);
+            var q = clamp((60 + cardH + 40 - top) / (cardH + 40), 0, 1);
             cards[i].style.width = (100 - 14 * q) + '%';
             cards[i].style.opacity = String(1 - 0.65 * q);
             cards[i].style.visibility = q >= 0.999 ? 'hidden' : 'visible';
@@ -309,18 +309,21 @@ const heroImages = [
 </style>
 
 <style is:global>
-  /* Column mockup: the homes sit in a centered column, 75% wide, with cards at the photo's own 3:2 shape. */
-  .cx-res .cx-res-head { width: min(75vw, calc((100svh - 96px) * 1.5)); margin: 0 auto; padding-left: 0; padding-right: 0; }
-  .cx-stack { width: min(75vw, calc((100svh - 96px) * 1.5)); margin: 0 auto; }
-  .cx-res .cx-res-head h2 { margin-left: -.04em; }
+  /* Column mockup: about and the homes share one centered column, 85% wide. Cards are 7:5, a little taller than the photos, and never taller than the screen. */
+  .cx-about { padding: 0 7.5vw; }
+  .cx-about-l { padding-left: 0; }
+  .cx-res .cx-res-head { width: 85vw; margin: 0 auto; padding-left: 0; padding-right: 0; }
+  .cx-stack { width: 85vw; margin: 0 auto; }
+  .cx-res .cx-res-head h2, .cx-about h2 { margin-left: -.04em; }
   .cx-res .cx-res-text { justify-self: end; text-align: left; }
-  .cx-card { height: auto; aspect-ratio: 3 / 2; }
+  .cx-card { top: 60px; aspect-ratio: auto; height: min(calc(85vw / 1.4), calc(100svh - 72px)); }
   .cx-card h3 { font-size: calc(100cqw / 8.3); }
   .cx-card-info { left: 22px; right: 22px; }
   .cx-card-text, .cx-card-line { max-width: none; }
   @media (max-width: 760px) {
+    .cx-about { padding: 0 22px; }
     .cx-res-head, .cx-stack { width: calc(100% - 44px); }
-    .cx-card { aspect-ratio: 3 / 4; }
+    .cx-card { height: min(calc((100vw - 44px) * 4 / 3), calc(100svh - 72px)); }
     .cx-card h3 { font-size: calc((100cqw - 44px) / 5.2); }
   }
 </style>
