@@ -309,12 +309,18 @@ const heroImages = [
 </style>
 
 <style is:global>
-  /* Column mockup: the homes sit in a centered column and the cards are taller. */
-  .cx-stack { width: min(780px, calc(100% - 44px)); margin: 0 auto; }
-  .cx-card { height: min(calc(100svh - 96px), 940px); }
-  .cx-card h3 { font-size: calc(0.86 * 100cqw / 4.5); }
+  /* Column mockup: the homes sit in a centered column, 75% wide, with cards at the photo's own 3:2 shape. */
+  .cx-res .cx-res-head { width: min(75vw, calc((100svh - 96px) * 1.5)); margin: 0 auto; padding-left: 0; padding-right: 0; }
+  .cx-stack { width: min(75vw, calc((100svh - 96px) * 1.5)); margin: 0 auto; }
+  .cx-res .cx-res-head h2 { margin-left: -.04em; }
+  .cx-res .cx-res-text { justify-self: end; text-align: left; }
+  .cx-card { height: auto; aspect-ratio: 3 / 2; }
+  .cx-card h3 { font-size: calc(100cqw / 8.3); }
   .cx-card-info { left: 22px; right: 22px; }
   .cx-card-text, .cx-card-line { max-width: none; }
-  .cx-card-by { top: 22px; bottom: auto; }
-  .cx-card-coords { top: 22px; }
+  @media (max-width: 760px) {
+    .cx-res-head, .cx-stack { width: calc(100% - 44px); }
+    .cx-card { aspect-ratio: 3 / 4; }
+    .cx-card h3 { font-size: calc((100cqw - 44px) / 5.2); }
+  }
 </style>
