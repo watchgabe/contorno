@@ -200,7 +200,7 @@ const policies = home.policies ?? [
             </div>
             {home.bookingRoomId ? (
               <form class="bu-form" id="bk" action="https://book.prestigebookingchannel.com/booking2.php" method="get"
-                data-room={home.bookingRoomId} data-prop={home.bookingPropertyId}>
+                data-room={home.bookingRoomId} data-prop={home.bookingPropertyId} data-unit={home.slug} data-checkout="/checkout">
                 <input type="hidden" name="propid" value={home.bookingPropertyId} />
                 <input type="hidden" name="lang" value="en" />
                 <input type="hidden" name="checkin" id="bk-in" />

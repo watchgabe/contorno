@@ -1,9 +1,9 @@
-// Password gate for the unit pages (/penthouse and /homes/*).
+// Password gate for the unit pages (/penthouse, /homes/*) and the demo checkout (/checkout).
 // Runs on Vercel before the static page is served, so the page content is not
 // sent to anyone without the password. Set GATE_PASSWORD in Vercel to change
 // the word; it defaults to "contorno".
 
-export const config = { matcher: ['/penthouse', '/penthouse/', '/homes', '/homes/:path*'] };
+export const config = { matcher: ['/penthouse', '/penthouse/', '/homes', '/homes/:path*', '/checkout', '/checkout/'] };
 
 const COOKIE = 'contorno_gate';
 const word = () => (process.env.GATE_PASSWORD || 'contorno').trim().toLowerCase();

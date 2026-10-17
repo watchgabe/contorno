@@ -76,6 +76,10 @@
 
   function fmt(n) { return new Intl.NumberFormat('en-US').format(Math.round(n)); }
   function checkoutUrl(nights) {
+    // Demo: our own checkout page. Remove data-checkout on the form to go back to the Prestige page.
+    if (form.dataset.checkout) {
+      return form.dataset.checkout + '?unit=' + encodeURIComponent(form.dataset.unit) + '&in=' + start + '&out=' + end + '&adults=' + encodeURIComponent(adults.value);
+    }
     var u = function (s) { var d = parse(s); return d.getUTCFullYear() + '-' + (d.getUTCMonth() + 1) + '-' + d.getUTCDate(); };
     return 'https://book.prestigebookingchannel.com/booking.php?propid=' + encodeURIComponent(prop) + '&page=book3' +
       '&checkin_hide=' + u(start) + '&checkout_hide=' + u(end) + '&numnight=' + nights +

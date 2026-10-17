@@ -1,0 +1,198 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import { homes } from '../data/homes';
+import '../styles/booking.css';
+
+// Only homes that can be booked through the calendar.
+const units = Object.fromEntries(
+  homes
+    .filter((h) => h.bookingRoomId)
+    .map((h) => [h.slug, {
+      name: h.name,
+      room: h.bookingRoomId,
+      prop: h.bookingPropertyId,
+      photo: h.photos[h.mosaic?.[0] ?? 0],
+      maxGuests: h.maxGuests ?? 2,
+    }])
+);
+---
+
+<BaseLayout title="Checkout | Contorno" description="Demo of the Contorno checkout." noindex>
+  <div class="co-demo-bar" role="note">
+    <strong>Demo checkout.</strong> Prices and availability are real. The card payment and the booking are simulated, so nothing is charged and nothing is booked.
+  </div>
+
+  <main class="co" id="co" data-units={JSON.stringify(units)}>
+    <div class="co-empty" id="co-empty" hidden>
+      <h1>Pick your dates first</h1>
+      <p>Choose dates on a home page, then press Reserve.</p>
+      <a class="b-btn" href="/penthouse">Go to the penthouse</a>
+    </div>
+
+    <div class="co-grid" id="co-grid" hidden>
+      <section class="co-main" id="co-main">
+        <a class="co-back" id="co-back" href="/penthouse">&larr; Change dates</a>
+        <h1 id="co-h1">Confirm and pay</h1>
+
+        <form id="co-form" novalidate>
+          <fieldset>
+            <legend><span class="co-n">1</span> Your details</legend>
+            <div class="co-row">
+              <label>First name<input name="first" autocomplete="given-name" required /></label>
+              <label>Last name<input name="last" autocomplete="family-name" required /></label>
+            </div>
+            <div class="co-row">
+              <label>Email<input name="email" type="email" autocomplete="email" required /></label>
+              <label>Phone<input name="phone" type="tel" autocomplete="tel" /></label>
+            </div>
+            <div class="co-row">
+              <label>Country<input name="country" autocomplete="country-name" placeholder="Mexico" required /></label>
+              <label>Expected arrival time
+                <select name="arrival">
+                  <option value="">I am not sure yet</option>
+                  <option>Before 4 pm</option><option>4 pm to 8 pm</option><option>After 8 pm</option>
+                </select>
+              </label>
+            </div>
+            <label>Anything we should know<textarea name="notes" rows="2"></textarea></label>
+          </fieldset>
+
+          <fieldset>
+            <legend><span class="co-n">2</span> Payment <span class="co-test">Test mode</span></legend>
+            <div class="co-card">
+              <label>Card number
+                <input id="cc-num" inputmode="numeric" autocomplete="off" placeholder="4242 4242 4242 4242" maxlength="23" />
+              </label>
+              <div class="co-row">
+                <label>Expiry<input id="cc-exp" inputmode="numeric" autocomplete="off" placeholder="MM / YY" maxlength="7" /></label>
+                <label>CVC<input id="cc-cvc" inputmode="numeric" autocomplete="off" placeholder="123" maxlength="4" /></label>
+              </div>
+              <p class="co-hint">Test cards. <button type="button" class="co-link" data-fill="4242 4242 4242 4242">4242 4242 4242 4242</button> works.
+                <button type="button" class="co-link" data-fill="4000 0000 0000 0002">4000 0000 0000 0002</button> is declined. Any future expiry and any CVC.</p>
+            </div>
+            <p class="co-terms">
+              <label class="co-check"><input type="checkbox" id="co-agree" /> I agree to the house rules and the cancellation policy. <span class="ph">[Placeholder: policy text to confirm with Hōm.]</span></label>
+            </p>
+          </fieldset>
+
+          <p class="co-error" id="co-error" role="alert" hidden></p>
+          <button class="b-btn full" type="submit" id="co-pay">Pay deposit</button>
+          <p class="co-fine">Your card is handled by Stripe. Contorno never sees the card number.</p>
+        </form>
+
+        <div class="co-work" id="co-work" hidden>
+          <h2>Securing your dates</h2>
+          <ol class="co-steps" id="co-steps"></ol>
+        </div>
+
+        <div class="co-done" id="co-done" hidden>
+          <p class="co-ok">Booking confirmed</p>
+          <h1 id="co-done-title">You are booked</h1>
+          <p class="co-ref">Reference <strong id="co-ref"></strong></p>
+          <div id="co-done-summary"></div>
+          <h2>What happens next</h2>
+          <ul class="co-next" id="co-next"></ul>
+          <p class="co-demo-note">Demo only. No card was charged and no booking was created in Prestige.</p>
+          <a class="b-btn ghost" href="/checkout" id="co-reset">Start over</a>
+        </div>
+      </section>
+
+      <aside class="co-side">
+        <div class="co-sum">
+          <img id="co-photo" alt="" />
+          <h2 id="co-unit"></h2>
+          <dl>
+            <div><dt>Check in</dt><dd id="co-in"></dd></div>
+            <div><dt>Check out</dt><dd id="co-out"></dd></div>
+            <div><dt>Guests</dt><dd id="co-guests"></dd></div>
+          </dl>
+          <div class="co-price" id="co-price">Checking the price...</div>
+          <h3>Payment schedule</h3>
+          <ul class="co-sched" id="co-sched"></ul>
+          <p class="co-fine">Schedule shown is a placeholder: <span id="co-policy"></span> Final terms to confirm with Hōm.</p>
+        </div>
+        <details class="co-behind">
+          <summary>What happens behind the scenes</summary>
+          <ol>
+            <li>We check the dates again with Prestige.</li>
+            <li>We hold the dates in Prestige so nobody else can book them.</li>
+            <li>Stripe charges the deposit.</li>
+            <li>We confirm the booking in Prestige and mark the deposit paid.</li>
+            <li>Prestige updates Airbnb so the dates close there too.</li>
+            <li>The guest gets a confirmation email.</li>
+          </ol>
+          <p>If the card is declined, we release the hold and the dates open again.</p>
+        </details>
+      </aside>
+    </div>
+  </main>
+
+  <script is:inline src="/checkout-demo.js" defer></script>
+</BaseLayout>
+
+<style is:global>
+  .co-demo-bar { position: relative; z-index: 5; margin-top: var(--nav-h); background: #1d1c1a; color: #F5F0E8; font-size: 13px; padding: 10px 20px; text-align: center; }
+  .co { max-width: 1120px; margin: 0 auto; padding: 36px clamp(20px, 4vw, 40px) 90px; font-family: "DM Sans", sans-serif; }
+  .co h1 { font-family: "Gabarito", sans-serif; font-weight: 500; font-size: clamp(30px, 4vw, 48px); letter-spacing: -.03em; margin: 8px 0 28px; }
+  .co h2 { font-family: "Gabarito", sans-serif; font-weight: 500; font-size: 22px; margin: 0 0 14px; }
+  .co-grid { display: grid; grid-template-columns: minmax(0, 1.25fr) minmax(0, 1fr); gap: 48px; align-items: start; }
+  .co-back { font-size: 13px; color: inherit; text-decoration: underline; text-underline-offset: 3px; }
+  .co fieldset { border: 0; padding: 0; margin: 0 0 30px; display: grid; gap: 14px; }
+  .co legend { font-family: "Gabarito", sans-serif; font-size: 19px; padding: 0; margin-bottom: 14px; display: flex; align-items: center; gap: 10px; }
+  .co-n { display: inline-grid; place-items: center; width: 26px; height: 26px; border-radius: 50%; background: #2A2A2A; color: #F5F0E8; font-size: 13px; }
+  .co-test { margin-left: auto; font-family: "DM Sans", sans-serif; font-size: 11px; letter-spacing: .12em; text-transform: uppercase; border: 1px solid #C0583A; color: #C0583A; border-radius: 999px; padding: 3px 9px; }
+  .co label { display: grid; gap: 6px; font-size: 11px; letter-spacing: .14em; text-transform: uppercase; color: rgba(42,42,42,.75); }
+  .co input, .co select, .co textarea { font: inherit; font-size: 15px; letter-spacing: 0; text-transform: none; color: #2A2A2A; background: #F5F0E8; border: 1px solid rgba(42,42,42,.18); border-radius: 4px; padding: 12px; width: 100%; }
+  .co input:focus-visible, .co select:focus-visible, .co textarea:focus-visible { outline: 2px solid #2A2A2A; outline-offset: 2px; }
+  .co input.bad { border-color: #C0583A; }
+  .co-row { display: grid; grid-template-columns: 1fr 1fr; gap: 14px; }
+  .co-card { display: grid; gap: 14px; border: 1px solid rgba(42,42,42,.18); border-radius: 6px; padding: 16px; background: #fff; }
+  .co-card input { background: #fff; }
+  .co-hint, .co-fine, .co-demo-note { font-size: 12.5px; line-height: 1.5; color: rgba(42,42,42,.7); margin: 0; }
+  .co-link { background: none; border: 0; padding: 0; font: inherit; color: #C0583A; text-decoration: underline; cursor: pointer; }
+  .co-check { display: flex !important; grid-template-columns: none; gap: 10px; align-items: flex-start; text-transform: none; letter-spacing: 0; font-size: 13.5px; line-height: 1.45; color: #2A2A2A; }
+  .co-check input { width: auto; margin-top: 3px; }
+  .co-terms { margin: 0; }
+  .co-error { background: rgba(192,88,58,.12); border: 1px solid #C0583A; color: #8f3b22; padding: 12px 14px; border-radius: 4px; font-size: 14px; margin: 0 0 14px; }
+  .co .b-btn:disabled { opacity: .5; cursor: not-allowed; }
+  .co-side { position: sticky; top: calc(var(--nav-h) + 20px); display: grid; gap: 16px; }
+  .co-sum { background: #F5F0E8; border-radius: 6px; padding: 18px; border: 1px solid rgba(42,42,42,.12); }
+  .co-sum img { width: 100%; aspect-ratio: 16 / 9; object-fit: cover; border-radius: 4px; display: block; margin-bottom: 14px; }
+  .co-sum dl { margin: 0 0 14px; display: grid; gap: 8px; font-size: 14px; }
+  .co-sum dl div { display: flex; justify-content: space-between; gap: 10px; }
+  .co-sum dt { color: rgba(42,42,42,.65); }
+  .co-sum dd { margin: 0; text-align: right; }
+  .co-price { font-family: "Gabarito", sans-serif; font-size: 26px; padding: 14px 0; border-top: 1px solid rgba(42,42,42,.14); border-bottom: 1px solid rgba(42,42,42,.14); margin-bottom: 14px; }
+  .co-price small { display: block; font-family: "DM Sans", sans-serif; font-size: 12.5px; color: rgba(42,42,42,.7); margin-top: 2px; }
+  .co-sum h3 { font-size: 11px; letter-spacing: .14em; text-transform: uppercase; font-weight: 500; margin: 0 0 8px; color: rgba(42,42,42,.75); }
+  .co-sched { list-style: none; margin: 0 0 12px; padding: 0; display: grid; gap: 10px; font-size: 14px; }
+  .co-sched li { display: flex; justify-content: space-between; gap: 12px; }
+  .co-sched li span:first-child small { display: block; font-size: 12px; color: rgba(42,42,42,.65); }
+  .co-sched b { font-weight: 500; white-space: nowrap; }
+  .co-behind { font-size: 13.5px; line-height: 1.5; }
+  .co-behind summary { cursor: pointer; }
+  .co-behind ol { padding-left: 18px; margin: 10px 0; }
+  .co-steps { list-style: none; padding: 0; margin: 0; display: grid; gap: 14px; }
+  .co-steps li { display: flex; align-items: center; gap: 12px; font-size: 15px; }
+  .co-steps .dot { width: 22px; height: 22px; border-radius: 50%; border: 2px solid rgba(42,42,42,.25); display: inline-grid; place-items: center; font-size: 12px; flex: none; }
+  .co-steps li.run .dot { border-color: #2A2A2A; animation: co-pulse 1s infinite; }
+  .co-steps li.ok .dot { background: #2D5A3D; border-color: #2D5A3D; color: #fff; }
+  .co-steps li.fail .dot { background: #C0583A; border-color: #C0583A; color: #fff; }
+  .co-steps li.skip { opacity: .4; }
+  .co-steps small { display: block; color: rgba(42,42,42,.65); font-size: 12.5px; }
+  @keyframes co-pulse { 50% { opacity: .4; } }
+  .co-ok { display: inline-block; background: #2D5A3D; color: #fff; font-size: 11px; letter-spacing: .14em; text-transform: uppercase; padding: 5px 10px; border-radius: 999px; margin: 6px 0 0; }
+  .co-ref { margin: -14px 0 22px; font-size: 14px; }
+  .co-next { padding-left: 18px; display: grid; gap: 8px; margin: 0 0 22px; font-size: 15px; line-height: 1.45; }
+  .co-done table { width: 100%; border-collapse: collapse; margin-bottom: 26px; font-size: 14.5px; }
+  .co-done td { padding: 10px 0; border-bottom: 1px solid rgba(42,42,42,.14); vertical-align: top; }
+  .co-done td:last-child { text-align: right; white-space: nowrap; }
+  .co-done .b-btn { margin-top: 14px; }
+  .co-empty { text-align: center; padding: 80px 0; }
+  .co-empty .b-btn { margin-top: 10px; }
+  @media (max-width: 860px) {
+    .co-grid { grid-template-columns: 1fr; gap: 28px; }
+    .co-side { position: static; order: -1; }
+    .co-row { grid-template-columns: 1fr; }
+  }
+</style>
