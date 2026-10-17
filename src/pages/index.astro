@@ -46,6 +46,15 @@ const tiles = [
   { cls: 'd', label: 'THE PLANS', img: '/img/home/plans.jpg', alt: 'Hands over printed floor plans on site', href: '/' },
 ];
 
+const heroImages = [
+  { src: '/img/home/drone-1.jpg', alt: 'Aerial view of the Contorno building above La Punta at sunset' },
+  { src: '/img/home/drone-3.jpg', alt: '' },
+  { src: '/img/home/ext-1.jpg', alt: '' },
+  { src: '/img/home/drone-2.jpg', alt: '' },
+  { src: '/img/home/ext-2.jpg', alt: '' },
+  { src: '/img/home/ext-3.jpg', alt: '' },
+];
+
 const ticker = ['la punta', 'built by hand', 'round windows', 'puerto escondido'];
 ---
 
@@ -75,7 +84,12 @@ const ticker = ['la punta', 'built by hand', 'round windows', 'puerto escondido'
   <!-- Hero: shrinks and fades as the page scrolls -->
   <section class="cx-hero">
     <div class="cx-hero-in" id="cx-hero">
-      <img src="/img/home/drone-1.jpg" alt="Aerial view of the Contorno building above La Punta at sunset" />
+      <!-- Slow zoom and fade between photos. A video can replace this later. -->
+      <div class="cx-kb" id="cx-kb">
+        {heroImages.map((h, i) => (
+          <img class={`cx-kb-img${i === 0 ? ' on' : ''}`} src={h.src} alt={i === 0 ? h.alt : ''} aria-hidden={i === 0 ? undefined : 'true'} loading={i === 0 ? 'eager' : 'lazy'} />
+        ))}
+      </div>
       <span class="cx-hero-coords">15.8442° N<br />97.0418° W</span>
       <span class="cx-hero-tag">PUERTO ESCONDIDO · 2026</span>
       <h1 class="cx-hero-word">contorno</h1>
@@ -222,6 +236,20 @@ const ticker = ['la punta', 'built by hand', 'round windows', 'puerto escondido'
       window.addEventListener('resize', onScroll);
       frame();
 
+      // Hero: slow zoom, then a slow fade to the next photo.
+      var kb = [].slice.call(document.querySelectorAll('.cx-kb-img'));
+      if (kb.length > 1 && !reduce) {
+        var cur = 0;
+        setInterval(function () {
+          var next = (cur + 1) % kb.length;
+          kb[cur].classList.remove('on'); kb[cur].classList.add('out');
+          kb[next].classList.remove('out'); kb[next].classList.add('on');
+          var old = kb[cur];
+          setTimeout(function () { old.classList.remove('out'); }, 2200);
+          cur = next;
+        }, 6500);
+      }
+
       // Fade up as things enter the screen.
       var items = [].slice.call(document.querySelectorAll('[data-reveal]'));
       if (!('IntersectionObserver' in window) || reduce) { items.forEach(function (e) { e.classList.add('in'); }); return; }
@@ -260,7 +288,12 @@ const ticker = ['la punta', 'built by hand', 'round windows', 'puerto escondido'
   /* hero: framed photo with a cream border, like the current home page */
   .cx-hero { height: 100svh; min-height: 620px; padding: 60px 14px 14px; background: var(--cx-bg); }
   .cx-hero-in { position: relative; height: 100%; border-radius: 12px; overflow: hidden; color: #F5F0E8; background: var(--cx-dark); transform-origin: 50% 50%; will-change: transform, opacity; }
-  .cx-hero-in img { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; }
+  .cx-kb, .cx-kb-img { position: absolute; inset: 0; width: 100%; height: 100%; }
+  .cx-kb-img { object-fit: cover; opacity: 0; transition: opacity 1.8s ease; transform-origin: 55% 50%; }
+  .cx-kb-img.on { opacity: 1; animation: cx-kb 13s ease-out forwards; }
+  .cx-kb-img.out { opacity: 0; animation: cx-kb 13s ease-out forwards; }
+  @keyframes cx-kb { from { transform: scale(1); } to { transform: scale(1.1) translate(-1%, -1%); } }
+  @media (prefers-reduced-motion: reduce) { .cx-kb-img.on, .cx-kb-img.out { animation: none; } }
   .cx-hero-in::after { content: ""; position: absolute; inset: 0; background: linear-gradient(to top, rgba(20,18,14,.55), rgba(20,18,14,0) 45%, rgba(20,18,14,.25)); }
   .cx-hero-coords, .cx-hero-tag { position: absolute; z-index: 2; top: 28px; font-family: "DM Sans", sans-serif; font-size: 11px; letter-spacing: .14em; line-height: 1.6; opacity: .85; }
   .cx-hero-coords { left: 34px; }
@@ -306,9 +339,9 @@ const ticker = ['la punta', 'built by hand', 'round windows', 'puerto escondido'
   .cx-card-by { right: 22px; bottom: 22px; text-align: left; display: inline-flex; align-items: center; gap: 10px; font-family: var(--cx-mono); font-size: 11px; letter-spacing: .06em; max-width: 14em; line-height: 1.4; }
   .cx-card-by .cx-dot { width: 26px; height: 26px; border-width: 2px; opacity: .85; }
   .cx-card-info { left: 22px; right: 22px; bottom: 22px; display: block; }
-  /* Same size for every title, left aligned. The size comes from the penthouse: 4.28em is the width of "penthouse" and it should take about two thirds of the card. */
+  /* Same size for every title, left aligned, and the same size as the contorno wordmark on the hero. */
   .cx-card { container-type: inline-size; }
-  .cx-card h3 { margin: 0 0 14px; font-family: "Gabarito", sans-serif; font-weight: 500; font-size: calc(0.85 * (38cqw - 22px) / 2.04); line-height: .92; letter-spacing: -.04em; text-transform: lowercase; white-space: nowrap; }
+  .cx-card h3 { margin: 0 0 14px; font-family: "Gabarito", sans-serif; font-weight: 500; font-size: clamp(64px, 12vw, 210px); line-height: .92; letter-spacing: -.04em; text-transform: lowercase; white-space: nowrap; }
   .cx-card-text { max-width: 38cqw; margin: 0; font-size: clamp(14px, 1.45vw, 20px); line-height: 1.2; font-family: "DM Sans", sans-serif; }
 
   /* the place: three columns of boxes in different sizes, like the Ardene heritage section */
