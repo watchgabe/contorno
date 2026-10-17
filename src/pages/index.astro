@@ -167,13 +167,16 @@ const heroImages = [
         }
         // Nav is cream on the framed hero, dark while scrolling through about, cream again from the homes on.
         nav.classList.toggle('is-dark', y > 24 && homesSection.getBoundingClientRect().top >= 60);
-        // Each pinned card insets and fades while the next card slides over it.
+        // Each pinned card insets and fades only while the next card slides over it.
+        // Once the next card fully covers it, the card is hidden so nothing shows through.
         if (!reduce) {
           for (var i = 0; i < cards.length - 1; i++) {
+            var cardH = cards[i].offsetHeight;
             var top = cards[i + 1].getBoundingClientRect().top;
-            var q = clamp((H - top) / (H - 76), 0, 1);
+            var q = clamp((76 + cardH + 40 - top) / (cardH + 40), 0, 1);
             cards[i].style.width = (100 - 14 * q) + '%';
             cards[i].style.opacity = String(1 - 0.65 * q);
+            cards[i].style.visibility = q >= 0.999 ? 'hidden' : 'visible';
           }
         }
       }
@@ -248,7 +251,7 @@ const heroImages = [
 
   /* homes: cards pin and the next one slides over */
   .cx-res { position: relative; z-index: 2; background: var(--cx-bg); padding: 56px 0 0; }
-  .cx-res-head { display: grid; grid-template-columns: 1fr 1fr; padding: 0 22px 26px; gap: 24px; align-items: end; scroll-margin-top: 70px; }
+  .cx-res-head { display: grid; grid-template-columns: 1fr 1fr; padding: 0 22px 26px; gap: 24px; align-items: end; scroll-margin-top: 18vh; }
   .cx-res-text { margin: 0 0 6px; font-size: clamp(16px, 1.5vw, 21px); line-height: 1.3; max-width: 28em; justify-self: start; font-family: "DM Sans", sans-serif; }
   .cx-stack { position: relative; padding-bottom: 0; }
   .cx-anchor { position: absolute; top: -80px; }

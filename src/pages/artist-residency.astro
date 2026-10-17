@@ -10,66 +10,16 @@ import BaseLayout from '../layouts/BaseLayout.astro';
     <p class="rs-eyebrow">Artist Residency Program</p>
     <h1 class="rs-title">Inviting artists to live and work on site</h1>
 
-    <div class="rs-panel">
-      <form id="rs-form" novalidate>
-        <p class="rs-intro">A month in Puerto Escondido. The application takes about ten minutes and we read every one.</p>
-
-        <fieldset>
-          <legend>About you</legend>
-          <div class="rs-row">
-            <label>Name <span class="req">*</span><input name="name" autocomplete="name" required /></label>
-            <label>Email <span class="req">*</span><input name="email" type="email" autocomplete="email" required /></label>
-          </div>
-          <div class="rs-row">
-            <label>Where are you based right now <span class="req">*</span><input name="based" autocomplete="address-level2" required /></label>
-            <label>Instagram handle<input name="instagram" placeholder="@" /></label>
-          </div>
-          <label>Portfolio or website <span class="req">*</span><input name="portfolio" inputmode="url" placeholder="https://" required /></label>
-        </fieldset>
-
-        <fieldset>
-          <legend>Your work</legend>
-          <label>What do you make <span class="req">*</span><textarea name="make" rows="3" required></textarea></label>
-          <label>Links to 3 to 5 pieces you are proud of <span class="req">*</span>
-            <textarea name="pieces" rows="4" placeholder="One link per line. Recent work or work from a few years back, your choice." required></textarea>
-          </label>
-          <label>What are you making right now
-            <small>The thing that is pulling you in at the moment.</small>
-            <textarea name="now" rows="3"></textarea>
-          </label>
-          <label>In one sentence, how would a friend describe your work<input name="sentence" /></label>
-        </fieldset>
-
-        <fieldset>
-          <legend>Why Contorno</legend>
-          <label>Why Puerto Escondido, and why now <span class="req">*</span><textarea name="why" rows="3" required></textarea></label>
-          <label>A rough idea for the piece you would leave behind
-            <small>Residents leave one piece that lives at Contorno. Describe what you might make for a space like this. It is a rough idea and it can change.</small>
-            <textarea name="idea" rows="4"></textarea>
-          </label>
-          <label>What a month here would unlock for you<textarea name="unlock" rows="3"></textarea></label>
-        </fieldset>
-
-        <fieldset>
-          <legend>A few last things</legend>
-          <label>Anything we should know
-            <small>Dietary needs, accessibility, traveling with a partner, working hours.</small>
-            <textarea name="notes" rows="2"></textarea>
-          </label>
-          <label>How you heard about the residency<input name="heard" /></label>
-        </fieldset>
-
-        <!-- Hidden from people. Bots tend to fill it in. -->
-        <div class="rs-trap" aria-hidden="true"><label>Company<input name="company" tabindex="-1" autocomplete="off" /></label></div>
-
-        <p class="rs-error" id="rs-error" role="alert" hidden></p>
-        <button class="rs-btn" type="submit" id="rs-send">Send application</button>
-      </form>
-
-      <div class="rs-thanks" id="rs-thanks" hidden>
-        <p class="rs-eyebrow">Application received</p>
-        <h2 id="rs-thanks-title">Thank you</h2>
-        <p id="rs-thanks-text"></p>
+    <div class="rs-panel" id="ap" aria-live="polite">
+      <div class="ap-bar" aria-hidden="true"><span id="ap-fill"></span></div>
+      <div class="ap-stage" id="ap-stage">
+        <noscript>
+          <p class="ap-q">This application needs JavaScript. Please email hello@contornocollective.com instead.</p>
+        </noscript>
+      </div>
+      <div class="ap-foot" id="ap-foot" hidden>
+        <button type="button" class="ap-back" id="ap-back" aria-label="Previous question">&larr; Back</button>
+        <span class="ap-count" id="ap-count"></span>
       </div>
     </div>
 
@@ -80,29 +30,45 @@ import BaseLayout from '../layouts/BaseLayout.astro';
 </BaseLayout>
 
 <style is:global>
-  .rs { max-width: 760px; margin: 0 auto; padding: calc(var(--nav-h) + 64px) 24px 110px; text-align: center; }
+  .rs { max-width: 920px; margin: 0 auto; padding: calc(var(--nav-h) + 64px) 24px 110px; text-align: center; }
   .rs-eyebrow { font-family: var(--label); font-size: 11px; letter-spacing: .18em; text-transform: uppercase; margin: 0 0 18px; opacity: .75; }
   .rs-title { font-family: var(--display); font-weight: 500; font-size: clamp(36px, 5.6vw, 72px); line-height: 1.02; letter-spacing: -.035em; margin: 0 auto 44px; max-width: 14em; }
-  .rs-panel { background: var(--offwhite); border: 1px solid rgba(42, 42, 42, .12); border-radius: 12px; padding: clamp(22px, 4vw, 40px); text-align: left; }
-  .rs-intro { margin: 0 0 26px; font-size: 15px; line-height: 1.5; opacity: .8; }
-  .rs fieldset { border: 0; padding: 0; margin: 0 0 30px; display: grid; gap: 16px; }
-  .rs legend { font-family: var(--display); font-size: 20px; letter-spacing: -.01em; margin-bottom: 14px; padding: 0; }
-  .rs label { display: flex; flex-wrap: wrap; align-items: baseline; gap: 6px 4px; font-family: var(--label); font-size: 11px; letter-spacing: .12em; text-transform: uppercase; color: rgba(42, 42, 42, .8); }
-  .rs label > input, .rs label > textarea, .rs label > small { flex: 0 0 100%; }
-  .rs label small { font-family: var(--sans); font-size: 13px; letter-spacing: 0; text-transform: none; line-height: 1.4; color: rgba(42, 42, 42, .65); }
-  .rs .req { color: var(--rust); }
-  .rs input, .rs textarea { font: inherit; font-family: var(--sans); font-size: 15px; letter-spacing: 0; text-transform: none; color: var(--ink); background: #fff; border: 1px solid rgba(42, 42, 42, .18); border-radius: 4px; padding: 12px; width: 100%; resize: vertical; }
-  .rs input:focus-visible, .rs textarea:focus-visible { outline: 2px solid var(--ink); outline-offset: 2px; }
-  .rs input.bad, .rs textarea.bad { border-color: var(--rust); }
-  .rs-row { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; }
-  .rs-trap { position: absolute; left: -9999px; width: 1px; height: 1px; overflow: hidden; }
-  .rs-error { background: rgba(192, 88, 58, .12); border: 1px solid var(--rust); color: #8f3b22; padding: 12px 14px; border-radius: 4px; font-size: 14px; margin: 0 0 16px; }
-  .rs-btn { width: 100%; background: var(--ink); color: var(--cream); border: 0; border-radius: 4px; padding: 16px; font-family: var(--label); font-size: 11px; letter-spacing: .16em; text-transform: uppercase; cursor: pointer; }
-  .rs-btn:hover { background: #444; }
-  .rs-btn:disabled { opacity: .5; cursor: wait; }
-  .rs-thanks { text-align: center; padding: 30px 0; }
-  .rs-thanks h2 { font-family: var(--display); font-weight: 500; font-size: clamp(30px, 4vw, 44px); letter-spacing: -.03em; margin: 0 0 14px; }
-  .rs-thanks p:last-child { margin: 0 auto; max-width: 28em; font-size: 16px; line-height: 1.5; }
   .rs-line { font-family: var(--label); font-size: 12px; letter-spacing: .16em; text-transform: uppercase; margin: 30px 0 0; opacity: .8; }
-  @media (max-width: 640px) { .rs-row { grid-template-columns: 1fr; } }
+
+  /* One question at a time, like a Typeform, but on the page */
+  .rs-panel { position: relative; background: var(--offwhite); border: 1px solid rgba(42, 42, 42, .12); border-radius: 12px; overflow: hidden; text-align: left; min-height: 460px; display: flex; flex-direction: column; }
+  .ap-bar { height: 3px; background: rgba(42, 42, 42, .08); }
+  .ap-bar span { display: block; height: 100%; width: 0; background: var(--rust); transition: width .45s ease; }
+  .ap-stage { flex: 1; display: flex; flex-direction: column; justify-content: center; padding: clamp(26px, 5vw, 56px); }
+  .ap-step { animation: ap-in .4s ease both; }
+  @keyframes ap-in { from { opacity: 0; transform: translateY(18px); } to { opacity: 1; transform: none; } }
+  .ap-num { font-family: var(--cx-mono, monospace); font-size: 12px; letter-spacing: .08em; color: var(--rust); margin: 0 0 14px; }
+  .ap-q { font-family: var(--display); font-weight: 500; font-size: clamp(26px, 3.6vw, 40px); line-height: 1.08; letter-spacing: -.03em; margin: 0 0 10px; }
+  .ap-help { font-size: 15px; line-height: 1.45; color: rgba(42, 42, 42, .65); margin: 0 0 22px; max-width: 34em; }
+  .ap-field { display: block; width: 100%; font: inherit; font-family: var(--sans); font-size: clamp(19px, 2.2vw, 26px); color: var(--rust); background: transparent; border: 0; border-bottom: 2px solid rgba(42, 42, 42, .25); padding: 10px 0; border-radius: 0; outline: none; resize: none; }
+  .ap-field:focus { border-bottom-color: var(--rust); }
+  .ap-field::placeholder { color: rgba(42, 42, 42, .3); }
+  .ap-field.bad { border-bottom-color: #b3261e; }
+  .ap-actions { display: flex; align-items: center; gap: 16px; margin-top: 26px; flex-wrap: wrap; }
+  .ap-ok { background: var(--rust); color: #fff; border: 0; border-radius: 4px; padding: 13px 22px; font-family: var(--label); font-size: 12px; letter-spacing: .14em; text-transform: uppercase; cursor: pointer; }
+  .ap-ok:hover { background: #a84a2f; }
+  .ap-ok:disabled { opacity: .5; cursor: wait; }
+  .ap-hint { font-size: 13px; color: rgba(42, 42, 42, .55); }
+  .ap-skip { background: none; border: 0; padding: 0; font: inherit; font-size: 13px; color: rgba(42, 42, 42, .6); text-decoration: underline; cursor: pointer; }
+  .ap-err { color: #b3261e; font-size: 14px; margin: 12px 0 0; min-height: 1.2em; }
+  .ap-foot { display: flex; justify-content: space-between; align-items: center; padding: 0 clamp(26px, 5vw, 56px) 22px; }
+  .ap-back { background: none; border: 0; font: inherit; font-size: 13px; color: rgba(42, 42, 42, .6); cursor: pointer; padding: 0; }
+  .ap-back:hover { color: var(--ink); }
+  .ap-back[hidden], .ap-foot[hidden] { display: none; }
+  .ap-count { font-family: var(--cx-mono, monospace); font-size: 12px; color: rgba(42, 42, 42, .5); }
+  .ap-welcome h2 { font-family: var(--display); font-weight: 500; font-size: clamp(28px, 4vw, 44px); letter-spacing: -.03em; line-height: 1.05; margin: 0 0 14px; }
+  .ap-welcome p { margin: 0 0 22px; font-size: 16px; line-height: 1.5; max-width: 30em; }
+  .ap-review { list-style: none; padding: 0; margin: 0 0 6px; display: grid; gap: 10px; font-size: 14px; }
+  .ap-review li { display: grid; grid-template-columns: 1fr auto; gap: 12px; padding-bottom: 10px; border-bottom: 1px solid rgba(42, 42, 42, .1); }
+  .ap-review b { font-weight: 500; display: block; font-size: 12px; letter-spacing: .08em; text-transform: uppercase; color: rgba(42, 42, 42, .6); margin-bottom: 2px; }
+  .ap-review span { display: block; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; max-width: 46ch; color: var(--ink); }
+  .ap-review button { background: none; border: 0; font: inherit; font-size: 13px; color: var(--rust); text-decoration: underline; cursor: pointer; align-self: start; }
+  .ap-thanks h2 { font-family: var(--display); font-weight: 500; font-size: clamp(30px, 4vw, 46px); letter-spacing: -.03em; margin: 0 0 14px; }
+  .ap-thanks p { font-size: 17px; line-height: 1.5; margin: 0; max-width: 28em; }
+  @media (prefers-reduced-motion: reduce) { .ap-step { animation: none; } .ap-bar span { transition: none; } }
 </style>
