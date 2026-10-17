@@ -1,7 +1,5 @@
 ---
 import BaseLayout from '../layouts/BaseLayout.astro';
-
-const TYPEFORM_URL = 'https://453f8jrwcv1.typeform.com/to/QAik2KWu';
 ---
 
 <BaseLayout
@@ -13,25 +11,98 @@ const TYPEFORM_URL = 'https://453f8jrwcv1.typeform.com/to/QAik2KWu';
     <h1 class="rs-title">Inviting artists to live and work on site</h1>
 
     <div class="rs-panel">
-      <iframe
-        class="rs-frame"
-        src={TYPEFORM_URL}
-        title="Contorno Artist Residency Application"
-        loading="lazy"
-        allow="camera; microphone; autoplay; encrypted-media; fullscreen"
-      ></iframe>
+      <form id="rs-form" novalidate>
+        <p class="rs-intro">A month in Puerto Escondido. The application takes about ten minutes and we read every one.</p>
+
+        <fieldset>
+          <legend>About you</legend>
+          <div class="rs-row">
+            <label>Name <span class="req">*</span><input name="name" autocomplete="name" required /></label>
+            <label>Email <span class="req">*</span><input name="email" type="email" autocomplete="email" required /></label>
+          </div>
+          <div class="rs-row">
+            <label>Where are you based right now <span class="req">*</span><input name="based" autocomplete="address-level2" required /></label>
+            <label>Instagram handle<input name="instagram" placeholder="@" /></label>
+          </div>
+          <label>Portfolio or website <span class="req">*</span><input name="portfolio" inputmode="url" placeholder="https://" required /></label>
+        </fieldset>
+
+        <fieldset>
+          <legend>Your work</legend>
+          <label>What do you make <span class="req">*</span><textarea name="make" rows="3" required></textarea></label>
+          <label>Links to 3 to 5 pieces you are proud of <span class="req">*</span>
+            <textarea name="pieces" rows="4" placeholder="One link per line. Recent work or work from a few years back, your choice." required></textarea>
+          </label>
+          <label>What are you making right now
+            <small>The thing that is pulling you in at the moment.</small>
+            <textarea name="now" rows="3"></textarea>
+          </label>
+          <label>In one sentence, how would a friend describe your work<input name="sentence" /></label>
+        </fieldset>
+
+        <fieldset>
+          <legend>Why Contorno</legend>
+          <label>Why Puerto Escondido, and why now <span class="req">*</span><textarea name="why" rows="3" required></textarea></label>
+          <label>A rough idea for the piece you would leave behind
+            <small>Residents leave one piece that lives at Contorno. Describe what you might make for a space like this. It is a rough idea and it can change.</small>
+            <textarea name="idea" rows="4"></textarea>
+          </label>
+          <label>What a month here would unlock for you<textarea name="unlock" rows="3"></textarea></label>
+        </fieldset>
+
+        <fieldset>
+          <legend>A few last things</legend>
+          <label>Anything we should know
+            <small>Dietary needs, accessibility, traveling with a partner, working hours.</small>
+            <textarea name="notes" rows="2"></textarea>
+          </label>
+          <label>How you heard about the residency<input name="heard" /></label>
+        </fieldset>
+
+        <!-- Hidden from people. Bots tend to fill it in. -->
+        <div class="rs-trap" aria-hidden="true"><label>Company<input name="company" tabindex="-1" autocomplete="off" /></label></div>
+
+        <p class="rs-error" id="rs-error" role="alert" hidden></p>
+        <button class="rs-btn" type="submit" id="rs-send">Send application</button>
+      </form>
+
+      <div class="rs-thanks" id="rs-thanks" hidden>
+        <p class="rs-eyebrow">Application received</p>
+        <h2 id="rs-thanks-title">Thank you</h2>
+        <p id="rs-thanks-text"></p>
+      </div>
     </div>
 
     <p class="rs-line">1 month on site, 1 hour at a time</p>
   </main>
+
+  <script is:inline src="/apply.js" defer></script>
 </BaseLayout>
 
 <style is:global>
-  .rs { max-width: 920px; margin: 0 auto; padding: calc(var(--nav-h) + 64px) 24px 110px; text-align: center; }
+  .rs { max-width: 760px; margin: 0 auto; padding: calc(var(--nav-h) + 64px) 24px 110px; text-align: center; }
   .rs-eyebrow { font-family: var(--label); font-size: 11px; letter-spacing: .18em; text-transform: uppercase; margin: 0 0 18px; opacity: .75; }
   .rs-title { font-family: var(--display); font-weight: 500; font-size: clamp(36px, 5.6vw, 72px); line-height: 1.02; letter-spacing: -.035em; margin: 0 auto 44px; max-width: 14em; }
-  .rs-panel { background: var(--offwhite); border: 1px solid rgba(42, 42, 42, .12); border-radius: 12px; overflow: hidden; }
-  .rs-frame { display: block; width: 100%; height: 640px; border: 0; }
+  .rs-panel { background: var(--offwhite); border: 1px solid rgba(42, 42, 42, .12); border-radius: 12px; padding: clamp(22px, 4vw, 40px); text-align: left; }
+  .rs-intro { margin: 0 0 26px; font-size: 15px; line-height: 1.5; opacity: .8; }
+  .rs fieldset { border: 0; padding: 0; margin: 0 0 30px; display: grid; gap: 16px; }
+  .rs legend { font-family: var(--display); font-size: 20px; letter-spacing: -.01em; margin-bottom: 14px; padding: 0; }
+  .rs label { display: flex; flex-wrap: wrap; align-items: baseline; gap: 6px 4px; font-family: var(--label); font-size: 11px; letter-spacing: .12em; text-transform: uppercase; color: rgba(42, 42, 42, .8); }
+  .rs label > input, .rs label > textarea, .rs label > small { flex: 0 0 100%; }
+  .rs label small { font-family: var(--sans); font-size: 13px; letter-spacing: 0; text-transform: none; line-height: 1.4; color: rgba(42, 42, 42, .65); }
+  .rs .req { color: var(--rust); }
+  .rs input, .rs textarea { font: inherit; font-family: var(--sans); font-size: 15px; letter-spacing: 0; text-transform: none; color: var(--ink); background: #fff; border: 1px solid rgba(42, 42, 42, .18); border-radius: 4px; padding: 12px; width: 100%; resize: vertical; }
+  .rs input:focus-visible, .rs textarea:focus-visible { outline: 2px solid var(--ink); outline-offset: 2px; }
+  .rs input.bad, .rs textarea.bad { border-color: var(--rust); }
+  .rs-row { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; }
+  .rs-trap { position: absolute; left: -9999px; width: 1px; height: 1px; overflow: hidden; }
+  .rs-error { background: rgba(192, 88, 58, .12); border: 1px solid var(--rust); color: #8f3b22; padding: 12px 14px; border-radius: 4px; font-size: 14px; margin: 0 0 16px; }
+  .rs-btn { width: 100%; background: var(--ink); color: var(--cream); border: 0; border-radius: 4px; padding: 16px; font-family: var(--label); font-size: 11px; letter-spacing: .16em; text-transform: uppercase; cursor: pointer; }
+  .rs-btn:hover { background: #444; }
+  .rs-btn:disabled { opacity: .5; cursor: wait; }
+  .rs-thanks { text-align: center; padding: 30px 0; }
+  .rs-thanks h2 { font-family: var(--display); font-weight: 500; font-size: clamp(30px, 4vw, 44px); letter-spacing: -.03em; margin: 0 0 14px; }
+  .rs-thanks p:last-child { margin: 0 auto; max-width: 28em; font-size: 16px; line-height: 1.5; }
   .rs-line { font-family: var(--label); font-size: 12px; letter-spacing: .16em; text-transform: uppercase; margin: 30px 0 0; opacity: .8; }
-  @media (max-width: 700px) { .rs-frame { height: 720px; } }
+  @media (max-width: 640px) { .rs-row { grid-template-columns: 1fr; } }
 </style>
