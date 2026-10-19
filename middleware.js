@@ -1,6 +1,6 @@
 // Password gate for the whole site while it is in review.
 // Runs on Vercel before any page or file is served, so nothing is sent to anyone
-// without the password. Set GATE_PASSWORD in Vercel to change the word; it
+// without the password. The one exception is /guide, which is public. Set GATE_PASSWORD in Vercel to change the word; it
 // defaults to "contorno2026". To open the site to everyone, delete this file.
 
 export const config = { matcher: ['/((?!favicon\\.ico).*)'] };
@@ -47,6 +47,11 @@ ${error ? '<p class="err" role="alert">that is not the password. try again.</p>'
 }
 
 export default async function middleware(request) {
+  // The Puerto Guide is public so it can be shared. Its page and the shared styles stay open.
+  const path = new URL(request.url).pathname;
+  if (path === '/guide' || path === '/guide/' || path.startsWith('/_astro/')) {
+    return new Response(null, { headers: { 'x-middleware-next': '1' } });
+  }
   const expected = await token();
   if (hasCookie(request, expected)) {
     return new Response(null, { headers: { 'x-middleware-next': '1' } });

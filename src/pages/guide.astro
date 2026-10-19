@@ -28,7 +28,14 @@ const mustGoCount = entries.filter((e) => e.mustGo).length;
 <BaseLayout
   title="Puerto Guide | Contorno"
   description="A living guide to the places we go in Puerto Escondido. Sortable by district and type."
+  header="none"
+  footer={false}
 >
+  <div class="guide-bar">
+    <span class="guide-bar-name">contorno</span>
+    <a class="guide-bar-ig" href="https://instagram.com/contornocollective" target="_blank" rel="noopener">@contornocollective</a>
+  </div>
+
   <header class="guide-header">
     <p class="guide-eyebrow">PXM · 2026</p>
     <h1 class="guide-title">Puerto Guide</h1>
@@ -134,6 +141,11 @@ const mustGoCount = entries.filter((e) => e.mustGo).length;
 
 <style>
   /* Header */
+  .guide-bar { position: absolute; top: 0; left: 0; right: 0; height: var(--nav-h); display: flex; align-items: center; justify-content: space-between; padding: 0 40px; font-family: var(--cx-mono, monospace); font-size: 11px; letter-spacing: .08em; }
+  .guide-bar-name { font-family: "Gabarito", sans-serif; font-size: 22px; letter-spacing: -.01em; }
+  .guide-bar-ig { color: inherit; text-decoration: none; }
+  .guide-bar-ig:hover { text-decoration: underline; text-underline-offset: 4px; }
+  @media (max-width: 760px) { .guide-bar { padding: 0 24px; } }
   .guide-header {
     padding: calc(var(--nav-h) + 80px) 40px 30px;
     max-width: 900px;
