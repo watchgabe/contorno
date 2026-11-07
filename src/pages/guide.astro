@@ -20,14 +20,17 @@ type Entry = {
 const entries = guide.entries as Entry[];
 
 const uniq = <T,>(xs: T[]) => Array.from(new Set(xs));
-const districts = uniq(entries.map((e) => e.district)).sort();
+// Neighborhoods in the order Nick wants them shown. Any new one from the sheet goes at the end.
+const neighborhoodOrder = ['La Bomba', 'La Punta', 'Zicatela', 'Tamarindo', 'Carretera'];
+const rank = (d: string) => (neighborhoodOrder.indexOf(d) + 1) || neighborhoodOrder.length + 1;
+const districts = uniq(entries.map((e) => e.district)).sort((a, b) => rank(a) - rank(b) || a.localeCompare(b));
 const types = uniq(entries.map((e) => e.type)).sort();
 const mustGoCount = entries.filter((e) => e.mustGo).length;
 ---
 
 <BaseLayout
   title="Puerto Guide | Contorno"
-  description="A living guide to the places we go in Puerto Escondido. Sortable by district and type."
+  description="A living guide to the places we go in Puerto Escondido. Sortable by neighborhood and type."
   header="none"
   footer={false}
 >
@@ -40,7 +43,7 @@ const mustGoCount = entries.filter((e) => e.mustGo).length;
     <p class="guide-eyebrow">PXM · 2026</p>
     <h1 class="guide-title">Puerto Guide</h1>
     <p class="guide-lede">
-      The places we go and what to order when you get there. Sortable by district and type.
+      The places we go and what to order when you get there. Sortable by neighborhood and type.
     </p>
   </header>
 
@@ -53,8 +56,8 @@ const mustGoCount = entries.filter((e) => e.mustGo).length;
 
     <div class="filters-body">
       <div class="filter-row">
-        <span class="filter-label">District</span>
-        <div class="chip-group" data-group="district" role="group" aria-label="Filter by district">
+        <span class="filter-label">Neighborhood</span>
+        <div class="chip-group" data-group="district" role="group" aria-label="Filter by neighborhood">
           <button type="button" class="chip is-active" data-value="all" aria-pressed="true">All</button>
           {districts.map((d) => (
             <button type="button" class="chip" data-value={d} aria-pressed="false">{d}</button>
