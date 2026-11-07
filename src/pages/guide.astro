@@ -30,7 +30,8 @@ const inOrder = (order: string[]) => {
   return (a: string, b: string) => rank(a) - rank(b) || a.localeCompare(b);
 };
 const districts = uniq(entries.map((e) => e.district)).sort(inOrder(neighborhoodOrder));
-const typesOf = (e: Entry) => [...(e.types ?? [e.type])].sort(inOrder(typeOrder));
+// A place's types, in the order they are listed for that place (Fish Shack shows "Lunch / Dinner")
+const typesOf = (e: Entry) => e.types ?? [e.type];
 const types = uniq(entries.flatMap(typesOf)).sort(inOrder(typeOrder));
 const mustGoCount = entries.filter((e) => e.mustGo).length;
 ---
