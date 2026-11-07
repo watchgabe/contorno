@@ -8,6 +8,8 @@ type Entry = {
   type: string;
   // Optional: a place that fits more than one type (for example Lunch and Dinner)
   types?: string[];
+  // Optional: the Vibe filter categories this place belongs to (See & Be Seen, Relaxed)
+  mood?: string[];
   name: string | null;
   displayName: string;
   nickname: string | null;
@@ -33,6 +35,8 @@ const districts = uniq(entries.map((e) => e.district)).sort(inOrder(neighborhood
 // A place's types, in the order they are listed for that place (Fish Shack shows "Lunch / Dinner")
 const typesOf = (e: Entry) => e.types ?? [e.type];
 const types = uniq(entries.flatMap(typesOf)).sort(inOrder(typeOrder));
+const moodOrder = ['See & Be Seen', 'Relaxed'];
+const moods = uniq(entries.flatMap((e) => e.mood ?? [])).sort(inOrder(moodOrder));
 const mustGoCount = entries.filter((e) => e.mustGo).length;
 ---
 
@@ -84,6 +88,16 @@ const mustGoCount = entries.filter((e) => e.mustGo).length;
       </div>
 
       <div class="filter-row">
+        <span class="filter-label">Vibe</span>
+        <div class="chip-group" data-group="mood" role="group" aria-label="Filter by vibe">
+          <button type="button" class="chip is-active" data-value="all" aria-pressed="true">All</button>
+          {moods.map((m) => (
+            <button type="button" class="chip" data-value={m} aria-pressed="false">{m}</button>
+          ))}
+        </div>
+      </div>
+
+      <div class="filter-row">
         <span class="filter-label">Priority</span>
         <div class="chip-group" data-group="mustgo" role="group" aria-label="Filter by priority">
           <button type="button" class="chip is-active" data-value="all" aria-pressed="true">All places</button>
@@ -106,6 +120,7 @@ const mustGoCount = entries.filter((e) => e.mustGo).length;
         class="card"
         data-district={e.district}
         data-type={typesOf(e).join('|')}
+        data-mood={(e.mood ?? []).join('|')}
         data-mustgo={e.mustGo ? '1' : '0'}
       >
         {e.mustGo && (
@@ -472,12 +487,13 @@ const mustGoCount = entries.filter((e) => e.mustGo).length;
     var clearBtn = document.getElementById('filters-clear');
     var groups = Array.from(document.querySelectorAll('.chip-group'));
 
-    var state = { district: 'all', type: 'all', mustgo: 'all' };
+    var state = { district: 'all', type: 'all', mood: 'all', mustgo: 'all' };
 
     function activeFilterCount() {
       var n = 0;
       if (state.district !== 'all') n++;
       if (state.type !== 'all') n++;
+      if (state.mood !== 'all') n++;
       if (state.mustgo !== 'all') n++;
       return n;
     }
@@ -487,10 +503,12 @@ const mustGoCount = entries.filter((e) => e.mustGo).length;
       cards.forEach(function (card) {
         var d = card.getAttribute('data-district');
         var t = card.getAttribute('data-type');
+        var v = card.getAttribute('data-mood') || '';
         var m = card.getAttribute('data-mustgo') === '1';
         var show =
           (state.district === 'all' || state.district === d) &&
           (state.type === 'all' || t.split('|').indexOf(state.type) !== -1) &&
+          (state.mood === 'all' || v.split('|').indexOf(state.mood) !== -1) &&
           (state.mustgo === 'all' || (state.mustgo === 'must' && m));
         card.hidden = !show;
         if (show) visible++;
@@ -532,7 +550,7 @@ const mustGoCount = entries.filter((e) => e.mustGo).length;
 
     if (clearBtn) {
       clearBtn.addEventListener('click', function () {
-        state = { district: 'all', type: 'all', mustgo: 'all' };
+        state = { district: 'all', type: 'all', mood: 'all', mustgo: 'all' };
         groups.forEach(function (group) { setGroup(group, 'all'); });
         apply();
       });

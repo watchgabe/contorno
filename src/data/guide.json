@@ -10,6 +10,9 @@
       "displayName": "Panaderia Helena",
       "nickname": "Helena",
       "vibe": "Relaxed & Natural Cafe",
+      "mood": [
+        "Relaxed"
+      ],
       "mustGo": true,
       "description": "The best cafe in Puerto Escondido.",
       "orderThis": "Food: Huevos con Tocino. Drink: Flat White Caliente. Postre: Rol de Canela o Choclatin. Order pastries when you arrive, they always run out.",
@@ -24,6 +27,9 @@
       "displayName": "Chicama",
       "nickname": null,
       "vibe": "Puerto's Peruvian Playground",
+      "mood": [
+        "See & Be Seen"
+      ],
       "mustGo": true,
       "description": null,
       "orderThis": null,
@@ -56,6 +62,9 @@
       "displayName": "Main Beach La Punta",
       "nickname": null,
       "vibe": "See & Be Seen",
+      "mood": [
+        "See & Be Seen"
+      ],
       "mustGo": true,
       "description": "Watch the surfers while relaxing at one of the most popular strips of beach in Puerto Escondido. Located at the southern tip, La Punta, next to the beach clubs.",
       "orderThis": null,
@@ -70,6 +79,9 @@
       "displayName": "Suave Studio",
       "nickname": "Suave",
       "vibe": "Best Yoga Spot in Puerto",
+      "mood": [
+        "Relaxed"
+      ],
       "mustGo": true,
       "description": null,
       "orderThis": "Alexandra's Hatha class or Sunday Restoration.",
@@ -154,6 +166,9 @@
       "displayName": "Jagura Negro",
       "nickname": "Jaguar",
       "vibe": "Chill with great coffee",
+      "mood": [
+        "Relaxed"
+      ],
       "mustGo": false,
       "description": "Relaxed morning in La Punta with great coffee.",
       "orderThis": null,
@@ -168,6 +183,9 @@
       "displayName": "Malagua",
       "nickname": null,
       "vibe": "See & Be Seen",
+      "mood": [
+        "See & Be Seen"
+      ],
       "mustGo": false,
       "description": "The most bustling cafe in Puerto. Get there early to avoid the wait.",
       "orderThis": "Food: Spirulina Pancakes (to share). Drink: Americano or Cappuccino.",
@@ -182,6 +200,9 @@
       "displayName": "Casa del Surfer",
       "nickname": null,
       "vibe": "Hidden Classic",
+      "mood": [
+        "Relaxed"
+      ],
       "mustGo": false,
       "description": "The locals spot, right next to a great cafe (Ojitos Abiertos). Fish tacos are healthy and delicious, and the best acai bowls in town.",
       "orderThis": "1 Fish Tacos + Acai Bowl.",
@@ -196,6 +217,9 @@
       "displayName": "Lava",
       "nickname": null,
       "vibe": "Date Night",
+      "mood": [
+        "Relaxed"
+      ],
       "mustGo": false,
       "description": "Relaxed and authentic Italian pizza. Save room for the panna cotta.",
       "orderThis": null,
@@ -224,6 +248,9 @@
       "displayName": "Moringa",
       "nickname": null,
       "vibe": "Clean Food",
+      "mood": [
+        "Relaxed"
+      ],
       "mustGo": false,
       "description": "High-quality organic grocery with a few locations across Puerto Escondido.",
       "orderThis": null,
@@ -238,6 +265,9 @@
       "displayName": "Pacifica Radio",
       "nickname": null,
       "vibe": "Relaxing (and delicious) brunch",
+      "mood": [
+        "Relaxed"
+      ],
       "mustGo": false,
       "description": "One of our favorite cafes in Puerto Escondido.",
       "orderThis": "Pancake de Platano Macho & Pollo Estilo Coreano. Food: Plantain Pancakes with Korean Style Chicken. Drink: Flat White Frio.",
@@ -252,6 +282,9 @@
       "displayName": "Zicatela Market",
       "nickname": "Zica Market",
       "vibe": null,
+      "mood": [
+        "Relaxed"
+      ],
       "mustGo": false,
       "description": null,
       "orderThis": null,
@@ -266,6 +299,9 @@
       "displayName": "Mariinera",
       "nickname": null,
       "vibe": null,
+      "mood": [
+        "Relaxed"
+      ],
       "mustGo": false,
       "description": "The best seafood tostadas in town.",
       "orderThis": "The Tostadas, Atun, Vela, & Camerones Curry.",
