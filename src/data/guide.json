@@ -33,7 +33,7 @@
     {
       "slug": "la-punta-main-beach",
       "district": "La Punta",
-      "type": "Beach Spot",
+      "type": "Beach",
       "name": "Main Beach",
       "displayName": "Main Beach",
       "nickname": null,
@@ -47,7 +47,7 @@
     {
       "slug": "la-punta-punta-vida",
       "district": "La Punta",
-      "type": "Beach Spot",
+      "type": "Beach",
       "name": "Punta Vida",
       "displayName": "Punta Vida",
       "nickname": "The Volleyball Courts",
@@ -61,7 +61,7 @@
     {
       "slug": "la-punta-suave-studio",
       "district": "La Punta",
-      "type": "Yoga",
+      "type": "Activities",
       "name": "Suave Studio",
       "displayName": "Suave Studio",
       "nickname": "Suave",
@@ -215,7 +215,7 @@
     {
       "slug": "la-punta-mombasa",
       "district": "La Punta",
-      "type": "Bar / Club",
+      "type": "Dancing",
       "name": "Mombasa",
       "displayName": "Mombasa",
       "nickname": null,
@@ -229,7 +229,7 @@
     {
       "slug": "la-punta-moringa",
       "district": "La Punta",
-      "type": "Groceries",
+      "type": "Shopping & Markets",
       "name": "Moringa",
       "displayName": "Moringa",
       "nickname": null,
@@ -257,7 +257,7 @@
     {
       "slug": "tamarindo-zicatela-market",
       "district": "Tamarindo",
-      "type": "Market",
+      "type": "Shopping & Markets",
       "name": "Zicatela Market",
       "displayName": "Zicatela Market",
       "nickname": "Zica Market",

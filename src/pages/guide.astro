@@ -20,11 +20,15 @@ type Entry = {
 const entries = guide.entries as Entry[];
 
 const uniq = <T,>(xs: T[]) => Array.from(new Set(xs));
-// Neighborhoods in the order Nick wants them shown. Any new one from the sheet goes at the end.
+// Filters in the order Nick wants them shown. Anything new from the sheet goes at the end.
 const neighborhoodOrder = ['La Bomba', 'La Punta', 'Zicatela', 'Tamarindo', 'Carretera'];
-const rank = (d: string) => (neighborhoodOrder.indexOf(d) + 1) || neighborhoodOrder.length + 1;
-const districts = uniq(entries.map((e) => e.district)).sort((a, b) => rank(a) - rank(b) || a.localeCompare(b));
-const types = uniq(entries.map((e) => e.type)).sort();
+const typeOrder = ['Cafe', 'Dinner', 'Drinks', 'Dancing', 'Beach', 'Lunch', 'Activities', 'Shopping & Markets'];
+const inOrder = (order: string[]) => {
+  const rank = (x: string) => (order.indexOf(x) + 1) || order.length + 1;
+  return (a: string, b: string) => rank(a) - rank(b) || a.localeCompare(b);
+};
+const districts = uniq(entries.map((e) => e.district)).sort(inOrder(neighborhoodOrder));
+const types = uniq(entries.map((e) => e.type)).sort(inOrder(typeOrder));
 const mustGoCount = entries.filter((e) => e.mustGo).length;
 ---
 

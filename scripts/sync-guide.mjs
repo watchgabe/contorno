@@ -61,10 +61,11 @@ function normalizeDistrict(raw) {
 
 function normalizeType(raw) {
   const s = clean(raw).replace(/\//g, ' / ').replace(/\s+/g, ' ');
-  // Title-case common variants
+  // Title-case common variants, and rename sheet types to the names shown on the site
   const map = { 'cafe': 'Cafe', 'dinner': 'Dinner', 'lunch': 'Lunch', 'drinks': 'Drinks',
-                'bar / club': 'Bar / Club', 'beach spot': 'Beach Spot', 'groceries': 'Groceries',
-                'yoga': 'Yoga', 'market': 'Market' };
+                'bar / club': 'Dancing', 'dancing': 'Dancing', 'beach spot': 'Beach', 'beach': 'Beach',
+                'groceries': 'Shopping & Markets', 'market': 'Shopping & Markets', 'shopping & markets': 'Shopping & Markets',
+                'yoga': 'Activities', 'activities': 'Activities' };
   return map[s.toLowerCase()] || s;
 }
 
